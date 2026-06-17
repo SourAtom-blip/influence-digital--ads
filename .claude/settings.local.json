@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "PowerShell(Copy-Item \"d:\\\\program files\\\\stitch_influence_digital_ads_premium_portal\\\\1 \\(1\\) \\(2\\).png\" \"d:\\\\program files\\\\stitch_influence_digital_ads_premium_portal\\\\frontend\\\\src\\\\assets\\\\logo.png\" -Force)"
+    ]
+  }
+}

@@ -1,0 +1,511 @@
+<!DOCTYPE html><html class="scroll-smooth" lang="en" style=""><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Influence Digital Ads | Premium Strategic Advertising</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;family=JetBrains+Mono:wght@500&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#eaf1ff",
+                        "tertiary": "#000000",
+                        "on-surface-variant": "#45464d",
+                        "on-secondary": "#ffffff",
+                        "primary-container": "#131b2e",
+                        "on-secondary-fixed": "#00174b",
+                        "surface-container-highest": "#d3e4fe",
+                        "tertiary-fixed-dim": "#c4c7c9",
+                        "on-tertiary-fixed-variant": "#444749",
+                        "surface": "#f8f9ff",
+                        "secondary": "#0051d5",
+                        "surface-tint": "#565e74",
+                        "outline-variant": "#c6c6cd",
+                        "error": "#ba1a1a",
+                        "inverse-primary": "#bec6e0",
+                        "on-primary-fixed-variant": "#3f465c",
+                        "primary-fixed": "#dae2fd",
+                        "surface-container-lowest": "#ffffff",
+                        "background": "#f8f9ff",
+                        "surface-container-low": "#eff4ff",
+                        "secondary-container": "#316bf3",
+                        "on-surface": "#0b1c30",
+                        "on-secondary-container": "#fefcff",
+                        "error-container": "#ffdad6",
+                        "outline": "#76777d",
+                        "surface-container": "#e5eeff",
+                        "on-tertiary-fixed": "#191c1e",
+                        "on-secondary-fixed-variant": "#003ea8",
+                        "surface-variant": "#d3e4fe",
+                        "on-tertiary-container": "#818486",
+                        "on-error": "#ffffff",
+                        "surface-bright": "#f8f9ff",
+                        "tertiary-container": "#191c1e",
+                        "inverse-surface": "#213145",
+                        "primary-fixed-dim": "#bec6e0",
+                        "surface-container-high": "#dce9ff",
+                        "on-error-container": "#93000a",
+                        "tertiary-fixed": "#e0e3e5",
+                        "primary": "#000000",
+                        "on-background": "#0b1c30",
+                        "on-primary-fixed": "#131b2e",
+                        "secondary-fixed": "#dbe1ff",
+                        "secondary-fixed-dim": "#b4c5ff",
+                        "surface-dim": "#cbdbf5",
+                        "on-primary-container": "#7c839b",
+                        "on-primary": "#ffffff",
+                        "on-tertiary": "#ffffff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "container-max": "1280px",
+                        "margin-mobile": "20px",
+                        "margin-desktop": "64px",
+                        "base": "8px",
+                        "stack-md": "24px",
+                        "stack-lg": "48px",
+                        "stack-sm": "12px",
+                        "gutter": "24px"
+                    },
+                    "fontFamily": {
+                        "body-md": ["Inter"],
+                        "display-lg": ["Inter"],
+                        "headline-lg": ["Inter"],
+                        "label-caps": ["JetBrains Mono"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-sm": ["Inter"]
+                    },
+                    "fontSize": {
+                        "body-md": ["16px", {"lineHeight": "1.6", "letterSpacing": "0", "fontWeight": "400"}],
+                        "display-lg": ["48px", {"lineHeight": "1.1", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.01em", "fontWeight": "600"}],
+                        "label-caps": ["12px", {"lineHeight": "1", "letterSpacing": "0.05em", "fontWeight": "500"}],
+                        "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "600"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 1.5rem;
+        }
+        .premium-card-shadow {
+            box-shadow: 0 4px 20px -2px rgba(11, 28, 48, 0.04);
+            transition: all 0.3s ease-out;
+        }
+        .premium-card-shadow:hover {
+            box-shadow: 0 12px 30px -4px rgba(0, 81, 213, 0.08);
+            transform: translateY(-2px);
+        }
+    </style>
+</head>
+<body class="bg-surface font-body-md text-on-surface">
+<!-- TopNavBar -->
+<nav class="bg-surface/95 backdrop-blur-md fixed top-0 w-full z-50 border-b border-outline-variant/30 h-20 shadow-sm">
+<div class="max-w-container-max mx-auto px-margin-desktop flex items-center justify-between h-full">
+<div class="flex items-center gap-4">
+<img alt="Influence Digital Ads" class="h-10 w-10" src="data:image/png;base64,[BASE64_LOGO]">
+<span class="font-display-lg text-[24px] font-bold text-primary tracking-tighter">Influence Digital Ads</span>
+</div>
+<div class="hidden md:flex items-center gap-8"><a class="text-secondary font-bold border-b-2 border-secondary font-label-caps text-label-caps h-20 flex items-center" href="#">Home</a><span class="h-6 w-px bg-outline-variant"></span><a class="text-on-surface hover:text-secondary transition-colors duration-200 font-label-caps text-label-caps font-bold" href="#">Advertising</a><span class="h-6 w-px bg-outline-variant"></span><a class="text-on-surface hover:text-secondary transition-colors duration-200 font-label-caps text-label-caps font-bold" href="#">Our Activities</a><span class="h-6 w-px bg-outline-variant"></span><a class="text-on-surface hover:text-secondary transition-colors duration-200 font-label-caps text-label-caps font-bold" href="#">Contact Us</a></div>
+<div class="flex items-center gap-6">
+<span class="font-label-caps text-label-caps text-on-surface font-semibold cursor-pointer hover:text-secondary transition-colors">EN/FR</span>
+<button class="bg-primary text-on-primary px-6 py-2.5 font-label-caps text-label-caps hover:bg-secondary transition-colors scale-95 active:opacity-80">Free Quote</button>
+</div>
+</div>
+</nav>
+<!-- Hero Section -->
+<header class="relative pt-32 pb-stack-lg overflow-hidden min-h-[90vh] flex items-center">
+<div class="absolute inset-0 z-0">
+
+<div class="w-full h-full grayscale mix-blend-multiply opacity-90" data-alt="A wide-angle, high-resolution photograph of a bustling metropolitan transit hub featuring massive digital billboards and LED screens displaying vibrant, high-contrast advertisements. The scene is characterized by motion-blurred commuters and sleek, architectural lines, emphasizing the high-traffic nature of the environment. The lighting is bright and modern, creating a professional, corporate atmosphere with a palette of deep blues and cool grays." style="background-image: linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0) 70%), url(&quot;https://lh3.googleusercontent.com/aida-public/AB6AXuBa7CGro66ONZKWGU8UM0JFwyIvVoLSz2VrCjQH3DxOVB3u_F87K9nQ3e-fATp7FhqHzRn-LSpyIAn0e-OXw3uZDM26dzUNyK7kHalyReX0PcmWW6YaXM6xU6XiGadmTokZAcCVJRJO0tHohN67adyngEoifeeCd3iaH9EM2-hD_rNfG4P-zk0oMM9b0Dfv5fhrOiJZcROl1OfwjCbMBJf2HgHYFYxxNvi9tJmFLR3rSm7VH2LE71EQyx3SSu0Rng_6Z6tzlnoZ_iRA&quot;); background-size: cover; background-position: center center;">
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop relative z-20">
+<div class="max-w-2xl">
+<span class="inline-block px-3 py-1 bg-secondary-container/10 text-secondary font-label-caps text-label-caps mb-6 rounded-full">Strategic Visibility</span>
+<h1 class="font-display-lg text-display-lg text-white mb-6 drop-shadow-md">Amplify Your Brand Presence Across High-Traffic Locations</h1>
+<p class="font-body-md text-white mb-10 text-lg leading-relaxed drop-shadow-sm opacity-90">Elevate your impact with precision-targeted digital advertising solutions in premium malls, international airports, and urban billboards. Data-driven strategy meets high-definition display.</p>
+<div class="flex flex-wrap gap-4">
+<button class="bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps hover:bg-secondary transition-all">Get Free Quote</button>
+<button class="border border-outline text-primary px-8 py-4 font-label-caps text-label-caps hover:bg-surface-container transition-all">Explore Advertising Solutions</button>
+</div>
+<div class="mt-16 grid grid-cols-3 gap-8 p-8 border border-white/10 backdrop-blur-md bg-black/20 rounded-lg">
+<div>
+<div class="font-display-lg text-[32px] font-bold text-white">500+</div>
+<div class="font-label-caps text-label-caps text-white/80 font-bold">Screens</div>
+</div>
+<div>
+<div class="font-display-lg text-[32px] font-bold text-white">50+</div>
+<div class="font-label-caps text-label-caps text-white/80 font-bold">Locations</div>
+</div>
+<div>
+<div class="font-display-lg text-[32px] font-bold text-white">100+</div>
+<div class="font-label-caps text-label-caps text-white/80 font-bold">Campaigns</div>
+</div>
+</div>
+</div>
+</div>
+</header>
+<!-- Trusted By -->
+<section class="py-12 border-y border-outline-variant/20 bg-secondary">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<p class="text-center font-label-caps text-label-caps mb-8 text-white font-bold">Trusted by global industry leaders</p>
+<div class="flex flex-wrap justify-center gap-12 lg:justify-between items-center grayscale hover:grayscale-0 transition-all duration-700 opacity-80">
+<div class="h-8 w-32 rounded bg-white"></div>
+<div class="h-8 w-40 rounded bg-white"></div>
+<div class="h-8 w-28 rounded bg-white"></div>
+<div class="h-8 w-36 rounded bg-white"></div>
+<div class="h-8 w-32 rounded bg-white"></div>
+<div class="h-8 w-44 rounded bg-white"></div>
+</div>
+</div>
+</section>
+<!-- About Us -->
+<section class="py-stack-lg bg-white">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+<div class="relative">
+<div class="aspect-square w-full bg-surface-container-low overflow-hidden border border-outline-variant/20 rounded-lg">
+<img class="w-full h-full object-cover grayscale opacity-90" data-alt="A professional, minimalist corporate office interior with clean lines, large glass partitions, and a palette of whites and light grays. The scene is brightly lit by natural light, conveying a sense of transparency, high-end design, and strategic calm. The aesthetic is modern and sophisticated, aligning with an elite digital advertising firm's headquarters." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCZQ5idDvJbeufNhlP-6p9YUNY8QBim8vRP1V58G1mhSzVmK4RsfBL5TIyMbHFOCKc25hl-UDWI35TuSok2h4glcMwhyCXX1-zv0G_FqT1twJKGHWu6IwvevICW89U53sATa0se5sKrACjatImD1Afs2150xz_fhJ-K6n9j_RId1XLGQLKi9ViyCTaKEGlD7aDk5HrWsDQB8oRHJbcP2IA0Gg4z8LiTKQbgTR1M6v54Tb1yrDBdXZEodHq6UBWTE-nF628THJznM0AU">
+</div>
+<div class="absolute -bottom-6 -right-6 p-10 bg-primary text-on-primary">
+<p class="font-display-lg text-[40px] font-bold">15+</p>
+<p class="font-label-caps text-label-caps">Years of Excellence</p>
+</div>
+</div>
+<div>
+<span class="font-label-caps text-label-caps text-secondary tracking-widest block mb-4">OUR LEGACY</span>
+<h2 class="font-headline-lg text-headline-lg text-primary mb-6">Redefining Presence in the Digital Age</h2>
+<p class="font-body-md text-on-surface-variant mb-6">
+                        Influence Digital Ads is more than a media buyer. we are strategic partners in brand elevation. Our mission is to bridge the gap between high-value brands and their target audiences through premium placements in the most influential physical spaces.
+                    </p>
+<p class="font-body-md text-on-surface-variant mb-8">
+                        From iconic city landmarks to the captive audiences of international travel hubs, we deliver precision, transparency, and undeniable impact.
+                    </p>
+<button class="bg-primary text-on-primary px-6 py-3 font-label-caps text-label-caps rounded hover:bg-secondary transition-all">Learn More About Us</button>
+</div>
+</div>
+</div>
+</section>
+<!-- Advertising Solutions (Bento Grid) -->
+<section class="py-stack-lg bg-surface">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="text-center mb-16">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-4">Precision-Targeted Solutions</h2>
+<p class="text-on-surface-variant max-w-xl mx-auto">Diverse media formats designed to capture attention where it matters most.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<!-- Mall Advertising -->
+<div class="bg-white p-10 premium-card-shadow flex flex-col border border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="shopping_bag">shopping_bag</span>
+<h3 class="font-headline-lg text-[20px] mb-4">Mall Advertising</h3>
+<p class="text-on-surface-variant font-body-sm mb-8 flex-grow">Connect with shoppers at the point of purchase in high-end retail environments.</p>
+<a class="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group hover:bg-secondary transition-all w-fit" href="#">Learn More <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+<!-- Airport Displays -->
+<div class="bg-white p-10 premium-card-shadow flex flex-col border border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="flight_takeoff">flight_takeoff</span>
+<h3 class="font-headline-lg text-[20px] mb-4">Airport Displays</h3>
+<p class="text-on-surface-variant font-body-sm mb-8 flex-grow">Engage high-net-worth international travelers with premium long-dwell displays.</p>
+<a class="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group hover:bg-secondary transition-all w-fit" href="#">Learn More <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+<!-- Billboard Networks -->
+<div class="bg-white p-10 premium-card-shadow flex flex-col border border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="branding_watermark">branding_watermark</span>
+<h3 class="font-headline-lg text-[20px] mb-4">Billboard Networks</h3>
+<p class="text-on-surface-variant font-body-sm mb-8 flex-grow">Dominant presence on key urban arteries and highway networks for maximum reach.</p>
+<a class="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group hover:bg-secondary transition-all w-fit" href="#">Learn More <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+<!-- LED Solutions -->
+<div class="bg-white p-10 premium-card-shadow flex flex-col border border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="lightbulb">lightbulb</span>
+<h3 class="font-headline-lg text-[20px] mb-4">LED Solutions</h3>
+<p class="text-on-surface-variant font-body-sm mb-8 flex-grow">High-resolution dynamic content that breaks through urban clutter with vibrant clarity.</p>
+<a class="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group hover:bg-secondary transition-all w-fit" href="#">Learn More <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+<!-- Urban -->
+<div class="bg-white p-10 premium-card-shadow flex flex-col border border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="location_city">location_city</span>
+<h3 class="font-headline-lg text-[20px] mb-4">Urban Centers</h3>
+<p class="text-on-surface-variant font-body-sm mb-8 flex-grow">Target the heart of the city where business, leisure, and lifestyle intersect.</p>
+<a class="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group hover:bg-secondary transition-all w-fit" href="#">Learn More <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+<!-- Transit Ads -->
+<div class="bg-white p-10 premium-card-shadow flex flex-col border border-outline-variant/20">
+<span class="material-symbols-outlined text-secondary text-4xl mb-6" data-icon="train">train</span>
+<h3 class="font-headline-lg text-[20px] mb-4">Transit Ads</h3>
+<p class="text-on-surface-variant font-body-sm mb-8 flex-grow">Move with your audience across metro networks, buses, and high-traffic transit hubs.</p>
+<a class="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group hover:bg-secondary transition-all w-fit" href="#">Learn More <span class="material-symbols-outlined text-sm group-hover:translate-x-1 transition-transform" data-icon="arrow_forward">arrow_forward</span></a>
+</div>
+</div>
+</div>
+</section>
+<!-- Why Choose Us -->
+<section class="py-stack-lg bg-primary text-on-primary">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<div class="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
+<div class="max-w-xl">
+<span class="font-label-caps text-label-caps text-secondary-container mb-4 block">THE INFLUENCE ADVANTAGE</span>
+<h2 class="font-headline-lg text-headline-lg mb-4 text-white">Strategy Built on Precision and Performance</h2>
+</div>
+<div class="font-body-md text-outline-variant max-w-sm">
+                    We combine premium inventory with rigorous analytics to ensure every impression contributes to your bottom line.
+                </div>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
+<div class="p-8 border border-white/10 hover:bg-white/5 transition-colors">
+<div class="font-label-caps text-label-caps text-secondary-container mb-2">01</div>
+<h4 class="font-headline-lg text-[18px] mb-3 text-white">Strategic Locations</h4>
+<p class="text-outline-variant text-sm">Pre-selected hubs that guarantee alignment with target demographics.</p>
+</div>
+<div class="p-8 border border-white/10 hover:bg-white/5 transition-colors">
+<div class="font-label-caps text-label-caps text-secondary-container mb-2">02</div>
+<h4 class="font-headline-lg text-[18px] mb-3 text-white">Unrivaled Reach</h4>
+<p class="text-outline-variant text-sm">Scale your brand across domestic and international markets seamlessly.</p>
+</div>
+<div class="p-8 border border-white/10 hover:bg-white/5 transition-colors">
+<div class="font-label-caps text-label-caps text-secondary-container mb-2">03</div>
+<h4 class="font-headline-lg text-[18px] mb-3 text-white">Premium Displays</h4>
+<p class="text-outline-variant text-sm">State-of-the-art hardware ensuring your brand looks its absolute best.</p>
+</div>
+<div class="p-8 border border-white/10 hover:bg-white/5 transition-colors">
+<div class="font-label-caps text-label-caps text-secondary-container mb-2">04</div>
+<h4 class="font-headline-lg text-[18px] mb-3 text-white">Domain Expertise</h4>
+<p class="text-outline-variant text-sm">Over a decade of specialization in the digital out-of-home (DOOH) sector.</p>
+</div>
+<div class="p-8 border border-white/10 hover:bg-white/5 transition-colors">
+<div class="font-label-caps text-label-caps text-secondary-container mb-2">05</div>
+<h4 class="font-headline-lg text-[18px] mb-3 text-white">End-to-End Management</h4>
+<p class="text-outline-variant text-sm">From creative adaptation to technical deployment, we handle it all.</p>
+</div>
+<div class="p-8 border border-white/10 hover:bg-white/5 transition-colors">
+<div class="font-label-caps text-label-caps text-secondary-container mb-2">06</div>
+<h4 class="font-headline-lg text-[18px] mb-3 text-white">Data Transparency</h4>
+<p class="text-outline-variant text-sm">Comprehensive performance reporting with verified impression metrics.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Impact Metrics -->
+<section class="py-24 bg-secondary text-on-secondary">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+<div>
+<div class="font-display-lg text-[48px] font-black mb-2">542</div>
+<div class="font-label-caps text-label-caps opacity-80">Premium Screens</div>
+</div>
+<div>
+<div class="font-display-lg text-[48px] font-black mb-2">12M+</div>
+<div class="font-label-caps text-label-caps opacity-80">Monthly Impressions</div>
+</div>
+<div>
+<div class="font-display-lg text-[48px] font-black mb-2">24/7</div>
+<div class="font-label-caps text-label-caps opacity-80">Uptime Guarantee</div>
+</div>
+<div>
+<div class="font-display-lg text-[48px] font-black mb-2">100%</div>
+<div class="font-label-caps text-label-caps opacity-80">Transparency</div>
+</div>
+</div>
+</section>
+<!-- Our Process -->
+<section class="py-stack-lg bg-white overflow-hidden">
+<div class="max-w-container-max mx-auto px-margin-desktop">
+<h2 class="font-headline-lg text-headline-lg text-primary mb-16 text-center">A Streamlined Path to Impact</h2>
+<div class="relative">
+<!-- Timeline Line -->
+<div class="absolute top-1/2 left-0 w-full h-px bg-outline-variant/30 -translate-y-1/2 hidden lg:block"></div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 relative">
+<div class="bg-white p-6 relative z-10">
+<div class="w-12 h-12 bg-primary text-on-primary flex items-center justify-center mb-6 font-bold rounded-full">01</div>
+<h4 class="font-headline-lg text-[20px] mb-3">Consultation</h4>
+<p class="text-on-surface-variant text-sm">We analyze your goals, budget, and target audience to identify ideal inventory.</p>
+</div>
+<div class="bg-white p-6 relative z-10">
+<div class="w-12 h-12 bg-primary text-on-primary flex items-center justify-center mb-6 font-bold rounded-full">02</div>
+<h4 class="font-headline-lg text-[20px] mb-3">Planning</h4>
+<p class="text-on-surface-variant text-sm">A customized media plan is developed with specific screen selections and timings.</p>
+</div>
+<div class="bg-white p-6 relative z-10">
+<div class="w-12 h-12 bg-primary text-on-primary flex items-center justify-center mb-6 font-bold rounded-full">03</div>
+<h4 class="font-headline-lg text-[20px] mb-3">Creative</h4>
+<p class="text-on-surface-variant text-sm">Technical specs review and visual adaptation to ensure maximum clarity on our displays.</p>
+</div>
+<div class="bg-white p-6 relative z-10">
+<div class="w-12 h-12 bg-primary text-on-primary flex items-center justify-center mb-6 font-bold rounded-full">04</div>
+<h4 class="font-headline-lg text-[20px] mb-3">Launch</h4>
+<p class="text-on-surface-variant text-sm">Campaign goes live with real-time monitoring and post-campaign performance audits.</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Final CTA -->
+<section class="py-24 bg-surface-container-low">
+<div class="max-w-container-max mx-auto px-margin-desktop bg-primary p-12 lg:p-20 relative overflow-hidden">
+<div class="absolute top-0 right-0 w-1/3 h-full opacity-10 bg-secondary-container pointer-events-none transform skew-x-12 translate-x-1/2"></div>
+<div class="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-10">
+<div class="max-w-xl text-center lg:text-left">
+<h2 class="font-display-lg text-white mb-6 text-[40px]">Ready to Increase Your Brand Visibility?</h2>
+<p class="text-outline-variant text-lg">Partner with Influence Digital Ads and place your brand at the center of the world's most dynamic environments.</p>
+</div>
+<button class="bg-secondary text-on-secondary px-12 py-5 font-label-caps text-label-caps text-lg hover:bg-secondary-container transition-all whitespace-nowrap shadow-xl">Request a Free Quote</button>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<section class="py-24 bg-white">
+  <div class="max-w-container-max mx-auto px-margin-desktop">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="font-headline-lg text-headline-lg text-primary mb-4">Get a Free Quote</h2>
+        <p class="text-on-surface-variant">Fill out the form below and our strategic team will contact you within 24 hours.</p>
+      </div>
+      <form class="space-y-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="font-label-caps text-sm text-on-surface font-semibold">Name</label>
+            <input type="text" placeholder="Your full name" class="w-full px-4 py-3 border border-outline-variant/30 rounded focus:border-secondary outline-none transition-colors">
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-caps text-sm text-on-surface font-semibold">Title</label>
+            <input type="text" placeholder="Job title" class="w-full px-4 py-3 border border-outline-variant/30 rounded focus:border-secondary outline-none transition-colors">
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="font-label-caps text-sm text-on-surface font-semibold">E-mail</label>
+            <input type="email" placeholder="work@company.com" class="w-full px-4 py-3 border border-outline-variant/30 rounded focus:border-secondary outline-none transition-colors">
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-caps text-sm text-on-surface font-semibold">Company</label>
+            <input type="text" placeholder="Company name" class="w-full px-4 py-3 border border-outline-variant/30 rounded focus:border-secondary outline-none transition-colors">
+          </div>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="space-y-2">
+            <label class="font-label-caps text-sm text-on-surface font-semibold">Telephone</label>
+            <input type="tel" placeholder="+1 (000) 000-0000" class="w-full px-4 py-3 border border-outline-variant/30 rounded focus:border-secondary outline-none transition-colors">
+          </div>
+          <div class="space-y-2">
+            <label class="font-label-caps text-sm text-on-surface font-semibold">Country, City</label>
+            <input type="text" placeholder="Location" class="w-full px-4 py-3 border border-outline-variant/30 rounded focus:border-secondary outline-none transition-colors">
+          </div>
+        </div>
+        <div class="space-y-2 relative">
+          <label class="font-label-caps text-sm text-on-surface font-semibold">Is there a particular area you want to target?</label>
+          <div class="relative">
+            <select class="w-full px-4 py-3 border border-outline-variant/30 rounded focus:border-secondary outline-none transition-colors appearance-none bg-transparent">
+              <option value="" disabled="" selected="">Select target area</option>
+              <option>Mall Advertising</option>
+              <option>Airport Displays</option>
+              <option>Billboard Networks</option>
+              <option>Urban Centers</option>
+              <option>Transit Ads</option>
+            </select>
+            
+          </div>
+        </div>
+        <div class="space-y-2 relative">
+          <label class="font-label-caps text-sm text-on-surface font-semibold">How long do you want to advertise?</label>
+          <div class="relative">
+            <select class="w-full px-4 py-3 border border-outline-variant/30 rounded focus:border-secondary outline-none transition-colors appearance-none bg-transparent">
+              <option value="" disabled="" selected="">Select duration</option>
+              <option>1 Month</option>
+              <option>3 Months</option>
+              <option>6 Months</option>
+              <option>12 Months+</option>
+            </select>
+            
+          </div>
+        </div>
+        <button type="submit" class="w-full bg-primary text-on-primary py-4 font-label-caps text-label-caps hover:bg-secondary transition-all shadow-lg mt-4">Submit Request</button>
+      </form>
+    </div>
+  </div>
+</section><footer class="bg-primary pt-stack-lg pb-stack-md border-t border-white/5">
+<div class="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+<div class="col-span-1 md:col-span-1">
+<div class="flex items-center gap-3 mb-8">
+<img alt="Influence Digital Ads" class="h-8 w-8 filter brightness-0 invert" src="data:image/png;base64,[BASE64_LOGO]">
+<span class="font-headline-lg text-headline-lg font-black text-on-primary">Influence</span>
+</div>
+<p class="font-body-sm text-outline-variant mb-8 pr-8">
+                    The leading partner for strategic digital advertising across premium global locations. Precision. Impact. Influence.
+                </p>
+<div class="flex gap-4">
+<a class="text-outline-variant hover:text-white transition-colors" href="#"><span class="material-symbols-outlined" data-icon="facebook">face_nod</span></a>
+<a class="text-outline-variant hover:text-white transition-colors" href="#"><span class="material-symbols-outlined" data-icon="linked_camera">linked_camera</span></a>
+<a class="text-outline-variant hover:text-white transition-colors" href="#"><span class="material-symbols-outlined" data-icon="post_add">post_add</span></a>
+</div>
+</div>
+<div>
+<h5 class="font-label-caps text-label-caps text-secondary-container mb-6 text-[16px] font-bold uppercase">Solutions</h5>
+<ul class="space-y-4 font-body-sm text-outline-variant">
+<li class=""><a class="hover:text-white transition-colors" href="#">Mall Advertising</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">Airport Displays</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">Billboard Networks</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">LED Solutions</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">Transit Ads</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-caps text-label-caps text-secondary-container mb-6 text-[16px] font-bold uppercase">Company</h5>
+<ul class="space-y-4 font-body-sm text-outline-variant">
+<li class=""><a class="hover:text-white transition-colors" href="#">About Us</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">Our Activities</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">Privacy Policy</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">Terms of Service</a></li>
+<li class=""><a class="hover:text-white transition-colors" href="#">EN / FR</a></li>
+</ul>
+</div>
+<div>
+<h5 class="font-label-caps text-label-caps text-secondary-container mb-6 text-[16px] font-bold uppercase">Contact</h5>
+<ul class="space-y-4 font-body-sm text-outline-variant">
+<li class="flex items-start gap-3"><span class="material-symbols-outlined text-sm mt-1" data-icon="location_on">location_on</span> 1200 Avenue of the Americas, New York, NY 10036</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-sm" data-icon="call">call</span> +1 (212) 555-0198</li>
+<li class="flex items-center gap-3"><span class="material-symbols-outlined text-sm" data-icon="mail">mail</span> strategy@influencedigital.com</li>
+</ul>
+</div>
+</div>
+<div class="max-w-container-max mx-auto px-margin-desktop mt-16 pt-8 border-t border-white/5 flex flex-col md:flex-row justify-between items-center gap-4">
+<p class="font-body-sm text-outline-variant text-[12px] opacity-60">© 2024 Influence Digital Ads. All rights reserved.</p>
+<div class="flex gap-8 text-[12px] font-label-caps text-label-caps text-outline-variant opacity-60">
+<a class="hover:text-white" href="#">Legal</a>
+<a class="hover:text-white" href="#">Security</a>
+<a class="hover:text-white" href="#">Compliance</a>
+</div>
+</div>
+</footer>
+<script>
+        // Simple scroll behavior for the header
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.classList.add('shadow-md');
+                nav.classList.remove('shadow-sm');
+            } else {
+                nav.classList.add('shadow-sm');
+                nav.classList.remove('shadow-md');
+            }
+        });
+    </script>
+
+
+</body></html>
