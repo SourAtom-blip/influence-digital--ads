@@ -69,7 +69,9 @@ export default function Footer() {
         </div>
       </div>
       <div className="max-w-container-max mx-auto px-margin-desktop mt-16 pt-8 border-t border-white/5 flex justify-center items-center">
-        <p className="font-body-sm text-outline-variant text-[12px] opacity-60">{c.footerCopyright}</p>
+        <p className="font-body-sm text-outline-variant text-[12px] opacity-60">
+          {c.footerCopyright.replace(/\d{4}/, new Date().getFullYear())}
+        </p>
       </div>
     </footer>
   );
