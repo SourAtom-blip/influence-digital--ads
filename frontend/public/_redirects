@@ -1,6 +1,4 @@
-# Proxy API calls to backend — replace the URL below with your Railway backend URL
-/api/*      https://YOUR-BACKEND.railway.app/api/:splat      200
-/uploads/*  https://YOUR-BACKEND.railway.app/uploads/:splat  200
+/api/*      https://influence-digital-ads-production.up.railway.app/api/:splat      200
+/uploads/*  https://influence-digital-ads-production.up.railway.app/uploads/:splat  200
 
-# SPA routing — must be last
-/*          /index.html                                       200
+/*          /index.html                                                               200
