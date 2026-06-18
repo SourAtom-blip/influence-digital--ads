@@ -2,6 +2,7 @@ import express from 'express';
 import nodemailer from 'nodemailer';
 import Quote from '../models/Quote.js';
 import protect from '../middleware/protect.js';
+import { encryptQuote, decryptQuote } from '../utils/encrypt.js';
 
 const router = express.Router();
 
@@ -80,10 +81,10 @@ router.post('/', async (req, res) => {
     if (!emailRegex.test(email))
       return res.status(400).json({ message: 'Please enter a valid email address.' });
 
-    const quote = await Quote.create(req.body);
+    const quote = await Quote.create(encryptQuote(req.body));
 
-    // Send emails in background — don't block the response
-    sendEmails(quote).catch(err => console.error('[Email Error]', err.message));
+    // Send emails with plain data (before encryption) — don't block the response
+    sendEmails({ ...req.body, _id: quote._id }).catch(err => console.error('[Email Error]', err.message));
 
     res.status(201).json({ _id: quote._id, message: 'Quote submitted successfully.' });
   } catch (err) {
@@ -96,7 +97,7 @@ router.post('/', async (req, res) => {
 router.get('/', protect, async (req, res) => {
   try {
     const quotes = await Quote.find().sort({ createdAt: -1 });
-    res.json(quotes);
+    res.json(quotes.map(decryptQuote));
   } catch (err) {
     console.error('[Quotes GET]', err.message);
     res.status(500).json({ message: 'Server error. Please try again.' });
