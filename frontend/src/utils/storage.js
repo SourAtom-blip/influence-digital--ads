@@ -1,7 +1,7 @@
 import { apiGetSite, apiSaveSite } from './api.js';
 
-const HERO_IMG  = '/pexels-edgarcolomba-28288097.jpg';
-const ABOUT_IMG = '/pexels-negativespace-34639.jpg';
+const HERO_IMG  = '/pexels-negativespace-34639.jpg';
+const ABOUT_IMG = '/pexels-edgarcolomba-28288097.jpg';
 
 const CONTENT_EN = {
   navBrand: 'Influence Digital Ads',
