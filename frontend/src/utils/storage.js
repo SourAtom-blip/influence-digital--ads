@@ -342,7 +342,9 @@ async function loadFromApi(key, fallback) {
 // ── Sync reads (used at render time) ─────────────────────────────────────────
 export const getImages = () => {
   const s = load('site_images');
-  return (s && s.hero && s.about) ? s : DEFAULTS.images;
+  const isStale = (img) => img?.list?.[0]?.includes('googleusercontent.com');
+  if (s && s.hero && s.about && !isStale(s.hero) && !isStale(s.about)) return s;
+  return DEFAULTS.images;
 };
 export const getTrustedBrands = () => {
   const s = load('site_brands');
