@@ -1,7 +1,7 @@
 import { apiGetSite, apiSaveSite } from './api.js';
 
-const HERO_IMG  = 'https://lh3.googleusercontent.com/aida-public/AB6AXuBa7CGro66ONZKWGU8UM0JFwyIvVoLSz2VrCjQH3DxOVB3u_F87K9nQ3e-fATp7FhqHzRn-LSpyIAn0e-OXw3uZDM26dzUNyK7kHalyReX0PcmWW6YaXM6xU6XiGadmTokZAcCVJRJO0tHohN67adyngEoifeeCd3iaH9EM2-hD_rNfG4P-zk0oMM9b0Dfv5fhrOiJZcROl1OfwjCbMBJf2HgHYFYxxNvi9tJmFLR3rSm7VH2LE71EQyx3SSu0Rng_6Z6tzlnoZ_iRA';
-const ABOUT_IMG = 'https://lh3.googleusercontent.com/aida-public/AB6AXuCZQ5idDvJbeufNhlP-6p9YUNY8QBim8vRP1V58G1mhSzVmK4RsfBL5TIyMbHFOCKc25hl-UDWI35TuSok2h4glcMwhyCXX1-zv0G_FqT1twJKGHWu6IwvevICW89U53sATa0se5sKrACjatImD1Afs2150xz_fhJ-K6n9j_RId1XLGQLKi9ViyCTaKEGlD7aDk5HrWsDQB8oRHJbcP2IA0Gg4z8LiTKQbgTR1M6v54Tb1yrDBdXZEodHq6UBWTE-nF628THJznM0AU';
+const HERO_IMG  = '/pexels-edgarcolomba-28288097.jpg';
+const ABOUT_IMG = '/pexels-negativespace-34639.jpg';
 
 const CONTENT_EN = {
   navBrand: 'Influence Digital Ads',
