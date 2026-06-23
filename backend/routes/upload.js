@@ -19,7 +19,7 @@ const storage = multer.diskStorage({
 const upload = multer({ storage });
 
 function authRequired(req, res, next) {
-  const token = req.cookies?.token || req.headers.authorization?.split(' ')[1];
+  const token = req.cookies?.adminToken || req.headers.authorization?.split(' ')[1];
   if (!token) return res.status(401).json({ message: 'Unauthorized' });
   try {
     jwt.verify(token, process.env.JWT_SECRET);
