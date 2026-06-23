@@ -1,16 +1,17 @@
 const BASE = '/api';
 
-async function request(method, path, body, token) {
+const getToken = () => localStorage.getItem('adminToken');
+const setToken = (t) => t ? localStorage.setItem('adminToken', t) : localStorage.removeItem('adminToken');
+
+async function request(method, path, body) {
+  const token = getToken();
   const headers = { 'Content-Type': 'application/json' };
   if (token) headers['Authorization'] = `Bearer ${token}`;
   const res = await fetch(`${BASE}${path}`, {
     method,
     headers,
-    credentials: 'include',
     body: body ? JSON.stringify(body) : undefined,
   });
-  // If the server returns HTML (e.g. a catch-all SPA redirect when no backend is running),
-  // treat it as a failed request rather than saving {} into localStorage.
   const ct = res.headers.get('content-type') || '';
   if (!ct.includes('application/json')) throw new Error('Backend unavailable');
   const data = await res.json().catch(() => { throw new Error('Backend unavailable'); });
@@ -19,17 +20,21 @@ async function request(method, path, body, token) {
 }
 
 // Auth
-export const apiLogin          = (u, p)          => request('POST', '/auth/login',          { username: u, password: p });
-export const apiLogout         = ()              => request('POST', '/auth/logout');
-export const apiChangePassword = (cur, newP)     => request('POST', '/auth/change-password', { currentPassword: cur, newPassword: newP });
-export const apiResetPassword  = (key, newP)     => request('POST', '/auth/reset-password',  { recoveryKey: key, newPassword: newP });
-export const apiChangeKey      = (newKey)        => request('POST', '/auth/change-recovery-key', { newRecoveryKey: newKey });
+export const apiLogin = async (u, p) => {
+  const data = await request('POST', '/auth/login', { username: u, password: p });
+  if (data.token) setToken(data.token);
+  return data;
+};
+export const apiLogout         = ()          => { setToken(null); return request('POST', '/auth/logout'); };
+export const apiChangePassword = (cur, newP) => request('POST', '/auth/change-password',    { currentPassword: cur, newPassword: newP });
+export const apiResetPassword  = (key, newP) => request('POST', '/auth/reset-password',     { recoveryKey: key, newPassword: newP });
+export const apiChangeKey      = (newKey)    => request('POST', '/auth/change-recovery-key', { newRecoveryKey: newKey });
 
 // Quotes
-export const apiSubmitQuote  = (data)      => request('POST', '/quotes', data);
-export const apiGetQuotes    = ()          => request('GET',  '/quotes');
-export const apiUpdateQuote  = (id, data)  => request('PUT',  `/quotes/${id}`, data);
-export const apiDeleteQuote  = (id)        => request('DELETE', `/quotes/${id}`);
+export const apiSubmitQuote  = (data)     => request('POST',   '/quotes', data);
+export const apiGetQuotes    = ()         => request('GET',    '/quotes');
+export const apiUpdateQuote  = (id, data) => request('PUT',    `/quotes/${id}`, data);
+export const apiDeleteQuote  = (id)       => request('DELETE', `/quotes/${id}`);
 
 // Site data
 export const apiGetSite  = (key)        => request('GET', `/site/${key}`);
@@ -37,9 +42,12 @@ export const apiSaveSite = (key, value) => request('PUT', `/site/${key}`, { valu
 
 // Image upload
 export const apiUploadImage = async (file) => {
+  const token = getToken();
   const form = new FormData();
   form.append('image', file);
-  const res = await fetch(`${BASE}/upload`, { method: 'POST', credentials: 'include', body: form });
+  const headers = {};
+  if (token) headers['Authorization'] = `Bearer ${token}`;
+  const res = await fetch(`${BASE}/upload`, { method: 'POST', headers, body: form });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.message || 'Upload failed');
   return data;
