@@ -4,27 +4,6 @@ import { useContent } from '../context/LanguageContext';
 import { getImages } from '../utils/storage';
 import CounterNumber from '../components/CounterNumber';
 
-function TeamCard({ name, role, bio, photo }) {
-  const initials = name.split(' ').map(w => w[0]).join('').slice(0, 2).toUpperCase();
-  return (
-    <div className="bg-white p-8 border border-outline-variant/20 premium-card-shadow flex flex-col items-center text-center group/card hover:bg-secondary transition-colors duration-300">
-      {photo ? (
-        <img
-          src={photo}
-          alt={name}
-          className="w-24 h-24 rounded-full object-cover mb-6 border-4 border-surface group-hover/card:border-white/30 transition-colors"
-        />
-      ) : (
-        <div className="w-24 h-24 rounded-full bg-secondary group-hover/card:bg-white/20 flex items-center justify-center mb-6 transition-colors">
-          <span className="text-white text-2xl font-bold font-display-lg">{initials}</span>
-        </div>
-      )}
-      <h4 className="font-headline-lg text-[18px] text-primary mb-1 group-hover/card:text-white transition-colors">{name}</h4>
-      <div className="font-label-caps text-label-caps text-secondary mb-4 group-hover/card:text-white/80 transition-colors">{role}</div>
-      <p className="text-on-surface-variant text-sm leading-relaxed group-hover/card:text-white/70 transition-colors">{bio}</p>
-    </div>
-  );
-}
 
 export default function AboutUs() {
   const content = useContent();
@@ -47,12 +26,6 @@ export default function AboutUs() {
     { n: '06', title: content.auVal6Title, desc: content.auVal6Desc },
   ];
 
-  const team = [
-    { name: content.auTeam1Name, role: content.auTeam1Role, bio: content.auTeam1Bio, photo: content.auTeam1Photo },
-    { name: content.auTeam2Name, role: content.auTeam2Role, bio: content.auTeam2Bio, photo: content.auTeam2Photo },
-    { name: content.auTeam3Name, role: content.auTeam3Role, bio: content.auTeam3Bio, photo: content.auTeam3Photo },
-    { name: content.auTeam4Name, role: content.auTeam4Role, bio: content.auTeam4Bio, photo: content.auTeam4Photo },
-  ];
 
   return (
     <div className="bg-surface">
@@ -164,20 +137,6 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* ── Leadership Team ──────────────────────────────────────────── */}
-      <section className="py-stack-lg bg-surface">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-16">
-            <span className="font-label-caps text-label-caps text-secondary block mb-4">THE PEOPLE BEHIND THE BRAND</span>
-            <h2 className="font-headline-lg text-headline-lg text-primary">{content.auTeamTitle}</h2>
-          </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-gutter">
-            {team.map((member, i) => (
-              <TeamCard key={i} {...member} />
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* ── CTA ─────────────────────────────────────────────────────── */}
       <section className="py-24 bg-surface-container-low">
