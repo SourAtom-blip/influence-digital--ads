@@ -15,8 +15,14 @@ const storage = multer.diskStorage({
   },
 });
 
-// No file size limit — admin uploads high-res images
-const upload = multer({ storage });
+const upload = multer({
+  storage,
+  limits: { fileSize: 5 * 1024 * 1024 },
+  fileFilter: (req, file, cb) => {
+    const allowed = /jpeg|jpg|png|webp/;
+    cb(null, allowed.test(path.extname(file.originalname).toLowerCase()));
+  },
+});
 
 function authRequired(req, res, next) {
   const token = req.cookies?.adminToken || req.headers.authorization?.split(' ')[1];
@@ -29,10 +35,16 @@ function authRequired(req, res, next) {
   }
 }
 
-router.post('/', authRequired, upload.single('image'), (req, res) => {
-  if (!req.file) return res.status(400).json({ message: 'No file received' });
-  const base = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
-  res.json({ url: `${base}/uploads/${req.file.filename}` });
+router.post('/', authRequired, (req, res, next) => {
+  upload.single('image')(req, res, (err) => {
+    if (err?.code === 'LIMIT_FILE_SIZE')
+      return res.status(400).json({ message: 'File too large. Maximum size is 5MB.' });
+    if (err)
+      return res.status(400).json({ message: 'Invalid file. Only JPEG, PNG, and WebP are allowed.' });
+    if (!req.file) return res.status(400).json({ message: 'No file received' });
+    const base = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
+    res.json({ url: `${base}/uploads/${req.file.filename}` });
+  });
 });
 
 export default router;
