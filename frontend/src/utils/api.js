@@ -1,4 +1,7 @@
 const BASE = '/api';
+const UPLOAD_BASE = import.meta.env.VITE_BACKEND_URL
+  ? `${import.meta.env.VITE_BACKEND_URL}/api`
+  : '/api';
 
 const getToken = () => localStorage.getItem('adminToken');
 const setToken = (t) => t ? localStorage.setItem('adminToken', t) : localStorage.removeItem('adminToken');
@@ -47,7 +50,7 @@ export const apiUploadImage = async (file) => {
   form.append('image', file);
   const headers = {};
   if (token) headers['Authorization'] = `Bearer ${token}`;
-  const res = await fetch(`${BASE}/upload`, { method: 'POST', headers, body: form });
+  const res = await fetch(`${UPLOAD_BASE}/upload`, { method: 'POST', headers, body: form });
   const data = await res.json().catch(() => ({}));
   if (!res.ok) throw new Error(data.message || 'Upload failed');
   return data;
