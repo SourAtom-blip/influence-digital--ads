@@ -222,28 +222,6 @@ export default function AboutUs() {
         </div>
       </section>
 
-<<<<<<< Updated upstream
-      {/* ── Core Values ──────────────────────────────────────────────── */}
-      <section className="py-stack-lg bg-primary">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="text-center mb-16">
-            <span className="font-label-caps text-label-caps text-secondary-container block mb-4">WHAT WE STAND FOR</span>
-            <h2 className="font-headline-lg text-headline-lg text-white">{content.auValuesTitle}</h2>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-            {values.map(v => (
-              <div key={v.n} className="p-8 border border-white/10 hover:bg-secondary transition-colors duration-300 cursor-default">
-                <div className="font-label-caps text-label-caps text-secondary-container mb-3">{v.n}</div>
-                <h4 className="font-headline-lg text-[18px] text-white mb-3">{v.title}</h4>
-                <p className="text-outline-variant text-sm leading-relaxed">{v.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-=======
->>>>>>> Stashed changes
 
       {/* ── CTA ─────────────────────────────────────────────────────── */}
       <section className="py-24 bg-surface-container-low">
