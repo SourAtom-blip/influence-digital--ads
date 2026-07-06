@@ -19,8 +19,12 @@ const T = {
     locationPh: 'Location', selectArea: 'Select target area', selectDuration: 'Select duration',
     submit: 'Submit Request', submitting: 'Submitting...',
     success: 'Thank you! Your request has been submitted. We will contact you within 24 hours.',
-    areas: ['Mall Advertising','Airport Displays','Billboard Networks','LED Solutions','Urban Centers','Transit Ads'],
-    durations: ['1 Month','3 Months','6 Months','12 Months+'],
+    areas: ['Shopping Center','Malls','Airports','Urban Zones'],
+    durations: ['2 Weeks','3 Weeks','4 Weeks','6 Weeks','8 Weeks','10 Weeks'],
+    consentText1: 'In order to offer you a personalized digital panel, adapted to your advertising needs and your budget, we need some information.',
+    consentText2: 'The data collected through this form are confidential and processed by Influence Digital Ads. They allow our teams to contact you to answer your request.',
+    consentCheck: 'I agree that my data will be processed by Influence Digital Ads for the purpose of responding to my request.',
+    consentError: 'Please agree to the data processing before submitting.',
   },
   fr: {
     name: 'Nom *', title: 'Titre', email: 'E-mail *', company: 'Entreprise',
@@ -30,12 +34,16 @@ const T = {
     locationPh: 'Emplacement', selectArea: 'Sélectionner une zone cible', selectDuration: 'Sélectionner une durée',
     submit: 'Envoyer la Demande', submitting: 'Envoi en cours...',
     success: 'Merci ! Votre demande a été soumise. Nous vous contacterons dans les 24 heures.',
-    areas: ['Publicité en Centre Commercial','Affichage Aéroport','Réseaux de Panneaux','Solutions LED','Centres Urbains','Publicité Transit'],
-    durations: ['1 Mois','3 Mois','6 Mois','12 Mois+'],
+    areas: ['Centre Commercial','Centres Commerciaux','Aéroports','Zones Urbaines'],
+    durations: ['2 Semaines','3 Semaines','4 Semaines','6 Semaines','8 Semaines','10 Semaines'],
+    consentText1: "Afin de vous proposer un panneau numérique personnalisé, adapté à vos besoins publicitaires et à votre budget, nous avons besoin de quelques informations.",
+    consentText2: "Les données collectées via ce formulaire sont confidentielles et traitées par Influence Digital Ads. Elles permettent à nos équipes de vous contacter pour répondre à votre demande.",
+    consentCheck: "J'accepte que mes données soient traitées par Influence Digital Ads dans le but de répondre à ma demande.",
+    consentError: "Veuillez accepter le traitement des données avant de soumettre.",
   },
 };
 
-export default function QuoteForm({ preselected = '', compact = false }) {
+export default function QuoteForm({ preselected = '', compact = false, showConsent = false }) {
   const content = useContent();
   const { lang } = useLanguage();
   const t = T[lang] || T.en;
@@ -43,11 +51,15 @@ export default function QuoteForm({ preselected = '', compact = false }) {
   const [formData, setFormData] = useState(empty);
   const [status, setStatus]     = useState({ type: null, message: '' });
   const [loading, setLoading]   = useState(false);
+  const [agreed, setAgreed]     = useState(false);
+  const [consentError, setConsentError] = useState(false);
 
   const handleChange = (e) => setFormData(p => ({ ...p, [e.target.name]: e.target.value }));
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (showConsent && !agreed) { setConsentError(true); return; }
+    setConsentError(false);
     setLoading(true);
     setStatus({ type: null, message: '' });
 
@@ -135,6 +147,25 @@ export default function QuoteForm({ preselected = '', compact = false }) {
                 <span className="pointer-events-none absolute right-3 top-1/2 -translate-y-1/2 material-symbols-outlined text-on-surface-variant text-sm">arrow_drop_down</span>
               </div>
             </div>
+
+            {showConsent && (
+              <div className="mt-2 p-5 bg-surface border border-outline-variant/20 rounded-lg">
+                <p className="text-on-surface-variant text-sm leading-relaxed mb-3">{t.consentText1}</p>
+                <p className="text-on-surface-variant text-sm leading-relaxed mb-4">{t.consentText2}</p>
+                <label className="flex items-start gap-3 cursor-pointer">
+                  <input
+                    type="checkbox"
+                    checked={agreed}
+                    onChange={e => { setAgreed(e.target.checked); if (e.target.checked) setConsentError(false); }}
+                    className="mt-0.5 w-4 h-4 accent-primary flex-shrink-0"
+                  />
+                  <span className="text-on-surface-variant text-sm leading-relaxed">{t.consentCheck}</span>
+                </label>
+                {consentError && (
+                  <p className="mt-2 text-red-600 text-xs font-medium">{t.consentError}</p>
+                )}
+              </div>
+            )}
 
             <button type="submit" disabled={loading}
               className="w-full bg-primary text-on-primary py-4 font-label-caps text-label-caps hover:bg-secondary transition-all shadow-lg mt-2 disabled:opacity-60">

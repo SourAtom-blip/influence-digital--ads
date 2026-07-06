@@ -52,11 +52,7 @@ export default function Navbar() {
   const handleFreeQuote = (e) => {
     e.preventDefault();
     setMobileOpen(false);
-    if (location.pathname === '/') {
-      scrollTo('contact');
-    } else {
-      navigate('/contact');
-    }
+    navigate('/free-quote');
   };
 
   const navLinks = [

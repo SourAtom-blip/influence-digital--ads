@@ -1,74 +1,176 @@
-import React from 'react';
-import QuoteForm from '../components/QuoteForm';
+import React, { useState } from 'react';
 import { useLanguage, useContent } from '../context/LanguageContext';
+import { getImages } from '../utils/storage';
 import T from '../utils/translations';
 
 export default function Contact() {
   const { lang } = useLanguage();
   const t = (T[lang] || T.en).contact;
   const content = useContent();
+  const images = getImages();
 
-  const badge             = content.contactBadge         || t.badge;
-  const headline          = content.contactHeadline      || t.headline;
-  const subtext           = content.contactSubtext       || t.subtext;
-  const getInTouch        = content.contactGetInTouch    || t.getInTouch;
-  const requestQuote      = content.contactRequestQuote  || t.requestQuote;
-  const responseLabel     = content.contactResponseLabel || t.responseLabel;
-  const responseTime      = content.contactResponseTime  || t.responseTime;
-  const responseNote      = content.contactResponseNote  || t.responseNote;
+  const badge    = content.contactBadge    || t.badge;
+  const headline = content.contactHeadline || t.headline;
+  const subtext  = content.contactSubtext  || t.subtext;
 
-  const info = [
-    { icon: t.info[0].icon, label: content.contactInfo1Label || t.info[0].label, value: content.contactInfo1Value || t.info[0].value },
-    { icon: t.info[1].icon, label: content.contactInfo2Label || t.info[1].label, value: content.contactInfo2Value || t.info[1].value },
-    { icon: t.info[2].icon, label: content.contactInfo3Label || t.info[2].label, value: content.contactInfo3Value || t.info[2].value },
-    { icon: t.info[3].icon, label: content.contactInfo4Label || t.info[3].label, value: content.contactInfo4Value || t.info[3].value },
-  ];
+  const empty = { name: '', telephone: '', email: '', message: '' };
+  const [form, setForm]                   = useState(empty);
+  const [agreed, setAgreed]               = useState(false);
+  const [consentError, setConsentError]   = useState(false);
+  const [submitted, setSubmitted]         = useState(false);
+  const [loading, setLoading]             = useState(false);
+
+  const handleChange = (e) => setForm(p => ({ ...p, [e.target.name]: e.target.value }));
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!agreed) { setConsentError(true); return; }
+    setConsentError(false);
+    setLoading(true);
+    await new Promise(r => setTimeout(r, 700));
+    setSubmitted(true);
+    setLoading(false);
+    setForm(empty);
+    setAgreed(false);
+  };
+
+  const inputCls = 'w-full px-4 py-3 border border-outline-variant/30 rounded focus:border-secondary outline-none transition-colors text-sm bg-white text-on-surface placeholder-on-surface-variant/50';
 
   return (
     <div className="bg-surface">
+
       {/* Hero */}
-      <section className="bg-primary pt-32 pb-20">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+      <section className="relative pt-32 pb-20 overflow-hidden min-h-[50vh] flex items-center">
+        <div className="absolute inset-0 z-0">
+          <img src={images.contactHero} alt="Contact Us" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-primary/80" />
+        </div>
+        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10">
           <span className="font-label-caps text-label-caps text-secondary-container block mb-4">{badge}</span>
           <h1 className="font-display-lg text-display-lg text-white mb-6 max-w-2xl">{headline}</h1>
           <p className="text-outline-variant text-lg max-w-xl">{subtext}</p>
         </div>
       </section>
 
-      {/* Contact Info + Form */}
+      {/* Form Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 lg:grid-cols-3 gap-16">
-          {/* Info Panel */}
-          <div>
-            <h2 className="font-headline-lg text-[22px] text-primary mb-8">{getInTouch}</h2>
-            <div className="space-y-8">
-              {info.map((c) => (
-                <div key={c.label} className="flex items-start gap-4">
-                  <div className="w-10 h-10 bg-surface-container flex items-center justify-center flex-shrink-0">
-                    <span className="material-symbols-outlined text-secondary text-xl">{c.icon}</span>
-                  </div>
-                  <div>
-                    <div className="font-label-caps text-label-caps text-on-surface-variant mb-1">{c.label}</div>
-                    <div className="text-primary text-sm font-medium">{c.value}</div>
-                  </div>
-                </div>
-              ))}
-            </div>
+        <div className="max-w-container-max mx-auto px-margin-desktop">
 
-            <div className="mt-12 p-8 bg-primary">
-              <div className="font-label-caps text-label-caps text-secondary-container mb-3">{responseLabel}</div>
-              <div className="font-display-lg text-[36px] font-bold text-white mb-1">{responseTime}</div>
-              <p className="text-outline-variant text-sm">{responseNote}</p>
-            </div>
+          {/* Section heading */}
+          <div className="text-center mb-14">
+            <span className="font-label-caps text-label-caps text-secondary tracking-widest block mb-4">{t.sectionBadge}</span>
+            <h2 className="font-headline-lg text-headline-lg text-primary mb-3">{t.sectionHead}</h2>
+            <p className="text-on-surface-variant text-sm">{t.sectionSub}</p>
           </div>
 
-          {/* Form */}
-          <div className="lg:col-span-2">
-            <h2 className="font-headline-lg text-[22px] text-primary mb-8">{requestQuote}</h2>
-            <QuoteForm compact />
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+
+            {/* Form — 2 cols */}
+            <div className="lg:col-span-2">
+              {submitted ? (
+                <div className="flex items-center justify-center h-64 bg-surface rounded-lg border border-outline-variant/20">
+                  <div className="text-center">
+                    <span className="material-symbols-outlined text-secondary text-5xl block mb-4">check_circle</span>
+                    <p className="text-primary font-medium text-lg">{t.successHead}</p>
+                    <p className="text-on-surface-variant text-sm mt-2">{t.successSub}</p>
+                  </div>
+                </div>
+              ) : (
+                <form onSubmit={handleSubmit} className="space-y-5">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className="font-label-caps text-xs text-on-surface font-semibold block mb-1.5">{t.fieldName}</label>
+                      <input type="text" name="name" value={form.name} onChange={handleChange} required placeholder={t.fieldNamePh} className={inputCls} />
+                    </div>
+                    <div>
+                      <label className="font-label-caps text-xs text-on-surface font-semibold block mb-1.5">{t.fieldTel}</label>
+                      <input type="tel" name="telephone" value={form.telephone} onChange={handleChange} placeholder={t.fieldTelPh} className={inputCls} />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="font-label-caps text-xs text-on-surface font-semibold block mb-1.5">{t.fieldEmail}</label>
+                    <input type="email" name="email" value={form.email} onChange={handleChange} required placeholder={t.fieldEmailPh} className={inputCls} />
+                  </div>
+
+                  <div>
+                    <label className="font-label-caps text-xs text-on-surface font-semibold block mb-1.5">{t.fieldMsg}</label>
+                    <textarea name="message" value={form.message} onChange={handleChange} placeholder={t.fieldMsgPh} rows={6} className={`${inputCls} resize-none`} />
+                  </div>
+
+                  {/* Consent checkbox */}
+                  <div className="p-4 bg-surface border border-outline-variant/20 rounded">
+                    <p className="text-on-surface-variant text-xs leading-relaxed mb-3">{t.consentText}</p>
+                    <label className="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        checked={agreed}
+                        onChange={e => { setAgreed(e.target.checked); if (e.target.checked) setConsentError(false); }}
+                        className="mt-0.5 w-4 h-4 accent-primary flex-shrink-0"
+                      />
+                      <span className="text-on-surface-variant text-xs leading-relaxed">{t.consentCheck}</span>
+                    </label>
+                    {consentError && (
+                      <p className="text-red-600 text-xs font-medium mt-2">{t.consentError}</p>
+                    )}
+                  </div>
+
+                  <button type="submit" disabled={loading}
+                    className="w-full bg-primary text-on-primary py-4 font-label-caps text-label-caps hover:bg-secondary transition-all shadow-lg disabled:opacity-60 mt-2">
+                    {loading ? t.sending : t.submit}
+                  </button>
+                </form>
+              )}
+            </div>
+
+            {/* Info + Consent — right col */}
+            <div className="flex flex-col gap-6">
+
+              {/* Company info card */}
+              <div className="bg-primary p-8 text-white">
+                <div className="font-label-caps text-label-caps text-secondary-container mb-4">{t.ourContact}</div>
+                <h3 className="font-headline-lg text-[18px] text-white mb-6">Influence Digital Ads</h3>
+                <div className="space-y-3 text-sm">
+                  <div className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-secondary-container text-base mt-0.5">call</span>
+                    <div>
+                      <p className="text-white font-semibold">+1 803 295 7599</p>
+                      <p className="text-white/60 text-xs">United States</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-secondary-container text-base mt-0.5">call</span>
+                    <div>
+                      <p className="text-white/80">+223 93 14 14 51</p>
+                      <p className="text-white/60 text-xs">Bamako</p>
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-3">
+                    <span className="material-symbols-outlined text-secondary-container text-base mt-0.5">call</span>
+                    <div>
+                      <p className="text-white/80">+221 77 234 66 33</p>
+                      <p className="text-white/60 text-xs">Dakar</p>
+                    </div>
+                  </div>
+                  <div className="pt-3 border-t border-white/10 space-y-2">
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-outlined text-secondary-container text-base">language</span>
+                      <p className="text-white/70 text-xs">www.influencedigital-ads.com</p>
+                    </div>
+                    <div className="flex items-center gap-3">
+                      <span className="material-symbols-outlined text-secondary-container text-base">mail</span>
+                      <p className="text-white/70 text-xs">info@influencedigital-ads.com</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
           </div>
         </div>
       </section>
+
     </div>
   );
 }

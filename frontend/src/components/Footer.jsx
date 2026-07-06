@@ -34,11 +34,9 @@ export default function Footer() {
         <div>
           <h5 className="font-label-caps text-label-caps text-secondary-container mb-6 text-[16px] font-bold uppercase">{tf.solutions}</h5>
           <ul className="space-y-4 font-body-sm text-outline-variant">
-            <li><Link className="hover:text-white transition-colors" to="/services/mall-advertising">{adv[0].title}</Link></li>
-            <li><Link className="hover:text-white transition-colors" to="/services/airport-displays">{adv[1].title}</Link></li>
-            <li><Link className="hover:text-white transition-colors" to="/services/billboard-networks">{adv[2].title}</Link></li>
-            <li><Link className="hover:text-white transition-colors" to="/services/led-solutions">{adv[3].title}</Link></li>
-            <li><Link className="hover:text-white transition-colors" to="/services/transit-ads">{adv[5].title}</Link></li>
+            {adv.map(s => (
+              <li key={s.slug}><Link className="hover:text-white transition-colors" to={`/services/${s.slug}`}>{s.title}</Link></li>
+            ))}
           </ul>
         </div>
         <div>

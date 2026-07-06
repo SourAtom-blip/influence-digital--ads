@@ -1,7 +1,32 @@
 import { apiGetSite, apiSaveSite } from './api.js';
 
-const HERO_IMG  = '/pexels-negativespace-34639.jpg';
-const ABOUT_IMG = '/pexels-edgarcolomba-28288097.jpg';
+const HERO_IMG  = '/images/home_03.jpg';
+const ABOUT_IMG = '/images/home_01.jpg';
+
+export const IMAGE_DEFAULTS = {
+  homeHero:        '/images/home_03.jpg',
+  homeAbout:       '/images/home_01.jpg',
+  homeDesign:      '/images/home_02.jpg',
+  homeGraphic:     '/images/home_00.jpg',
+  homeExtra:       '/images/home_08.jpg',
+  aboutMain:       '/images/advertising_02.jpg',
+  contactHero:     '/images/contact_00.jpg',
+  freeQuoteHero:   '/images/freequote_00.jpg',
+  advertisingHero: '/images/advertising_00.jpg',
+  advertisingMid:  '/images/advertising_01.jpg',
+  advertisingBanner:'/images/advertising_03.jpg',
+  activitiesHero:  '/images/activities_01.jpg',
+  activitiesFounder:'/images/activities_00.jpg',
+  activitiesZone1: '/images/activities_02.jpg',
+  activitiesZone2: '/images/activities_03.jpg',
+  activitiesZone3: '/images/activities_04.jpg',
+  activitiesZone4: '/images/activities_05.jpg',
+  activitiesZone5: '/images/activities_06.jpg',
+  serviceShoppingCenters: '/images/activities_03.jpg',
+  serviceMalls:           '/images/activities_04.jpg',
+  serviceAirports:        '/images/activities_05.jpg',
+  serviceUrbanZones:      '/images/activities_02.jpg',
+};
 
 const CONTENT_EN = {
   navBrand: 'Influence Digital Ads',
@@ -17,10 +42,10 @@ const CONTENT_EN = {
 
   trustedLabel: 'Trusted by global industry leaders',
 
-  aboutLabel:      'OUR LEGACY',
-  aboutHeadline:   'Redefining Presence in the Digital Age',
-  aboutText1:      'Influence Digital Ads is more than a media buyer. We are strategic partners in brand elevation. Our mission is to bridge the gap between high-value brands and their target audiences through premium placements in the most influential physical spaces.',
-  aboutText2:      'From iconic city landmarks to the captive audiences of international travel hubs, we deliver precision, transparency, and undeniable impact.',
+  aboutLabel:      'DIGITAL ADVERTISING',
+  aboutHeadline:   "Maximize Your Brand's Visibility",
+  aboutText1:      'Influence Digital-ads specializes in digital advertising with giant LED screens. We broadcast a variety of content, including client information, weather updates, and announcements, in high-traffic areas such as shopping centers, airports, and other strategic locations.',
+  aboutText2:      'Successful advertising on giant screens requires exceptional graphic design. Our expertise in creating captivating graphics ensures that your content stands out and effectively captures the audience\'s attention.',
   aboutYears:      '15+',
   aboutYearsLabel: 'Years of Excellence',
   aboutCta:        'Learn More About Us',
@@ -57,15 +82,15 @@ const CONTENT_EN = {
   formSubtext:  'Fill out the form below and our strategic team will contact you within 24 hours.',
 
   footerDesc:      'The leading partner for strategic digital advertising across premium global locations. Precision. Impact. Influence.',
-  footerAddress:   '1200 Avenue of the Americas, New York, NY 10036',
-  footerPhone:     '+1 (212) 555-0198',
-  footerEmail:     'strategy@influencedigital.com',
+  footerAddress:   'www.influencedigital-ads.com',
+  footerPhone:     '+1 803 295 7599',
+  footerEmail:     'info@influencedigital-ads.com',
   footerCopyright: '© 2024 Influence Digital Ads. All rights reserved.',
 
   // Advertising page
-  advBadge:       'Advertising Solutions',
-  advHeadline:    'Comprehensive Digital Out-of-Home Advertising',
-  advSubtext:     'From malls to airports, we connect your brand with the audiences that matter most.',
+  advBadge:       'DIGITAL ADVERTISING AGENCY / DIGITAL SIGNAGE SOLUTIONS',
+  advHeadline:    'Let Us Promote Your Brand / Come Advertise With Us',
+  advSubtext:     'Influence Digital-ads is an agency that provides opportunities accessible to all businesses, with the goal of making advertising in large retail spaces accessible to everyone.',
   advAllChannels: 'All Advertising Channels',
   advStat1Val: '542',  advStat1Label: 'Premium Screens',
   advStat2Val: '12M+', advStat2Label: 'Monthly Impressions',
@@ -113,10 +138,10 @@ const CONTENT_EN = {
   contactResponseLabel:  'RESPONSE TIME',
   contactResponseTime:   '24hrs',
   contactResponseNote:   'Guaranteed response from a senior strategist, not a bot.',
-  contactInfo1Label:     'Head Office',    contactInfo1Value: '1200 Avenue of the Americas, New York, NY 10036',
-  contactInfo2Label:     'Phone',          contactInfo2Value: '+1 (212) 555-0198',
-  contactInfo3Label:     'Email',          contactInfo3Value: 'strategy@influencedigital.com',
-  contactInfo4Label:     'Business Hours', contactInfo4Value: 'Mon – Fri, 9:00 AM – 6:00 PM EST',
+  contactInfo1Label:     'Phone (US)',      contactInfo1Value: '+1 803 295 7599',
+  contactInfo2Label:     'Phone (Bamako)', contactInfo2Value: '+223 93 14 14 51',
+  contactInfo3Label:     'Phone (Dakar)',  contactInfo3Value: '+221 77 234 66 33',
+  contactInfo4Label:     'Email',          contactInfo4Value: 'info@influencedigital-ads.com',
 
   // About Us page
   auBadge:    'OUR STORY',
@@ -197,9 +222,9 @@ const CONTENT_FR = {
   formSubtext:  'Remplissez le formulaire ci-dessous et notre équipe stratégique vous contactera dans les 24 heures.',
 
   footerDesc:      'Le partenaire leader pour la publicité numérique stratégique dans les emplacements premium mondiaux. Précision. Impact. Influence.',
-  footerAddress:   '1200 Avenue of the Americas, New York, NY 10036',
-  footerPhone:     '+1 (212) 555-0198',
-  footerEmail:     'strategy@influencedigital.com',
+  footerAddress:   'www.influencedigital-ads.com',
+  footerPhone:     '+1 803 295 7599',
+  footerEmail:     'info@influencedigital-ads.com',
   footerCopyright: '© 2024 Influence Digital Ads. Tous droits réservés.',
 
   // Advertising page (FR)
@@ -253,10 +278,10 @@ const CONTENT_FR = {
   contactResponseLabel:  'TEMPS DE RÉPONSE',
   contactResponseTime:   '24h',
   contactResponseNote:   "Réponse garantie d'un stratège senior, pas d'un bot.",
-  contactInfo1Label:     'Siège Social',        contactInfo1Value: '1200 Avenue of the Americas, New York, NY 10036',
-  contactInfo2Label:     'Téléphone',           contactInfo2Value: '+1 (212) 555-0198',
-  contactInfo3Label:     'E-mail',              contactInfo3Value: 'strategy@influencedigital.com',
-  contactInfo4Label:     "Heures d'Ouverture",  contactInfo4Value: 'Lun – Ven, 9h00 – 18h00 EST',
+  contactInfo1Label:     'Téléphone (US)',      contactInfo1Value: '+1 803 295 7599',
+  contactInfo2Label:     'Téléphone (Bamako)', contactInfo2Value: '+223 93 14 14 51',
+  contactInfo3Label:     'Téléphone (Dakar)',  contactInfo3Value: '+221 77 234 66 33',
+  contactInfo4Label:     'E-mail',             contactInfo4Value: 'info@influencedigital-ads.com',
 
   // About Us page (FR)
   auBadge:    'NOTRE HISTOIRE',
@@ -284,10 +309,7 @@ const CONTENT_FR = {
 };
 
 export const DEFAULTS = {
-  images: {
-    hero:  { active: 0, list: [HERO_IMG] },
-    about: { active: 0, list: [ABOUT_IMG] },
-  },
+  images: { ...IMAGE_DEFAULTS },
   brands: [
     { id: '1', name: 'Brand One',   logoUrl: '', siteUrl: '#' },
     { id: '2', name: 'Brand Two',   logoUrl: '', siteUrl: '#' },
@@ -297,12 +319,10 @@ export const DEFAULTS = {
     { id: '6', name: 'Brand Six',   logoUrl: '', siteUrl: '#' },
   ],
   services: [
-    { slug: 'mall-advertising',   icon: 'shopping_bag',       title: 'Mall Advertising',   tagline: 'Reach Shoppers at the Point of Purchase',         stat: '200+ Screens',       desc: 'Connect with shoppers at the point of purchase in high-end retail environments.' },
-    { slug: 'airport-displays',   icon: 'flight_takeoff',     title: 'Airport Displays',   tagline: 'Command Attention in International Travel Hubs',  stat: '12 Major Airports',  desc: 'Engage high-net-worth international travelers with premium long-dwell displays.' },
-    { slug: 'billboard-networks', icon: 'branding_watermark', title: 'Billboard Networks', tagline: 'Dominate Key Urban Arteries and Highways',         stat: '150+ Billboards',    desc: 'Dominant presence on key urban arteries and highway networks for maximum reach.' },
-    { slug: 'led-solutions',      icon: 'lightbulb',          title: 'LED Solutions',      tagline: 'Dynamic Content That Breaks Through the Clutter', stat: '4K Resolution',      desc: 'High-resolution dynamic content that breaks through urban clutter with vibrant clarity.' },
-    { slug: 'urban-centers',      icon: 'location_city',      title: 'Urban Centers',      tagline: 'Own the Heart of the City',                       stat: '30+ Districts',      desc: 'Target the heart of the city where business, leisure, and lifestyle intersect.' },
-    { slug: 'transit-ads',        icon: 'train',              title: 'Transit Ads',        tagline: 'Move With Your Audience Across the Network',      stat: '500+ Placements',    desc: 'Move with your audience across metro networks, buses, and high-traffic transit hubs.' },
+    { slug: 'shopping-centers', icon: 'shopping_cart',   title: 'Shopping Centers', tagline: 'Reach Consumers at Prime Shopping Moments',          stat: '200+ Screens',   desc: 'Reach a wide audience every day with strategic locations in shopping centers. Ideal for capturing consumers\' attention at a prime shopping moment.' },
+    { slug: 'malls',            icon: 'storefront',      title: 'Malls',            tagline: 'Large Daily Audience in Premium Retail Spaces',       stat: '150+ Locations', desc: 'Benefit from a large daily audience with strategic locations in malls. Ideal for capturing consumers\' attention at a prime shopping moment.' },
+    { slug: 'airports',         icon: 'flight_takeoff',  title: 'Airports',         tagline: 'Communicate With Travelers and Professionals',        stat: '12 Airports',    desc: 'Communicate effectively with travelers and air transport professionals. Airports offer significant visibility in transit and waiting areas.' },
+    { slug: 'urban-zones',      icon: 'location_city',   title: 'Urban Zones',      tagline: 'High Visibility With a Local and Regular Audience',   stat: '500+ Placements',desc: 'Achieve high visibility with a local and regular audience. Bus stops allow you to reach an urban and mobile public throughout the day.' },
   ],
   capabilities: [
     { id: '1', icon: 'analytics',     title: 'Audience Analytics',      desc: 'We integrate footfall data, mobile movement insights, and demographic profiling to plan placements with surgical precision.' },
@@ -342,9 +362,7 @@ async function loadFromApi(key, fallback) {
 // ── Sync reads (used at render time) ─────────────────────────────────────────
 export const getImages = () => {
   const s = load('site_images');
-  const isStale = (img) => img?.list?.[0]?.includes('googleusercontent.com');
-  if (s && s.hero && s.about && !isStale(s.hero) && !isStale(s.about)) return s;
-  return DEFAULTS.images;
+  return s ? { ...DEFAULTS.images, ...s } : DEFAULTS.images;
 };
 export const getTrustedBrands = () => {
   const s = load('site_brands');

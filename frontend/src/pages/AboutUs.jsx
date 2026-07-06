@@ -1,14 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useContent } from '../context/LanguageContext';
+import { useContent, useLanguage } from '../context/LanguageContext';
 import { getImages } from '../utils/storage';
 import CounterNumber from '../components/CounterNumber';
+import T from '../utils/translations';
 
 
 export default function AboutUs() {
   const content = useContent();
+  const { lang } = useLanguage();
+  const ta = (T[lang] || T.en).aboutUs;
+  const tadv = (T[lang] || T.en).advertising;
+  const tact = (T[lang] || T.en).ourActivities;
   const images  = getImages();
-  const aboutImg = images.about.list[images.about.active];
+  const aboutImg = images.homeAbout;
 
   const metrics = [
     { val: content.metric1Val, label: content.metric1Label },
@@ -31,10 +36,12 @@ export default function AboutUs() {
     <div className="bg-surface">
 
       {/* ── Hero ─────────────────────────────────────────────────────── */}
-      <section className="bg-primary pt-32 pb-24 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-5 pointer-events-none"
-          style={{ backgroundImage: 'radial-gradient(circle at 70% 50%, #0051d5 0%, transparent 60%)' }} />
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10">
+      <section className="pt-32 pb-24 relative overflow-hidden min-h-[50vh] flex items-center">
+        <div className="absolute inset-0 z-0">
+          <img src={images.aboutMain} alt="About Us" className="w-full h-full object-cover" />
+          <div className="absolute inset-0 bg-primary/85" />
+        </div>
+        <div className="max-w-container-max mx-auto px-margin-desktop relative z-20">
           <span className="font-label-caps text-label-caps text-secondary-container block mb-4">{content.auBadge}</span>
           <h1 className="font-display-lg text-display-lg text-white mb-6 max-w-3xl">{content.auHeadline}</h1>
           <p className="text-outline-variant text-lg max-w-2xl leading-relaxed">{content.auSubtext}</p>
@@ -45,7 +52,7 @@ export default function AboutUs() {
             </Link>
             <Link to="/advertising"
               className="border border-white/30 text-white px-8 py-4 font-label-caps text-label-caps hover:bg-white/10 transition-colors">
-              Our Services
+              {ta.ourServices}
             </Link>
           </div>
         </div>
@@ -57,11 +64,11 @@ export default function AboutUs() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
               <div className="aspect-square w-full bg-surface-container-low overflow-hidden border border-outline-variant/20 rounded-lg">
-                <img className="w-full h-full object-cover grayscale opacity-90" src={aboutImg} alt="About Influence" />
+                <img className="w-full h-full object-cover" src={aboutImg} alt="About Influence" />
               </div>
-              <div className="absolute -bottom-6 -right-6 p-10 bg-primary text-on-primary">
-                <p className="font-display-lg text-[40px] font-bold text-white">{content.aboutYears}</p>
-                <p className="font-label-caps text-label-caps text-white">{content.aboutYearsLabel}</p>
+              <div className="absolute bottom-0 right-0 sm:-bottom-6 sm:-right-6 p-3 sm:p-8 bg-primary text-on-primary">
+                <p className="font-bold text-[18px] sm:text-[40px] text-white leading-tight">{content.aboutYears}</p>
+                <p className="text-[8px] sm:text-label-caps tracking-widest uppercase text-white mt-0.5">{content.aboutYearsLabel}</p>
               </div>
             </div>
             <div>
@@ -73,6 +80,103 @@ export default function AboutUs() {
                 className="bg-primary text-on-primary px-6 py-3 font-label-caps text-label-caps rounded hover:bg-secondary transition-all inline-block">
                 {content.aboutCta}
               </Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Since 2019 ───────────────────────────────────────────────── */}
+      <section className="py-20 bg-surface">
+        <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="flex flex-col gap-6">
+              <div className="overflow-hidden rounded-lg">
+                <img src={images.activitiesFounder} alt="Shopping Mall" className="w-full h-64 object-cover" />
+              </div>
+              <div className="overflow-hidden rounded-lg">
+                <img src={images.activitiesZone1} alt="Bus Stop Display" className="w-full h-64 object-cover" />
+              </div>
+            </div>
+            <div>
+              <p className="font-body-md text-on-surface-variant mb-6 leading-relaxed uppercase font-medium">{tact.intro1}</p>
+              <p className="font-body-md text-on-surface-variant mb-6 leading-relaxed">{tact.intro2}</p>
+              <p className="font-body-md text-on-surface-variant leading-relaxed">{tact.intro3}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Expert Graphic Design ────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="relative overflow-hidden rounded-lg min-h-[400px]">
+              <img src={images.homeGraphic} alt="Expert Graphic Design" className="w-full h-full object-cover absolute inset-0" />
+            </div>
+            <div>
+              <span className="font-label-caps text-label-caps text-secondary tracking-widest block mb-4">{(T[lang]||T.en).home.designBadge}</span>
+              <h2 className="font-headline-lg text-headline-lg text-primary mb-6">{(T[lang]||T.en).home.designHeadline}</h2>
+              <p className="font-body-md text-on-surface-variant mb-6 leading-relaxed">{(T[lang]||T.en).home.designText1}</p>
+              <p className="font-body-md text-on-surface-variant mb-8 leading-relaxed">{(T[lang]||T.en).home.designText2}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Who We Are ───────────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="relative min-h-[380px] rounded-lg overflow-hidden">
+              <img src={images.aboutMain} alt="Advertising Agency" className="w-full h-full object-cover absolute inset-0" />
+            </div>
+            <div>
+              <span className="font-label-caps text-label-caps text-secondary tracking-widest block mb-4">{tadv.whoBadge}</span>
+              <h2 className="font-headline-lg text-headline-lg text-primary mb-6">{tadv.whoHeadline}</h2>
+              <p className="font-body-md text-on-surface-variant mb-5 leading-relaxed">{tadv.whoText1}</p>
+              <p className="font-body-md text-on-surface-variant leading-relaxed">{tadv.whoText2}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Your Brand ───────────────────────────────────────────────── */}
+      <section className="py-20 bg-surface">
+        <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="relative min-h-[380px] rounded-lg overflow-hidden">
+              <img src={images.advertisingBanner} alt="Your Brand Here" className="w-full h-full object-cover absolute inset-0" />
+            </div>
+            <div>
+              <span className="font-label-caps text-label-caps text-secondary tracking-widest block mb-4">{tadv.brandBadge}</span>
+              <h2 className="font-headline-lg text-headline-lg text-primary mb-6">{tadv.brandHeadline}</h2>
+              <p className="font-body-md text-on-surface-variant leading-relaxed">{tadv.brandText}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Founder Story ────────────────────────────────────────────── */}
+      <section className="py-20 bg-white">
+        <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div>
+              <span className="font-label-caps text-label-caps text-secondary tracking-widest block mb-4">{tact.founderBadge}</span>
+              <h2 className="font-headline-lg text-headline-lg text-primary mb-6">{tact.founderName}</h2>
+              <p className="font-body-md text-on-surface-variant mb-5 leading-relaxed">{tact.founderText1}</p>
+              <p className="font-body-md text-on-surface-variant mb-5 leading-relaxed">{tact.founderText2}</p>
+              <p className="font-body-md text-on-surface-variant mb-5 leading-relaxed">{tact.founderText3}</p>
+              <p className="font-body-md text-on-surface-variant leading-relaxed">{tact.founderText4}</p>
+            </div>
+            <div className="relative min-h-[400px] rounded-lg overflow-hidden">
+              <img src={images.activitiesFounder} alt="Founder" className="w-full h-full object-cover absolute inset-0" />
+              <div className="absolute inset-0 bg-primary/50" />
+              <div className="relative z-10 flex items-end h-full p-8 min-h-[400px]">
+                <div>
+                  <p className="font-label-caps text-label-caps text-white/80 tracking-widest">{tact.founderRole}</p>
+                  <p className="font-headline-lg text-white mt-1 text-[22px]">{tact.founderName}</p>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -104,8 +208,8 @@ export default function AboutUs() {
       <section className="py-24 bg-secondary">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center mb-16">
-            <span className="font-label-caps text-label-caps text-white/60 block mb-3">BY THE NUMBERS</span>
-            <h2 className="font-headline-lg text-headline-lg text-white">Our Reach, Our Impact</h2>
+            <span className="font-label-caps text-label-caps text-white/60 block mb-3">{ta.byNumbers}</span>
+            <h2 className="font-headline-lg text-headline-lg text-white">{ta.reachImpact}</h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
             {metrics.map(m => (
@@ -118,6 +222,7 @@ export default function AboutUs() {
         </div>
       </section>
 
+<<<<<<< Updated upstream
       {/* ── Core Values ──────────────────────────────────────────────── */}
       <section className="py-stack-lg bg-primary">
         <div className="max-w-container-max mx-auto px-margin-desktop">
@@ -137,6 +242,8 @@ export default function AboutUs() {
         </div>
       </section>
 
+=======
+>>>>>>> Stashed changes
 
       {/* ── CTA ─────────────────────────────────────────────────────── */}
       <section className="py-24 bg-surface-container-low">

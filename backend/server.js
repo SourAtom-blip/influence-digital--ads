@@ -111,6 +111,16 @@ mongoose.connect(process.env.MONGO_URI, {
       console.log(`[Server] Running on http://localhost:${PORT}`);
     });
 
+    // Keep MongoDB Atlas active — ping every 24h to prevent M0 free tier auto-pause
+    setInterval(async () => {
+      try {
+        await mongoose.connection.db.command({ ping: 1 });
+        console.log('[KeepAlive] MongoDB ping OK');
+      } catch (e) {
+        console.error('[KeepAlive] Ping failed:', e.message);
+      }
+    }, 24 * 60 * 60 * 1000);
+
     const shutdown = () => {
       console.log('[Server] Shutting down gracefully…');
       server.close(() => {

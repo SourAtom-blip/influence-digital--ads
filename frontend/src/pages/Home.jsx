@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import QuoteForm from '../components/QuoteForm';
 import CounterNumber from '../components/CounterNumber';
@@ -12,15 +12,21 @@ export default function Home() {
   const { lang } = useLanguage();
   const t       = T[lang] || T.en;
   const brands  = getTrustedBrands();
+  const [activeCard, setActiveCard] = useState(0);
+  const carouselRef = useRef(null);
 
   // Merge admin-managed structure with translated titles/descs by slug
   const services = getServices().map(s => {
     const tr = t.advertising.services.find(ts => ts.slug === s.slug);
-    return tr ? { ...s, title: tr.title, desc: tr.desc } : s;
+    if (tr) return { ...s, title: tr.title, desc: tr.desc };
+    // For custom services added via admin, use FR fields when in French
+    return lang === 'fr'
+      ? { ...s, title: s.title_fr || s.title, desc: s.desc_fr || s.desc }
+      : s;
   });
 
-  const heroImg  = images.hero.list[images.hero.active];
-  const aboutImg = images.about.list[images.about.active];
+  const heroImg  = images.homeHero;
+  const aboutImg = images.homeAbout;
 
   const scrollTo = (id) => {
     const el = document.getElementById(id);
@@ -60,7 +66,7 @@ export default function Home() {
       <header className="relative pt-32 pb-stack-lg overflow-hidden min-h-[90vh] flex items-center">
         <div className="absolute inset-0 z-0">
           <div
-            className="w-full h-full grayscale mix-blend-multiply opacity-90"
+            className="w-full h-full"
             style={{
               backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0) 70%), url("${heroImg}")`,
               backgroundSize: 'cover',
@@ -76,20 +82,6 @@ export default function Home() {
             <div className="flex flex-wrap gap-4">
               <button onClick={handleScrollToContact} className="bg-primary text-on-primary px-8 py-4 font-label-caps text-label-caps hover:bg-secondary transition-all">{content.heroCta1}</button>
               <button onClick={handleScrollToSolutions} className="border border-outline text-primary px-8 py-4 font-label-caps text-label-caps hover:bg-surface-container transition-all">{content.heroCta2}</button>
-            </div>
-            <div className="mt-16 grid grid-cols-3 gap-8 p-8 border border-white/10 backdrop-blur-md bg-black/20 rounded-lg">
-              <div>
-                <CounterNumber value={content.heroStat1Val} className="font-display-lg text-[32px] font-bold text-white" />
-                <div className="font-label-caps text-label-caps text-white/80 font-bold">{content.heroStat1Label}</div>
-              </div>
-              <div>
-                <CounterNumber value={content.heroStat2Val} className="font-display-lg text-[32px] font-bold text-white" />
-                <div className="font-label-caps text-label-caps text-white/80 font-bold">{content.heroStat2Label}</div>
-              </div>
-              <div>
-                <CounterNumber value={content.heroStat3Val} className="font-display-lg text-[32px] font-bold text-white" />
-                <div className="font-label-caps text-label-caps text-white/80 font-bold">{content.heroStat3Label}</div>
-              </div>
             </div>
           </div>
         </div>
@@ -131,11 +123,14 @@ export default function Home() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
             <div className="relative">
               <div className="aspect-square w-full bg-surface-container-low overflow-hidden border border-outline-variant/20 rounded-lg">
-                <img className="w-full h-full object-cover grayscale opacity-90" src={aboutImg} alt="About" />
+                <img className="w-full h-full object-cover" src={aboutImg} alt="About" />
               </div>
               <div className="absolute -bottom-6 -right-6 p-10 bg-primary text-on-primary">
                 <p className="font-display-lg text-[40px] font-bold text-white">{content.aboutYears}</p>
                 <p className="font-label-caps text-label-caps text-white">{content.aboutYearsLabel}</p>
+              </div>
+              <div className="absolute -left-8 -bottom-12 w-40 h-40 rounded-lg overflow-hidden border-4 border-white shadow-xl hidden lg:block">
+                <img src={images.homeDesign} alt="Billboard" className="w-full h-full object-cover" />
               </div>
             </div>
             <div>
@@ -149,49 +144,90 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Expert Graphic Design Section */}
+      <section className="py-stack-lg bg-surface">
+        <div className="max-w-container-max mx-auto px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+            <div className="relative overflow-hidden rounded-lg min-h-[400px]">
+              <img src={images.homeGraphic} alt="Expert Graphic Design" className="w-full h-full object-cover absolute inset-0" />
+            </div>
+            <div>
+              <span className="font-label-caps text-label-caps text-secondary tracking-widest block mb-4">{t.home.designBadge}</span>
+              <h2 className="font-headline-lg text-headline-lg text-primary mb-6">{t.home.designHeadline}</h2>
+              <p className="font-body-md text-on-surface-variant mb-6 leading-relaxed">{t.home.designText1}</p>
+              <p className="font-body-md text-on-surface-variant mb-8 leading-relaxed">{t.home.designText2}</p>
+              <Link to="/about-us" className="bg-primary text-on-primary px-6 py-3 font-label-caps text-label-caps rounded hover:bg-secondary transition-all inline-block">{t.home.designCta}</Link>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Solutions */}
-      <section id="solutions" className="py-stack-lg bg-surface">
+      <section id="solutions" className="py-stack-lg bg-white">
         <div className="max-w-container-max mx-auto px-margin-desktop">
           <div className="text-center mb-16">
             <h2 className="font-headline-lg text-headline-lg text-primary mb-4">{content.solutionsHeadline}</h2>
             <p className="text-on-surface-variant max-w-xl mx-auto">{content.solutionsSubtext}</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-            {services.map(s => (
-              <div key={s.slug} className="bg-white p-10 premium-card-shadow flex flex-col border border-outline-variant/20 group/card hover:bg-secondary transition-colors duration-300">
-                <span className="material-symbols-outlined text-secondary text-4xl mb-6 group-hover/card:text-white transition-colors">{s.icon}</span>
-                <h3 className="font-headline-lg text-[20px] mb-4 text-primary group-hover/card:text-white transition-colors">{s.title}</h3>
-                <p className="text-on-surface-variant font-body-sm mb-8 flex-grow group-hover/card:text-white/80 transition-colors">{s.desc}</p>
-                <Link to={`/services/${s.slug}`} className="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group/link group-hover/card:bg-white group-hover/card:text-secondary transition-all w-fit">
-                  {t.advertising.explore} <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                </Link>
+          {/* Carousel */}
+          <div className="relative">
+            {/* Arrow Left */}
+            <button
+              onClick={() => setActiveCard(i => Math.max(0, i - 1))}
+              disabled={activeCard === 0}
+              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 w-11 h-11 rounded-full bg-white border border-outline-variant/30 premium-card-shadow flex items-center justify-center text-primary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-secondary hover:text-white transition-colors"
+            >
+              <span className="material-symbols-outlined text-xl">chevron_left</span>
+            </button>
+
+            {/* Cards track */}
+            <div ref={carouselRef} className="overflow-hidden">
+              <div
+                className="flex transition-transform duration-500 ease-in-out gap-gutter"
+                style={{ transform: `translateX(calc(-${activeCard} * (100% / 3 + 8px)))` }}
+              >
+                {services.map((s, i) => (
+                  <div
+                    key={s.slug}
+                    className="bg-white p-10 premium-card-shadow flex flex-col border border-outline-variant/20 group/card hover:bg-secondary transition-colors duration-300 flex-shrink-0"
+                    style={{ width: 'calc(33.333% - 11px)' }}
+                  >
+                    <span className="material-symbols-outlined text-secondary text-4xl mb-6 group-hover/card:text-white transition-colors">{s.icon}</span>
+                    <h3 className="font-headline-lg text-[20px] mb-4 text-primary group-hover/card:text-white transition-colors">{s.title}</h3>
+                    <p className="text-on-surface-variant font-body-sm mb-8 flex-grow group-hover/card:text-white/80 transition-colors">{s.desc}</p>
+                    <Link to={`/services/${s.slug}`} className="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group/link group-hover/card:bg-white group-hover/card:text-secondary transition-all w-fit">
+                      {t.advertising.explore} <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                    </Link>
+                  </div>
+                ))}
               </div>
-            ))}
+            </div>
+
+            {/* Arrow Right */}
+            <button
+              onClick={() => setActiveCard(i => Math.min(services.length - 3, i + 1))}
+              disabled={activeCard >= services.length - 3}
+              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 w-11 h-11 rounded-full bg-white border border-outline-variant/30 premium-card-shadow flex items-center justify-center text-primary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-secondary hover:text-white transition-colors"
+            >
+              <span className="material-symbols-outlined text-xl">chevron_right</span>
+            </button>
+
+            {/* Dots */}
+            {services.length > 3 && (
+              <div className="flex justify-center gap-2 mt-8">
+                {Array.from({ length: services.length - 2 }).map((_, i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveCard(i)}
+                    className={`w-2 h-2 rounded-full transition-colors ${activeCard === i ? 'bg-secondary' : 'bg-outline-variant/40'}`}
+                  />
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </section>
 
-      {/* Why Choose Us */}
-      <section className="py-stack-lg bg-primary text-on-primary">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-8">
-            <div className="max-w-xl">
-              <span className="font-label-caps text-label-caps text-secondary-container mb-4 block">{content.whyLabel}</span>
-              <h2 className="font-headline-lg text-headline-lg mb-4 text-white">{content.whyHeadline}</h2>
-            </div>
-            <div className="font-body-md text-outline-variant max-w-sm">{content.whySubtext}</div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-gutter">
-            {whyItems.map(item => (
-              <div key={item.n} className="p-8 border border-white/10 hover:bg-secondary transition-colors duration-300 cursor-default">
-                <div className="font-label-caps text-label-caps text-secondary-container mb-2">{item.n}</div>
-                <h4 className="font-headline-lg text-[18px] mb-3 text-white">{item.title}</h4>
-                <p className="text-outline-variant text-sm">{item.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* Impact Metrics */}
       <section className="py-24 bg-secondary text-on-secondary">
@@ -239,7 +275,7 @@ export default function Home() {
       </section>
 
       {/* Interactive Quote Form */}
-      <QuoteForm />
+      <QuoteForm showConsent />
     </div>
   );
 }

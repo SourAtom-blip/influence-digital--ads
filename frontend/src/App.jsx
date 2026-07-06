@@ -40,6 +40,7 @@ import Advertising from './pages/Advertising';
 import OurActivities from './pages/OurActivities';
 import Contact from './pages/Contact';
 import AboutUs from './pages/AboutUs';
+import FreeQuote from './pages/FreeQuote';
 
 function Layout() {
   const location = useLocation();
@@ -65,6 +66,7 @@ function Layout() {
           <Route path="/our-activities" element={<OurActivities />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/about-us" element={<AboutUs />} />
+          <Route path="/free-quote" element={<FreeQuote />} />
         </Routes>
       </main>
       {!isAdmin && <Footer />}

@@ -5,7 +5,7 @@ import {
   getServices, saveServices,
   getCapabilities, saveCapabilities,
   getContent, saveContent,
-  DEFAULTS,
+  DEFAULTS, IMAGE_DEFAULTS,
 } from '../utils/storage';
 import {
   apiLogin, apiLogout,
@@ -14,11 +14,6 @@ import {
   apiUploadImage,
 } from '../utils/api';
 
-const initialQuotes = [
-  { _id: '1', name: 'Alice Johnson',  title: 'CMO',                company: 'TechVanguard',   email: 'alice@techvanguard.com', telephone: '+1 (555) 019-2834', location: 'San Francisco, CA', targetArea: 'Airport Displays', duration: '3 Months',  status: 'Pending',   createdAt: '2026-06-15T14:32:00.000Z' },
-  { _id: '2', name: 'David Smith',    title: 'Marketing Director', company: 'LuxRetail Group', email: 'dsmith@luxretail.com',   telephone: '+1 (555) 014-9922', location: 'New York, NY',      targetArea: 'Mall Advertising', duration: '6 Months',  status: 'Reviewed',  createdAt: '2026-06-14T09:15:00.000Z' },
-  { _id: '3', name: 'Elena Rostova',  title: 'Founder',            company: 'AeroTravel',      email: 'elena@aerotravel.co',    telephone: '+1 (555) 012-7744', location: 'Miami, FL',         targetArea: 'Transit Ads',      duration: '12 Months+', status: 'Contacted', createdAt: '2026-06-12T17:45:00.000Z' },
-];
 
 // ─── Tab: Leads ───────────────────────────────────────────────────────────────
 function downloadCSV(quotes) {
@@ -48,11 +43,11 @@ We have reviewed your request and are pleased to provide the following quote:
 • Estimated Cost: [ADD PRICE HERE]
 • Campaign Start: [ADD DATE HERE]
 
-Please reply to this email or call us at +1 (212) 555-0198 to confirm.
+Please reply to this email or call us at +1 803 295 7599 to confirm.
 
 Best regards,
 Influence Digital Ads Strategy Team
-strategy@influencedigital.com`;
+info@influencedigital-ads.com`;
 
   const [subject, setSubject] = useState(`Your Advertising Quote — ${lead.targetArea}`);
   const [body, setBody] = useState(defaultBody);
@@ -120,8 +115,8 @@ strategy@influencedigital.com`;
 function getStoredLeads() {
   try {
     const local = JSON.parse(localStorage.getItem('site_leads') ?? '[]');
-    return local.length > 0 ? local : initialQuotes;
-  } catch { return initialQuotes; }
+    return local.length > 0 ? local : [];
+  } catch { return []; }
 }
 
 function LeadsTab() {
@@ -225,108 +220,101 @@ function LeadsTab() {
 }
 
 // ─── Tab: Images ──────────────────────────────────────────────────────────────
-function ImagesTab() {
-  const [images, setImages]     = useState(getImages);
-  const [inputs, setInputs]     = useState({ hero: '', about: '' });
-  const [uploading, setUploading] = useState({ hero: false, about: false });
-  const [uploadErr, setUploadErr] = useState({ hero: null, about: null });
-  const [saved, setSaved]       = useState(false);
-  const fileRefs = { hero: React.useRef(), about: React.useRef() };
+const IMAGE_SLOTS = [
+  { section: 'Home Page', slots: [
+    { key: 'homeHero',    label: 'Hero Background' },
+    { key: 'homeAbout',   label: 'About Section' },
+    { key: 'homeDesign',  label: 'Billboard Thumbnail' },
+    { key: 'homeGraphic', label: 'Graphic Design Section' },
+    { key: 'homeExtra',   label: 'Stats/CTA Background' },
+  ]},
+  { section: 'Advertising Page', slots: [
+    { key: 'advertisingHero',   label: 'Hero Background' },
+    { key: 'advertisingMid',    label: 'Middle Section' },
+    { key: 'aboutMain',         label: 'Agency Section' },
+    { key: 'advertisingBanner', label: 'Brand Banner' },
+  ]},
+  { section: 'Our Activities Page', slots: [
+    { key: 'activitiesHero',    label: 'Hero Background' },
+    { key: 'activitiesFounder', label: 'Founder / Gallery Image' },
+    { key: 'activitiesZone1',   label: 'Zone 1 (Urban)' },
+    { key: 'activitiesZone2',   label: 'Zone 2 (Shopping Centers)' },
+    { key: 'activitiesZone3',   label: 'Zone 3 (Malls)' },
+    { key: 'activitiesZone4',   label: 'Zone 4 (Airports)' },
+    { key: 'activitiesZone5',   label: 'Zone 5 (Extra)' },
+  ]},
+  { section: 'Service Pages', slots: [
+    { key: 'serviceShoppingCenters', label: 'Shopping Centers' },
+    { key: 'serviceMalls',           label: 'Malls' },
+    { key: 'serviceAirports',        label: 'Airports' },
+    { key: 'serviceUrbanZones',      label: 'Urban Zones' },
+  ]},
+  { section: 'Other Pages', slots: [
+    { key: 'aboutMain',      label: 'About Us Hero' },
+    { key: 'contactHero',    label: 'Contact Hero' },
+    { key: 'freeQuoteHero',  label: 'Free Quote Hero' },
+  ]},
+];
 
-  const pushUrl = (slot, url) => {
-    const updated = { ...images, [slot]: { ...images[slot], list: [...images[slot].list, url], active: images[slot].list.length } };
-    setImages(updated);
-    saveImages(updated);
-  };
+function ImageSlot({ imgKey, label, images, onChange }) {
+  const fileRef = React.useRef();
+  const current = images[imgKey];
 
-  const addUrl = (slot) => {
-    const url = inputs[slot].trim();
-    if (!url) return;
-    pushUrl(slot, url);
-    setInputs(p => ({ ...p, [slot]: '' }));
-  };
-
-  const handleFileChange = async (slot, e) => {
+  const handleFile = (e) => {
     const file = e.target.files[0];
     if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => onChange(imgKey, ev.target.result);
+    reader.readAsDataURL(file);
     e.target.value = '';
-    setUploading(p => ({ ...p, [slot]: true }));
-    setUploadErr(p => ({ ...p, [slot]: null }));
-    try {
-      const { url } = await apiUploadImage(file);
-      pushUrl(slot, url);
-    } catch (err) {
-      setUploadErr(p => ({ ...p, [slot]: err.message }));
-    } finally {
-      setUploading(p => ({ ...p, [slot]: false }));
-    }
   };
 
-  const setActive = (slot, idx) => {
-    const updated = { ...images, [slot]: { ...images[slot], active: idx } };
+  return (
+    <div className="bg-surface-container-lowest border border-outline-variant/20 rounded-lg p-4 flex flex-col gap-3">
+      <div className="font-label-caps text-xs text-on-surface-variant">{label}</div>
+      <div className="relative w-full h-32 rounded overflow-hidden bg-surface-container border border-outline-variant/20">
+        {current && <img src={current} alt={label} className="w-full h-full object-cover" />}
+        {!current && <div className="flex items-center justify-center h-full text-on-surface-variant/40 text-xs">No image</div>}
+      </div>
+      <div className="flex gap-2">
+        <button onClick={() => fileRef.current.click()}
+          className="flex-1 flex items-center justify-center gap-1 bg-primary text-white px-3 py-1.5 font-label-caps text-xs rounded hover:bg-secondary transition-colors">
+          <span className="material-symbols-outlined text-sm">upload</span> Upload
+        </button>
+        {current && current !== IMAGE_DEFAULTS[imgKey] && (
+          <button onClick={() => onChange(imgKey, IMAGE_DEFAULTS[imgKey])}
+            className="px-3 py-1.5 border border-outline-variant/30 text-on-surface-variant font-label-caps text-xs rounded hover:bg-surface-container transition-colors" title="Reset to default">
+            Reset
+          </button>
+        )}
+      </div>
+      <input ref={fileRef} type="file" accept="image/*" className="hidden" onChange={handleFile} />
+    </div>
+  );
+}
+
+function ImagesTab() {
+  const [images, setImages] = useState(getImages);
+  const [saved, setSaved] = useState(false);
+
+  const handleChange = (key, val) => {
+    const updated = { ...images, [key]: val };
     setImages(updated);
     saveImages(updated);
     setSaved(true);
     setTimeout(() => setSaved(false), 2000);
   };
 
-  const removeUrl = (slot, idx) => {
-    const list = images[slot].list.filter((_, i) => i !== idx);
-    const active = Math.min(images[slot].active, Math.max(0, list.length - 1));
-    const updated = { ...images, [slot]: { list, active } };
-    setImages(updated);
-    saveImages(updated);
-  };
-
-  const slots = [{ key: 'hero', label: 'Hero Background' }, { key: 'about', label: 'About Section Image' }];
-
   return (
     <div className="space-y-10">
-      {saved && <div className="p-3 bg-green-100 text-green-800 text-sm rounded font-medium">Active image updated — reload the homepage to see the change.</div>}
-      {slots.map(({ key, label }) => (
-        <div key={key} className="bg-white border border-outline-variant/20 rounded-lg p-8">
-          <h3 className="font-headline-lg text-[18px] text-primary mb-6">{label}</h3>
-
-          {/* Image grid */}
-          {images[key].list.length > 0 && (
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 mb-6">
-              {images[key].list.map((url, idx) => (
-                <div key={idx} className={`relative group border-2 rounded-lg overflow-hidden cursor-pointer ${images[key].active === idx ? 'border-secondary' : 'border-outline-variant/30'}`} onClick={() => setActive(key, idx)}>
-                  <img src={url} alt="" className="w-full h-28 object-cover" onError={e => { e.target.style.background = '#e5eeff'; e.target.src = ''; }} />
-                  {images[key].active === idx && (
-                    <div className="absolute top-2 left-2 bg-secondary text-white text-xs font-label-caps px-2 py-0.5 rounded">Active</div>
-                  )}
-                  <button onClick={e => { e.stopPropagation(); removeUrl(key, idx); }} className="absolute top-2 right-2 bg-red-600 text-white rounded p-0.5 opacity-0 group-hover:opacity-100 transition-opacity">
-                    <span className="material-symbols-outlined text-sm">close</span>
-                  </button>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {/* Upload from computer */}
-          <input ref={fileRefs[key]} type="file" accept="image/*" className="hidden" onChange={e => handleFileChange(key, e)} />
-          <button
-            onClick={() => fileRefs[key].current.click()}
-            disabled={uploading[key]}
-            className="flex items-center gap-2 bg-primary text-white px-6 py-3 font-label-caps text-label-caps hover:bg-secondary transition-colors rounded disabled:opacity-60 mb-4"
-          >
-            <span className="material-symbols-outlined text-base">{uploading[key] ? 'hourglass_top' : 'upload_file'}</span>
-            {uploading[key] ? 'Uploading…' : 'Upload from Computer'}
-          </button>
-          {uploadErr[key] && <p className="text-red-600 text-sm mb-3">Upload failed: {uploadErr[key]} — make sure the backend server is running.</p>}
-
-          {/* URL fallback */}
-          <div className="flex gap-3 items-center">
-            <span className="text-xs text-on-surface-variant font-label-caps whitespace-nowrap">Or paste URL:</span>
-            <input
-              type="url" placeholder="https://example.com/image.jpg"
-              value={inputs[key]}
-              onChange={e => setInputs(p => ({ ...p, [key]: e.target.value }))}
-              onKeyDown={e => e.key === 'Enter' && addUrl(key)}
-              className="flex-1 px-4 py-2 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary"
-            />
-            <button onClick={() => addUrl(key)} className="border border-primary text-primary px-5 py-2 font-label-caps text-label-caps hover:bg-surface-container transition-colors rounded">Add</button>
+      {saved && <div className="p-3 bg-green-100 text-green-800 text-sm rounded font-medium">Image saved — refresh the page to see the change.</div>}
+      {IMAGE_SLOTS.map(({ section, slots }) => (
+        <div key={section} className="bg-white border border-outline-variant/20 rounded-lg p-8">
+          <h3 className="font-headline-lg text-[18px] text-primary mb-6">{section}</h3>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            {slots.map(({ key, label }) => (
+              <ImageSlot key={key} imgKey={key} label={label} images={images} onChange={handleChange} />
+            ))}
           </div>
         </div>
       ))}
@@ -456,13 +444,25 @@ function BrandsTab() {
 
 
 // ─── Tab: Services ────────────────────────────────────────────────────────────
+async function translateServiceFields(obj) {
+  const fields = ['title', 'tagline', 'desc'];
+  const result = { ...obj };
+  for (const f of fields) {
+    if (obj[f] && String(obj[f]).trim()) {
+      try { result[`${f}_fr`] = await translateText(obj[f]); } catch { result[`${f}_fr`] = obj[f]; }
+    }
+  }
+  return result;
+}
+
 function ServicesTab() {
   const [services, setServices] = useState(getServices);
-  const [form, setForm] = useState({ slug: '', icon: '', title: '', tagline: '', stat: '', desc: '' });
-  const [editing, setEditing] = useState(null); // slug of service being edited
+  const [form, setForm] = useState({ slug: '', icon: '', title: '', tagline: '', stat: '', desc: '', image: '' });
+  const [editing, setEditing] = useState(null);
   const [editForm, setEditForm] = useState({});
   const [adding, setAdding] = useState(false);
   const [msg, setMsg] = useState('');
+  const [translating, setTranslating] = useState(false);
 
   const remove = (slug) => {
     if (!window.confirm('Remove this service?')) return;
@@ -471,25 +471,33 @@ function ServicesTab() {
     saveServices(updated);
   };
 
-  const add = () => {
+  const add = async () => {
     if (!form.slug || !form.title) return;
     if (services.find(s => s.slug === form.slug)) { setMsg('Slug already exists.'); return; }
-    const updated = [...services, form];
+    setTranslating(true);
+    setMsg('Translating to French…');
+    const translated = await translateServiceFields(form);
+    const updated = [...services, translated];
     setServices(updated);
     saveServices(updated);
-    setForm({ slug: '', icon: '', title: '', tagline: '', stat: '', desc: '' });
+    setForm({ slug: '', icon: '', title: '', tagline: '', stat: '', desc: '', image: '' });
     setAdding(false);
-    setMsg('Service added.');
+    setTranslating(false);
+    setMsg('Service added — French translation saved.');
     setTimeout(() => setMsg(''), 3000);
   };
 
   const startEdit = (s) => { setEditing(s.slug); setEditForm({ ...s }); };
-  const saveEdit = () => {
-    const updated = services.map(s => s.slug === editing ? { ...s, ...editForm } : s);
+  const saveEdit = async () => {
+    setTranslating(true);
+    setMsg('Translating to French…');
+    const translated = await translateServiceFields(editForm);
+    const updated = services.map(s => s.slug === editing ? { ...s, ...translated } : s);
     setServices(updated);
     saveServices(updated);
     setEditing(null);
-    setMsg('Service updated.');
+    setTranslating(false);
+    setMsg('Service updated — French translation saved.');
     setTimeout(() => setMsg(''), 3000);
   };
 
@@ -497,7 +505,8 @@ function ServicesTab() {
 
   return (
     <div className="space-y-6">
-      {msg && <div className="p-3 bg-green-100 text-green-800 text-sm rounded font-medium">{msg}</div>}
+      {translating && <div className="p-3 bg-blue-50 text-blue-800 text-sm rounded font-medium flex items-center gap-2"><span className="material-symbols-outlined text-base animate-spin">autorenew</span> Auto-translating to French…</div>}
+      {!translating && msg && <div className="p-3 bg-green-100 text-green-800 text-sm rounded font-medium">{msg}</div>}
       <div className="bg-white border border-outline-variant/20 rounded-lg overflow-hidden">
         <table className="w-full text-sm">
           <thead>
@@ -564,13 +573,28 @@ function ServicesTab() {
         <div className="bg-white border border-outline-variant/20 rounded-lg p-8">
           <h3 className="font-headline-lg text-[18px] text-primary mb-6">New Service</h3>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            {[['title','Title'],['slug','Slug (url-friendly, e.g. my-service)'],['tagline','Tagline'],['stat','Stat Label (shown on Advertising page, e.g. 200+ Screens)'],['desc','Short Description']].map(([k,l]) => (
+            {[['title','Title'],['tagline','Tagline'],['stat','Stat Label (shown on Advertising page, e.g. 200+ Screens)'],['desc','Short Description']].map(([k,l]) => (
               <div key={k} className={k === 'desc' || k === 'stat' ? 'md:col-span-2' : ''}>
                 <label className="font-label-caps text-xs text-on-surface-variant block mb-1">{l}</label>
-                <input value={form[k]} onChange={e => setForm(p => ({...p,[k]:e.target.value}))}
+                <input value={form[k]} onChange={e => {
+                  const val = e.target.value;
+                  if (k === 'title') {
+                    const slug = val.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+                    setForm(p => ({...p, title: val, slug}));
+                  } else {
+                    setForm(p => ({...p, [k]: val}));
+                  }
+                }}
                   className="w-full px-4 py-2 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary" />
               </div>
             ))}
+            <div>
+              <label className="font-label-caps text-xs text-on-surface-variant block mb-1">URL Slug (auto-generated)</label>
+              <input value={form.slug} onChange={e => setForm(p => ({...p, slug: e.target.value}))}
+                className="w-full px-4 py-2 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary bg-surface-container-low"
+                placeholder="auto-generated from title" />
+              {form.slug && <p className="text-xs text-on-surface-variant mt-1">Page: /services/{form.slug}</p>}
+            </div>
             <div>
               <label className="font-label-caps text-xs text-on-surface-variant block mb-1">Icon (Material Symbol name)</label>
               <div className="flex items-center gap-3">
@@ -587,6 +611,22 @@ function ServicesTab() {
               </div>
             </div>
           </div>
+          <div className="mt-4">
+            <label className="font-label-caps text-xs text-on-surface-variant block mb-1">Service Image</label>
+            <input type="file" accept="image/*" onChange={e => {
+              const file = e.target.files[0];
+              if (!file) return;
+              const reader = new FileReader();
+              reader.onload = ev => setForm(p => ({...p, image: ev.target.result}));
+              reader.readAsDataURL(file);
+            }} className="w-full text-sm text-on-surface-variant file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:font-label-caps file:text-xs file:bg-secondary file:text-white hover:file:bg-secondary/80 cursor-pointer" />
+            {form.image && (
+              <div className="mt-2 relative w-full h-32 rounded overflow-hidden border border-outline-variant/30">
+                <img src={form.image} alt="preview" className="w-full h-full object-cover" />
+                <button onClick={() => setForm(p => ({...p, image: ''}))} className="absolute top-1 right-1 bg-black/60 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">✕</button>
+              </div>
+            )}
+          </div>
           <div className="flex gap-3 mt-4">
             <button onClick={add} className="bg-primary text-white px-6 py-2 font-label-caps text-label-caps hover:bg-secondary transition-colors rounded">Save Service</button>
             <button onClick={() => setAdding(false)} className="px-6 py-2 border border-outline-variant/30 text-on-surface-variant font-label-caps text-label-caps rounded hover:bg-surface-container">Cancel</button>
@@ -599,6 +639,16 @@ function ServicesTab() {
 
 
 // ─── Tab: Capabilities ────────────────────────────────────────────────────────
+async function translateCapFields(obj) {
+  const result = { ...obj };
+  for (const f of ['title', 'desc']) {
+    if (obj[f] && String(obj[f]).trim()) {
+      try { result[`${f}_fr`] = await translateText(obj[f]); } catch { result[`${f}_fr`] = obj[f]; }
+    }
+  }
+  return result;
+}
+
 function CapabilitiesTab() {
   const [caps, setCaps] = useState(getCapabilities);
   const [editing, setEditing] = useState(null);
@@ -606,6 +656,7 @@ function CapabilitiesTab() {
   const [adding, setAdding] = useState(false);
   const [form, setForm] = useState({ icon: '', title: '', desc: '' });
   const [msg, setMsg] = useState('');
+  const [translating, setTranslating] = useState(false);
 
   const ICONS = ['analytics','monitoring','content_paste','verified_user','support_agent','bar_chart','campaign','insights','speed','dashboard','smart_display','tune'];
 
@@ -617,23 +668,30 @@ function CapabilitiesTab() {
   };
 
   const startEdit = (c) => { setEditing(c.id); setEditForm({ ...c }); };
-  const saveEdit = () => {
-    persist(caps.map(c => c.id === editing ? { ...c, ...editForm } : c));
+  const saveEdit = async () => {
+    setTranslating(true);
+    const translated = await translateCapFields(editForm);
+    persist(caps.map(c => c.id === editing ? { ...c, ...translated } : c));
     setEditing(null);
-    setMsg('Updated.'); setTimeout(() => setMsg(''), 2500);
+    setTranslating(false);
+    setMsg('Updated — French translation saved.'); setTimeout(() => setMsg(''), 2500);
   };
 
-  const add = () => {
+  const add = async () => {
     if (!form.title.trim()) return;
-    persist([...caps, { id: Date.now().toString(), ...form }]);
+    setTranslating(true);
+    const translated = await translateCapFields(form);
+    persist([...caps, { id: Date.now().toString(), ...translated }]);
     setForm({ icon: '', title: '', desc: '' });
     setAdding(false);
-    setMsg('Capability added.'); setTimeout(() => setMsg(''), 2500);
+    setTranslating(false);
+    setMsg('Capability added — French translation saved.'); setTimeout(() => setMsg(''), 2500);
   };
 
   return (
     <div className="space-y-6">
-      {msg && <div className="p-3 bg-green-100 text-green-800 text-sm rounded font-medium">{msg}</div>}
+      {translating && <div className="p-3 bg-blue-50 text-blue-800 text-sm rounded font-medium flex items-center gap-2"><span className="material-symbols-outlined text-base animate-spin">autorenew</span> Auto-translating to French…</div>}
+      {!translating && msg && <div className="p-3 bg-green-100 text-green-800 text-sm rounded font-medium">{msg}</div>}
       <p className="text-on-surface-variant text-sm">These cards appear in the "Capabilities" section on the Our Activities page.</p>
 
       <div className="bg-white border border-outline-variant/20 rounded-lg overflow-hidden">
@@ -744,30 +802,52 @@ const NO_TRANSLATE = new Set([
   'contactResponseTime','contactInfo1Value','contactInfo2Value','contactInfo3Value','contactInfo4Value',
 ]);
 
-async function autoTranslateFr(englishContent) {
-  const entries = Object.entries(englishContent);
-  let failures = 0;
-  const results = await Promise.all(
-    entries.map(async ([key, val]) => {
-      if (NO_TRANSLATE.has(key) || !val || !String(val).trim()) return [key, val];
-      try {
-        const r = await fetch(
-          `https://api.mymemory.translated.net/get?q=${encodeURIComponent(String(val).slice(0, 500))}&langpair=en|fr`
-        );
-        const d = await r.json();
-        const translated = d.responseData?.translatedText;
-        return [key, translated && translated !== 'QUERY LENGTH LIMIT EXCEDEED' ? translated : val];
-      } catch {
-        failures++;
-        return [key, val];
-      }
-    })
-  );
-  const translatableCount = entries.filter(([k, v]) => !NO_TRANSLATE.has(k) && v && String(v).trim()).length;
-  if (translatableCount > 0 && failures === translatableCount) {
-    throw new Error('All translation requests failed — no internet connection.');
+async function translateText(text) {
+  const chunks = [];
+  const str = String(text).trim();
+  for (let i = 0; i < str.length; i += 450) chunks.push(str.slice(i, i + 450));
+  const translated = [];
+  for (const chunk of chunks) {
+    const r = await fetch(
+      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=en|fr&de=admin@influencedigital-ads.com`
+    );
+    const d = await r.json();
+    const t = d.responseData?.translatedText;
+    if (!t || t === 'QUERY LENGTH LIMIT EXCEDEED' || d.responseStatus === 429) throw new Error('rate_limit');
+    translated.push(t);
+    if (chunks.length > 1) await new Promise(res => setTimeout(res, 300));
   }
-  return Object.fromEntries(results);
+  return translated.join(' ');
+}
+
+async function autoTranslateFrWithProgress(englishContent, onProgress) {
+  const entries = Object.entries(englishContent);
+  const result = {};
+  let failures = 0;
+  let translatable = 0;
+  let done = 0;
+
+  for (const [key, val] of entries) {
+    if (NO_TRANSLATE.has(key) || !val || !String(val).trim()) {
+      result[key] = val;
+      continue;
+    }
+    translatable++;
+    try {
+      result[key] = await translateText(val);
+      done++;
+      onProgress && onProgress(done);
+      await new Promise(res => setTimeout(res, 250));
+    } catch {
+      failures++;
+      result[key] = val;
+    }
+  }
+
+  if (translatable > 0 && failures === translatable) {
+    throw new Error('All translation requests failed — check internet connection.');
+  }
+  return result;
 }
 
 // ─── Tab: Content ─────────────────────────────────────────────────────────────
@@ -775,17 +855,20 @@ function ContentTab() {
   const [content, setContent]         = useState(() => getContent());
   const [saved, setSaved]             = useState(false);
   const [translating, setTranslating] = useState(false);
+  const [translateProgress, setTranslateProgress] = useState({ done: 0, total: 0 });
   const [translateErr, setTranslateErr] = useState(false);
 
   const update = (key, val) => { setContent(p => ({ ...p, [key]: val })); setTranslateErr(false); };
 
   const save = async () => {
     saveContent(content);
+    const total = Object.entries(content).filter(([k, v]) => !NO_TRANSLATE.has(k) && v && String(v).trim()).length;
     setTranslating(true);
+    setTranslateProgress({ done: 0, total });
     setTranslateErr(false);
     setSaved(false);
     try {
-      const frContent = await autoTranslateFr(content);
+      const frContent = await autoTranslateFrWithProgress(content, (done) => setTranslateProgress({ done, total }));
       saveContent(frContent, 'fr');
       setSaved(true);
       setTimeout(() => setSaved(false), 3500);
@@ -897,7 +980,18 @@ function ContentTab() {
 
   return (
     <div className="space-y-8">
-      {translating && <div className="p-3 bg-blue-50 text-blue-800 text-sm rounded font-medium flex items-center gap-2"><span className="material-symbols-outlined text-base animate-spin">autorenew</span> Auto-translating to French… please wait.</div>}
+      {translating && (
+        <div className="p-4 bg-blue-50 text-blue-800 text-sm rounded font-medium">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="material-symbols-outlined text-base animate-spin">autorenew</span>
+            Auto-translating to French… {translateProgress.done}/{translateProgress.total} fields done
+          </div>
+          <div className="w-full bg-blue-200 rounded-full h-2">
+            <div className="bg-blue-600 h-2 rounded-full transition-all duration-300"
+              style={{ width: translateProgress.total ? `${Math.round(translateProgress.done / translateProgress.total * 100)}%` : '0%' }} />
+          </div>
+        </div>
+      )}
       {saved && <div className="p-3 bg-green-100 text-green-800 text-sm rounded font-medium">Saved in English + auto-translated to French — both languages updated.</div>}
       {translateErr && (
         <div className="p-4 bg-red-50 border border-red-200 text-red-800 text-sm rounded">
