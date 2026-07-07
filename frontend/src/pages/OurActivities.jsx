@@ -55,17 +55,16 @@ export default function OurActivities() {
           <img src={images.activitiesHero} alt="Our Activities" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-primary/80" />
         </div>
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop relative z-10">
           <span className="font-label-caps text-label-caps text-secondary-container block mb-4">{badge}</span>
-          <h1 className="font-display-lg text-display-lg text-white mb-6 max-w-2xl">{headline}</h1>
-          <p className="text-outline-variant text-lg max-w-2xl">{subtext}</p>
+          <h1 className="font-display-lg text-3xl sm:text-4xl lg:text-display-lg text-white mb-6 max-w-2xl">{headline}</h1>
+          <p className="text-outline-variant text-base sm:text-lg max-w-2xl">{subtext}</p>
         </div>
       </section>
 
-
       {/* Process Steps */}
       <section className="py-20 bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
           <h2 className="font-headline-lg text-headline-lg text-primary mb-16 text-center">{processTitle}</h2>
           <div className="relative">
             <div className="absolute top-8 left-0 w-full h-px bg-outline-variant/20 hidden lg:block"></div>
@@ -87,7 +86,7 @@ export default function OurActivities() {
 
       {/* Our Activities Areas */}
       <section className="py-20 bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
           <div className="text-center mb-16">
             <span className="font-label-caps text-label-caps text-secondary block mb-4">{(T[lang] || T.en).advertising.whereOpBadge}</span>
             <h2 className="font-headline-lg text-headline-lg text-primary">{(T[lang] || T.en).advertising.whereOpHeadline}</h2>
@@ -115,10 +114,10 @@ export default function OurActivities() {
 
       {/* CTA */}
       <section className="py-20 bg-surface-container-low">
-        <div className="max-w-container-max mx-auto px-margin-desktop text-center">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop text-center">
           <h2 className="font-headline-lg text-headline-lg text-primary mb-4">{ctaHeadline}</h2>
           <p className="text-on-surface-variant mb-8">{ctaSubtext}</p>
-          <Link to="/contact" className="bg-primary text-white px-10 py-4 font-label-caps text-label-caps hover:bg-secondary transition-colors inline-block">
+          <Link to="/contact" className="bg-primary text-white px-8 py-4 sm:px-10 font-label-caps text-label-caps hover:bg-secondary transition-colors inline-block w-full sm:w-auto">
             {ctaButton}
           </Link>
         </div>

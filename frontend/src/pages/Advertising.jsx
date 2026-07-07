@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage, useContent } from '../context/LanguageContext';
 import CounterNumber from '../components/CounterNumber';
@@ -11,6 +11,13 @@ export default function Advertising() {
   const content = useContent();
   const images = getImages();
   const [activeCard, setActiveCard] = useState(0);
+  const [visibleCards, setVisibleCards] = useState(3);
+  useEffect(() => {
+    const update = () => setVisibleCards(window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3);
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   // Allow admin to override the key page-level text; fall back to translations
   const badge       = content.advBadge       || t.badge;
@@ -50,19 +57,19 @@ export default function Advertising() {
           <img src={images.advertisingHero} alt="Advertising" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-primary/80" />
         </div>
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop relative z-10">
           <span className="font-label-caps text-label-caps text-secondary-container block mb-4">{badge}</span>
-          <h1 className="font-display-lg text-display-lg text-white mb-6 max-w-2xl">{headline}</h1>
-          <p className="text-outline-variant text-lg max-w-2xl">{subtext}</p>
+          <h1 className="font-display-lg text-3xl sm:text-4xl lg:text-display-lg text-white mb-6 max-w-2xl">{headline}</h1>
+          <p className="text-outline-variant text-base sm:text-lg max-w-2xl">{subtext}</p>
         </div>
       </section>
 
 
       {/* AD Experiences That Drive Performance */}
       <section className="py-20 bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="relative min-h-[400px] rounded-lg overflow-hidden">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+            <div className="relative min-h-[250px] sm:min-h-[400px] rounded-lg overflow-hidden">
               <img src={images.advertisingMid} alt="AD Experiences" className="w-full h-full object-cover absolute inset-0" />
             </div>
             <div>
@@ -78,24 +85,25 @@ export default function Advertising() {
 
       {/* Services Grid */}
       <section className="py-20 bg-surface">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
           <h2 className="font-headline-lg text-headline-lg text-primary mb-12">{allChannels}</h2>
           <div className="relative">
             <button
               onClick={() => setActiveCard(i => Math.max(0, i - 1))}
               disabled={activeCard === 0}
-              className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-5 z-10 w-11 h-11 rounded-full bg-white border border-outline-variant/30 premium-card-shadow flex items-center justify-center text-primary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-secondary hover:text-white transition-colors"
+              className="absolute left-1 sm:-left-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white border border-outline-variant/30 premium-card-shadow flex items-center justify-center text-primary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-secondary hover:text-white transition-colors"
             >
-              <span className="material-symbols-outlined text-xl">chevron_left</span>
+              <span className="material-symbols-outlined text-lg sm:text-xl">chevron_left</span>
             </button>
 
-            <div className="overflow-hidden">
+            <div className="overflow-hidden mx-8 sm:mx-0">
               <div
-                className="flex transition-transform duration-500 ease-in-out gap-gutter"
-                style={{ transform: `translateX(calc(-${activeCard} * (100% / 3 + 8px)))` }}
+                className="flex transition-transform duration-500 ease-in-out gap-4"
+                style={{ transform: `translateX(calc(-${activeCard} * (100% / ${visibleCards} + ${visibleCards === 1 ? 16 : visibleCards === 2 ? 8 : 5}px)))` }}
               >
                 {services.map((s) => (
-                  <div key={s.slug} className="bg-white p-10 premium-card-shadow flex flex-col border border-outline-variant/20 group/card hover:bg-secondary transition-colors duration-300 flex-shrink-0" style={{ width: 'calc(33.333% - 11px)' }}>
+                  <div key={s.slug} className="bg-white p-6 sm:p-10 premium-card-shadow flex flex-col border border-outline-variant/20 group/card hover:bg-secondary transition-colors duration-300 flex-shrink-0"
+                    style={{ width: `calc(${100 / visibleCards}% - ${visibleCards === 1 ? 0 : visibleCards === 2 ? 8 : 11}px)` }}>
                     <span className="material-symbols-outlined text-secondary text-4xl mb-6 group-hover/card:text-white transition-colors">{s.icon}</span>
                     <span className="font-label-caps text-label-caps text-secondary mb-2 group-hover/card:text-white/80 transition-colors">{s.stat}</span>
                     <h3 className="font-headline-lg text-[20px] mb-4 text-primary group-hover/card:text-white transition-colors">{s.title}</h3>
@@ -109,19 +117,17 @@ export default function Advertising() {
             </div>
 
             <button
-              onClick={() => setActiveCard(i => Math.min(services.length - 3, i + 1))}
-              disabled={activeCard >= services.length - 3}
-              className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-5 z-10 w-11 h-11 rounded-full bg-white border border-outline-variant/30 premium-card-shadow flex items-center justify-center text-primary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-secondary hover:text-white transition-colors"
+              onClick={() => setActiveCard(i => Math.min(services.length - visibleCards, i + 1))}
+              disabled={activeCard >= services.length - visibleCards}
+              className="absolute right-1 sm:-right-5 top-1/2 -translate-y-1/2 z-10 w-9 h-9 sm:w-11 sm:h-11 rounded-full bg-white border border-outline-variant/30 premium-card-shadow flex items-center justify-center text-primary disabled:opacity-30 disabled:cursor-not-allowed hover:bg-secondary hover:text-white transition-colors"
             >
-              <span className="material-symbols-outlined text-xl">chevron_right</span>
+              <span className="material-symbols-outlined text-lg sm:text-xl">chevron_right</span>
             </button>
 
-            {services.length > 3 && (
+            {services.length > visibleCards && (
               <div className="flex justify-center gap-2 mt-8">
-                {Array.from({ length: services.length - 2 }).map((_, i) => (
-                  <button
-                    key={i}
-                    onClick={() => setActiveCard(i)}
+                {Array.from({ length: services.length - visibleCards + 1 }).map((_, i) => (
+                  <button key={i} onClick={() => setActiveCard(i)}
                     className={`w-2 h-2 rounded-full transition-colors ${activeCard === i ? 'bg-secondary' : 'bg-outline-variant/40'}`}
                   />
                 ))}
@@ -136,12 +142,12 @@ export default function Advertising() {
 
       {/* CTA */}
       <section className="py-20 bg-primary">
-        <div className="max-w-container-max mx-auto px-margin-desktop flex flex-col lg:flex-row items-center justify-between gap-10">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop flex flex-col lg:flex-row items-center justify-between gap-8">
           <div>
             <h2 className="font-headline-lg text-headline-lg text-white mb-3">{ctaHeadline}</h2>
             <p className="text-outline-variant">{ctaSubtext}</p>
           </div>
-          <Link to="/free-quote" className="bg-secondary text-white px-10 py-4 font-label-caps text-label-caps hover:bg-secondary-container transition-colors whitespace-nowrap">
+          <Link to="/free-quote" className="bg-secondary text-white px-8 py-4 sm:px-10 font-label-caps text-label-caps hover:bg-secondary-container transition-colors w-full sm:w-auto text-center">
             {ctaButton}
           </Link>
         </div>

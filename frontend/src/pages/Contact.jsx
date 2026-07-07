@@ -45,16 +45,16 @@ export default function Contact() {
           <img src={images.contactHero} alt="Contact Us" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-primary/80" />
         </div>
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop relative z-10">
           <span className="font-label-caps text-label-caps text-secondary-container block mb-4">{badge}</span>
-          <h1 className="font-display-lg text-display-lg text-white mb-6 max-w-2xl">{headline}</h1>
-          <p className="text-outline-variant text-lg max-w-xl">{subtext}</p>
+          <h1 className="font-display-lg text-3xl sm:text-4xl lg:text-display-lg text-white mb-6 max-w-2xl">{headline}</h1>
+          <p className="text-outline-variant text-base sm:text-lg max-w-xl">{subtext}</p>
         </div>
       </section>
 
       {/* Form Section */}
       <section className="py-20 bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
 
           {/* Section heading */}
           <div className="text-center mb-14">

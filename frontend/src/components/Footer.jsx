@@ -13,12 +13,12 @@ export default function Footer() {
 
   return (
     <footer className="bg-primary pt-stack-lg pb-stack-md border-t border-white/5">
-      <div className="max-w-container-max mx-auto px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
+      <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop grid grid-cols-1 md:grid-cols-4 gap-gutter">
         <div className="col-span-1 md:col-span-1">
           <div className="flex items-center gap-3 mb-8">
             <img alt="Influence Digital Ads" className="h-12 brightness-0 invert" src={logoImg} />
           </div>
-          <p className="font-body-sm text-outline-variant mb-8 pr-8">{c.footerDesc}</p>
+          <p className="font-body-sm text-outline-variant mb-8 pr-0 md:pr-8">{c.footerDesc}</p>
           <div className="flex gap-4">
             <a className="text-outline-variant hover:text-white transition-colors" href="#">
               <span className="material-symbols-outlined">face_nod</span>
@@ -66,7 +66,7 @@ export default function Footer() {
           </ul>
         </div>
       </div>
-      <div className="max-w-container-max mx-auto px-margin-desktop mt-16 pt-8 border-t border-white/5 flex justify-center items-center">
+      <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop mt-16 pt-8 border-t border-white/5 flex justify-center items-center">
         <p className="font-body-sm text-outline-variant text-[12px] opacity-60">
           {c.footerCopyright.replace(/\d{4}/, new Date().getFullYear())}
         </p>

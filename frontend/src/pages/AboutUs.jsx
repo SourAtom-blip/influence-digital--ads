@@ -41,17 +41,17 @@ export default function AboutUs() {
           <img src={images.aboutMain} alt="About Us" className="w-full h-full object-cover" />
           <div className="absolute inset-0 bg-primary/85" />
         </div>
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-20">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop relative z-20">
           <span className="font-label-caps text-label-caps text-secondary-container block mb-4">{content.auBadge}</span>
-          <h1 className="font-display-lg text-display-lg text-white mb-6 max-w-3xl">{content.auHeadline}</h1>
-          <p className="text-outline-variant text-lg max-w-2xl leading-relaxed">{content.auSubtext}</p>
-          <div className="mt-12 flex flex-wrap gap-6">
+          <h1 className="font-display-lg text-3xl sm:text-4xl lg:text-display-lg text-white mb-6 max-w-3xl">{content.auHeadline}</h1>
+          <p className="text-outline-variant text-base sm:text-lg max-w-2xl leading-relaxed">{content.auSubtext}</p>
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 sm:gap-6">
             <Link to="/contact"
-              className="bg-secondary text-white px-8 py-4 font-label-caps text-label-caps hover:bg-secondary-container transition-colors">
+              className="bg-secondary text-white px-6 py-3 sm:px-8 sm:py-4 font-label-caps text-label-caps hover:bg-secondary-container transition-colors text-center">
               {content.auCtaButton}
             </Link>
             <Link to="/advertising"
-              className="border border-white/30 text-white px-8 py-4 font-label-caps text-label-caps hover:bg-white/10 transition-colors">
+              className="border border-white/30 text-white px-6 py-3 sm:px-8 sm:py-4 font-label-caps text-label-caps hover:bg-white/10 transition-colors text-center">
               {ta.ourServices}
             </Link>
           </div>
@@ -60,8 +60,8 @@ export default function AboutUs() {
 
       {/* ── Our Story ────────────────────────────────────────────────── */}
       <section className="py-stack-lg bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <div className="relative">
               <div className="aspect-square w-full bg-surface-container-low overflow-hidden border border-outline-variant/20 rounded-lg">
                 <img className="w-full h-full object-cover" src={aboutImg} alt="About Influence" />
@@ -87,14 +87,14 @@ export default function AboutUs() {
 
       {/* ── Since 2019 ───────────────────────────────────────────────── */}
       <section className="py-20 bg-surface">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <div className="flex flex-col gap-6">
               <div className="overflow-hidden rounded-lg">
-                <img src={images.activitiesFounder} alt="Shopping Mall" className="w-full h-64 object-cover" />
+                <img src={images.activitiesFounder} alt="Shopping Mall" className="w-full h-48 sm:h-64 object-cover" />
               </div>
               <div className="overflow-hidden rounded-lg">
-                <img src={images.activitiesZone1} alt="Bus Stop Display" className="w-full h-64 object-cover" />
+                <img src={images.activitiesZone1} alt="Bus Stop Display" className="w-full h-48 sm:h-64 object-cover" />
               </div>
             </div>
             <div>
@@ -108,9 +108,9 @@ export default function AboutUs() {
 
       {/* ── Expert Graphic Design ────────────────────────────────────── */}
       <section className="py-20 bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="relative overflow-hidden rounded-lg min-h-[400px]">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+            <div className="relative overflow-hidden rounded-lg min-h-[250px] sm:min-h-[400px]">
               <img src={images.homeGraphic} alt="Expert Graphic Design" className="w-full h-full object-cover absolute inset-0" />
             </div>
             <div>
@@ -125,9 +125,9 @@ export default function AboutUs() {
 
       {/* ── Who We Are ───────────────────────────────────────────────── */}
       <section className="py-20 bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="relative min-h-[380px] rounded-lg overflow-hidden">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+            <div className="relative min-h-[250px] sm:min-h-[380px] rounded-lg overflow-hidden">
               <img src={images.aboutMain} alt="Advertising Agency" className="w-full h-full object-cover absolute inset-0" />
             </div>
             <div>
@@ -142,9 +142,9 @@ export default function AboutUs() {
 
       {/* ── Your Brand ───────────────────────────────────────────────── */}
       <section className="py-20 bg-surface">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
-            <div className="relative min-h-[380px] rounded-lg overflow-hidden">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
+            <div className="relative min-h-[250px] sm:min-h-[380px] rounded-lg overflow-hidden">
               <img src={images.advertisingBanner} alt="Your Brand Here" className="w-full h-full object-cover absolute inset-0" />
             </div>
             <div>
@@ -158,8 +158,8 @@ export default function AboutUs() {
 
       {/* ── Founder Story ────────────────────────────────────────────── */}
       <section className="py-20 bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <div>
               <span className="font-label-caps text-label-caps text-secondary tracking-widest block mb-4">{tact.founderBadge}</span>
               <h2 className="font-headline-lg text-headline-lg text-primary mb-6">{tact.founderName}</h2>
@@ -184,16 +184,16 @@ export default function AboutUs() {
 
       {/* ── Mission & Vision ─────────────────────────────────────────── */}
       <section className="py-stack-lg bg-surface">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-gutter">
-            <div className="group/card bg-white p-12 border border-outline-variant/20 premium-card-shadow hover:bg-secondary transition-colors duration-300 cursor-default">
+            <div className="group/card bg-white p-6 sm:p-12 border border-outline-variant/20 premium-card-shadow hover:bg-secondary transition-colors duration-300 cursor-default">
               <div className="w-14 h-14 bg-secondary group-hover/card:bg-white/20 flex items-center justify-center mb-8 rounded-lg transition-colors">
                 <span className="material-symbols-outlined text-white text-2xl">rocket_launch</span>
               </div>
               <h3 className="font-headline-lg text-[24px] text-primary group-hover/card:text-white mb-4 transition-colors">{content.auMissionTitle}</h3>
               <p className="text-on-surface-variant group-hover/card:text-white/80 leading-relaxed transition-colors">{content.auMissionText}</p>
             </div>
-            <div className="group/card bg-white p-12 border border-outline-variant/20 premium-card-shadow hover:bg-secondary transition-colors duration-300 cursor-default">
+            <div className="group/card bg-white p-6 sm:p-12 border border-outline-variant/20 premium-card-shadow hover:bg-secondary transition-colors duration-300 cursor-default">
               <div className="w-14 h-14 bg-secondary group-hover/card:bg-white/20 flex items-center justify-center mb-8 rounded-lg transition-colors">
                 <span className="material-symbols-outlined text-white text-2xl">visibility</span>
               </div>
@@ -211,10 +211,10 @@ export default function AboutUs() {
             <span className="font-label-caps text-label-caps text-white/60 block mb-3">{ta.byNumbers}</span>
             <h2 className="font-headline-lg text-headline-lg text-white">{ta.reachImpact}</h2>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-12 text-center">
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-12 text-center">
             {metrics.map(m => (
               <div key={m.label}>
-                <CounterNumber value={m.val} className="font-display-lg text-[56px] font-black text-white mb-2" />
+                <CounterNumber value={m.val} className="font-display-lg text-[30px] sm:text-[44px] lg:text-[56px] font-black text-white mb-2" />
                 <div className="font-label-caps text-label-caps text-white/70">{m.label}</div>
               </div>
             ))}
@@ -225,17 +225,19 @@ export default function AboutUs() {
 
       {/* ── CTA ─────────────────────────────────────────────────────── */}
       <section className="py-24 bg-surface-container-low">
-        <div className="max-w-container-max mx-auto px-margin-desktop bg-primary p-12 lg:p-20 relative overflow-hidden">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
+          <div className="bg-primary p-6 sm:p-12 lg:p-20 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 bg-secondary-container pointer-events-none transform skew-x-12 translate-x-1/2" />
-          <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-10">
+          <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-8">
             <div className="max-w-xl text-center lg:text-left">
-              <h2 className="font-display-lg text-white mb-6 text-[40px]">{content.auCtaHeadline}</h2>
-              <p className="text-outline-variant text-lg">{content.auCtaSubtext}</p>
+              <h2 className="font-display-lg text-white mb-4 text-2xl sm:text-[32px] lg:text-[40px]">{content.auCtaHeadline}</h2>
+              <p className="text-outline-variant text-base sm:text-lg">{content.auCtaSubtext}</p>
             </div>
             <Link to="/contact"
-              className="bg-secondary text-white px-12 py-5 font-label-caps text-label-caps text-lg hover:bg-secondary-container transition-all whitespace-nowrap shadow-xl">
+              className="bg-secondary text-white px-8 py-4 sm:px-12 sm:py-5 font-label-caps text-label-caps hover:bg-secondary-container transition-all shadow-xl w-full sm:w-auto text-center">
               {content.auCtaButton}
             </Link>
+          </div>
           </div>
         </div>
       </section>
