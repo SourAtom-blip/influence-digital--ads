@@ -106,8 +106,8 @@ export default function Advertising() {
                   return (
                   <div key={s.slug} className="bg-white premium-card-shadow flex flex-col border border-outline-variant/20 group/card hover:bg-secondary transition-colors duration-300 flex-shrink-0 overflow-hidden"
                     style={{ width: `calc(${100 / visibleCards}% - ${visibleCards === 1 ? 0 : visibleCards === 2 ? 8 : 11}px)` }}>
-                    <div className="h-48 overflow-hidden flex-shrink-0">
-                      <img src={svcImg} alt={s.title} className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300" />
+                    <div className="h-52 overflow-hidden flex-shrink-0" style={{ transform: 'translateZ(0)' }}>
+                      <img src={svcImg} alt={s.title} loading="eager" decoding="async" className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105" style={{ willChange: 'transform', imageRendering: 'auto' }} />
                     </div>
                     <div className="p-6 sm:p-8 flex flex-col flex-grow">
                       <span className="font-label-caps text-label-caps text-secondary mb-2 group-hover/card:text-white/80 transition-colors">{s.stat}</span>

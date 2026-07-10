@@ -887,11 +887,8 @@ function ContentTab() {
   const fields = [
     { section: 'Navbar', keys: ['navBrand'] },
     { section: 'Hero Section', keys: ['heroBadge','heroHeadline','heroSubtext','heroCta1','heroCta2','heroStat1Val','heroStat1Label','heroStat2Val','heroStat2Label','heroStat3Val','heroStat3Label'] },
-    { section: 'Trusted By Banner', keys: ['trustedLabel'] },
     { section: 'About Section', keys: ['aboutLabel','aboutHeadline','aboutText1','aboutText2','aboutYears','aboutYearsLabel','aboutCta'] },
     { section: 'Solutions Section', keys: ['solutionsHeadline','solutionsSubtext'] },
-    { section: 'Why Choose Us', keys: ['whyLabel','whyHeadline','whySubtext','why1Title','why1Desc','why2Title','why2Desc','why3Title','why3Desc','why4Title','why4Desc','why5Title','why5Desc','why6Title','why6Desc'] },
-    { section: 'Impact Metrics', keys: ['metric1Val','metric1Label','metric2Val','metric2Label','metric3Val','metric3Label','metric4Val','metric4Label'] },
     { section: 'Our Process', keys: ['processHeadline','process1Title','process1Desc','process2Title','process2Desc','process3Title','process3Desc','process4Title','process4Desc'] },
     { section: 'Final CTA', keys: ['ctaHeadline','ctaSubtext','ctaButton'] },
     { section: 'Footer', keys: ['footerDesc','footerAddress','footerPhone','footerEmail','footerCopyright'] },
@@ -900,17 +897,13 @@ function ContentTab() {
     { section: 'Advertising Page — CTA', keys: ['advCtaHeadline','advCtaSubtext','advCtaButton'] },
     { section: 'Our Activities Page — Hero', keys: ['oaBadge','oaHeadline','oaSubtext','oaProcessTitle'] },
     { section: 'Our Activities Page — Capabilities', keys: ['oaCapBadge','oaCapHeadline','oaCapSubtext'] },
-    { section: 'Our Activities Page — Why Choose Us', keys: ['oaWhyBadge','oaWhyHeadline','oaWhySubtext'] },
     { section: 'Our Activities Page — CTA', keys: ['oaCtaHeadline','oaCtaSubtext','oaCtaButton'] },
     { section: 'Our Activities — Process Steps', keys: ['oaStep1Title','oaStep1Desc','oaStep2Title','oaStep2Desc','oaStep3Title','oaStep3Desc','oaStep4Title','oaStep4Desc'] },
-    { section: 'Our Activities — Why Items', keys: ['oaWhy1Title','oaWhy1Desc','oaWhy2Title','oaWhy2Desc','oaWhy3Title','oaWhy3Desc','oaWhy4Title','oaWhy4Desc','oaWhy5Title','oaWhy5Desc','oaWhy6Title','oaWhy6Desc'] },
     { section: 'Contact Page — Hero', keys: ['contactBadge','contactHeadline','contactSubtext','contactGetInTouch','contactRequestQuote'] },
     { section: 'Contact Page — Response Box', keys: ['contactResponseLabel','contactResponseTime','contactResponseNote'] },
     { section: 'Contact Page — Info Items', keys: ['contactInfo1Label','contactInfo1Value','contactInfo2Label','contactInfo2Value','contactInfo3Label','contactInfo3Value','contactInfo4Label','contactInfo4Value'] },
     { section: 'About Us Page — Hero', keys: ['auBadge','auHeadline','auSubtext'] },
     { section: 'About Us Page — Mission & Vision', keys: ['auMissionTitle','auMissionText','auVisionTitle','auVisionText'] },
-    { section: 'About Us Page — Core Values', keys: ['auValuesTitle','auVal1Title','auVal1Desc','auVal2Title','auVal2Desc','auVal3Title','auVal3Desc','auVal4Title','auVal4Desc','auVal5Title','auVal5Desc','auVal6Title','auVal6Desc'] },
-    { section: 'About Us Page — Team', keys: ['auTeamTitle','auTeam1Name','auTeam1Role','auTeam1Bio','auTeam1Photo','auTeam2Name','auTeam2Role','auTeam2Bio','auTeam2Photo','auTeam3Name','auTeam3Role','auTeam3Bio','auTeam3Photo','auTeam4Name','auTeam4Role','auTeam4Bio','auTeam4Photo'] },
     { section: 'About Us Page — CTA', keys: ['auCtaHeadline','auCtaSubtext','auCtaButton'] },
   ];
 
@@ -1107,7 +1100,6 @@ function SettingsTab() {
 const TABS = [
   { id: 'Leads',        icon: 'inbox' },
   { id: 'Images',       icon: 'image' },
-  { id: 'Brands',       icon: 'verified' },
   { id: 'Services',     icon: 'grid_view' },
   { id: 'Capabilities', icon: 'workspace_premium' },
   { id: 'Content',      icon: 'edit_note' },
@@ -1117,7 +1109,6 @@ const TABS = [
 const TAB_DESC = {
   Leads:        'Review and manage client quote requests.',
   Images:       'Manage images displayed on the website. Click an image to set it as active.',
-  Brands:       'Manage the trusted brand logos that scroll across the homepage banner.',
   Services:     'Add, edit, or remove advertising services. Changes apply to the Home page and Advertising page cards.',
   Capabilities: 'Edit the capability cards shown in the "Our Activities" page. Add, edit, or remove items.',
   Content:      'Edit all text content on every page of the website — homepage, advertising, activities, and contact.',
@@ -1291,7 +1282,6 @@ export default function AdminPanel() {
         </div>
         {activeTab === 'Leads'        && <LeadsTab />}
         {activeTab === 'Images'       && <ImagesTab />}
-        {activeTab === 'Brands'       && <BrandsTab />}
         {activeTab === 'Services'     && <ServicesTab />}
         {activeTab === 'Capabilities' && <CapabilitiesTab />}
         {activeTab === 'Content'      && <ContentTab />}

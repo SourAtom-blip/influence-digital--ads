@@ -94,34 +94,6 @@ export default function Home() {
         </div>
       </header>
 
-      {/* Trusted By — infinite scrolling marquee */}
-      <section className="py-5 border-y border-outline-variant/20 bg-secondary overflow-hidden">
-        <div className="marquee-wrapper">
-          <div className="marquee-track">
-            {[...brands, ...brands].map((brand, i) => (
-              <a
-                key={i}
-                href={brand.siteUrl || '#'}
-                target={brand.siteUrl && brand.siteUrl !== '#' ? '_blank' : undefined}
-                rel="noopener noreferrer"
-                className="flex-shrink-0 mx-10 flex items-center justify-center opacity-70 hover:opacity-100 transition-opacity"
-              >
-                {brand.logoUrl ? (
-                  <img
-                    src={brand.logoUrl}
-                    alt={brand.name}
-                    className="h-8 max-w-[120px] object-contain brightness-0 invert"
-                  />
-                ) : (
-                  <div className="h-8 w-32 rounded bg-white/80 flex items-center justify-center">
-                    <span className="text-secondary text-xs font-label-caps font-bold px-2 truncate">{brand.name}</span>
-                  </div>
-                )}
-              </a>
-            ))}
-          </div>
-        </div>
-      </section>
 
       {/* About Us */}
       <section id="about" className="py-stack-lg bg-white">
@@ -198,8 +170,8 @@ export default function Home() {
                     className="bg-white premium-card-shadow flex flex-col border border-outline-variant/20 group/card hover:bg-secondary transition-colors duration-300 flex-shrink-0 overflow-hidden"
                     style={{ width: `calc(${100 / visibleCards}% - ${visibleCards === 1 ? 0 : visibleCards === 2 ? 8 : 11}px)` }}
                   >
-                    <div className="h-48 overflow-hidden flex-shrink-0">
-                      <img src={svcImg} alt={s.title} className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300" />
+                    <div className="h-52 overflow-hidden flex-shrink-0" style={{ transform: 'translateZ(0)' }}>
+                      <img src={svcImg} alt={s.title} loading="eager" decoding="async" className="w-full h-full object-cover transition-transform duration-300 group-hover/card:scale-105" style={{ willChange: 'transform', imageRendering: 'auto' }} />
                     </div>
                     <div className="p-6 sm:p-8 flex flex-col flex-grow">
                       <h3 className="font-headline-lg text-[20px] mb-4 text-primary group-hover/card:text-white transition-colors">{s.title}</h3>

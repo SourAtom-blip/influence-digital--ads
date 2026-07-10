@@ -19,13 +19,13 @@ export const IMAGE_DEFAULTS = {
   activitiesFounder:'/images/activities_00.jpg',
   activitiesZone1: '/images/activities_02.jpg',
   activitiesZone2: '/images/activities_03.jpg',
-  activitiesZone3: '/images/activities_04.jpg',
-  activitiesZone4: '/images/activities_05.jpg',
-  activitiesZone5: '/images/activities_06.jpg',
+  activitiesZone3: '/images/Image 1.jpg',
+  activitiesZone4: '/images/eric-prouzet-qUi9i0nLcPQ-unsplash.jpg',
+  activitiesZone5: '/images/pexels-kokyo-k-244418001-26761527.jpg',
   serviceShoppingCenters: '/images/activities_03.jpg',
-  serviceMalls:           '/images/activities_04.jpg',
-  serviceAirports:        '/images/activities_05.jpg',
-  serviceUrbanZones:      '/images/activities_02.jpg',
+  serviceMalls:           '/images/Image 1.jpg',
+  serviceAirports:        '/images/eric-prouzet-qUi9i0nLcPQ-unsplash.jpg',
+  serviceUrbanZones:      '/images/pexels-kokyo-k-244418001-26761527.jpg',
 };
 
 const CONTENT_EN = {
