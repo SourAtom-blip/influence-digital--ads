@@ -57,9 +57,9 @@ export default function Navbar() {
 
   const navLinks = [
     { label: tn.home,          to: '/',               active: location.pathname === '/' },
+    { label: tn.aboutUs,       to: '/about-us',       active: location.pathname === '/about-us' },
     { label: tn.advertising,   to: '/advertising',    active: location.pathname.startsWith('/advertising') || location.pathname.startsWith('/services') },
     { label: tn.ourActivities, to: '/our-activities', active: location.pathname === '/our-activities' },
-    { label: tn.aboutUs,       to: '/about-us',       active: location.pathname === '/about-us' },
     { label: tn.contactUs,     to: '/contact',        active: location.pathname === '/contact' },
   ];
 
