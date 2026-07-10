@@ -95,8 +95,7 @@ export default function Home() {
       </header>
 
       {/* Trusted By — infinite scrolling marquee */}
-      <section className="py-12 border-y border-outline-variant/20 bg-secondary overflow-hidden">
-        <p className="text-center font-label-caps text-label-caps mb-8 text-white font-bold px-margin-desktop">{content.trustedLabel}</p>
+      <section className="py-5 border-y border-outline-variant/20 bg-secondary overflow-hidden">
         <div className="marquee-wrapper">
           <div className="marquee-track">
             {[...brands, ...brands].map((brand, i) => (
