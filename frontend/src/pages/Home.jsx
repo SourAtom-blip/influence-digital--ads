@@ -190,20 +190,27 @@ export default function Home() {
                 className="flex transition-transform duration-500 ease-in-out gap-4"
                 style={{ transform: `translateX(calc(-${activeCard} * (100% / ${visibleCards} + ${visibleCards === 1 ? 16 : visibleCards === 2 ? 8 : 5}px)))` }}
               >
-                {services.map((s) => (
+                {services.map((s) => {
+                  const svcImg = { 'shopping-centers': images.serviceShoppingCenters, 'malls': images.serviceMalls, 'airports': images.serviceAirports, 'urban-zones': images.serviceUrbanZones }[s.slug];
+                  return (
                   <div
                     key={s.slug}
-                    className="bg-white p-6 sm:p-10 premium-card-shadow flex flex-col border border-outline-variant/20 group/card hover:bg-secondary transition-colors duration-300 flex-shrink-0"
+                    className="bg-white premium-card-shadow flex flex-col border border-outline-variant/20 group/card hover:bg-secondary transition-colors duration-300 flex-shrink-0 overflow-hidden"
                     style={{ width: `calc(${100 / visibleCards}% - ${visibleCards === 1 ? 0 : visibleCards === 2 ? 8 : 11}px)` }}
                   >
-                    <span className="material-symbols-outlined text-secondary text-4xl mb-6 group-hover/card:text-white transition-colors">{s.icon}</span>
-                    <h3 className="font-headline-lg text-[20px] mb-4 text-primary group-hover/card:text-white transition-colors">{s.title}</h3>
-                    <p className="text-on-surface-variant font-body-sm mb-8 flex-grow group-hover/card:text-white/80 transition-colors">{s.desc}</p>
-                    <Link to={`/services/${s.slug}`} className="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group/link group-hover/card:bg-white group-hover/card:text-secondary transition-all w-fit">
-                      {t.advertising.explore} <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
-                    </Link>
+                    <div className="h-48 overflow-hidden flex-shrink-0">
+                      <img src={svcImg} alt={s.title} className="w-full h-full object-cover group-hover/card:scale-105 transition-transform duration-300" />
+                    </div>
+                    <div className="p-6 sm:p-8 flex flex-col flex-grow">
+                      <h3 className="font-headline-lg text-[20px] mb-4 text-primary group-hover/card:text-white transition-colors">{s.title}</h3>
+                      <p className="text-on-surface-variant font-body-sm mb-8 flex-grow group-hover/card:text-white/80 transition-colors">{s.desc}</p>
+                      <Link to={`/services/${s.slug}`} className="bg-primary text-on-primary px-4 py-2 font-label-caps text-label-caps rounded flex items-center justify-center gap-2 group/link group-hover/card:bg-white group-hover/card:text-secondary transition-all w-fit">
+                        {t.advertising.explore} <span className="material-symbols-outlined text-sm group-hover/link:translate-x-1 transition-transform">arrow_forward</span>
+                      </Link>
+                    </div>
                   </div>
-                ))}
+                  );
+                })}
               </div>
             </div>
 
