@@ -75,9 +75,9 @@ export default function Home() {
           <div
             className="w-full h-full"
             style={{
-              backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.9) 0%, rgba(0, 0, 0, 0.6) 30%, rgba(0, 0, 0, 0) 70%), url("${heroImg}")`,
+              backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.1) 70%), url("${heroImg}")`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center center'
+              backgroundPosition: 'center top'
             }}
           />
         </div>
