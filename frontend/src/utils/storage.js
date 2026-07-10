@@ -1,10 +1,10 @@
 import { apiGetSite, apiSaveSite } from './api.js';
 
-const HERO_IMG  = '/images/home_03.jpg';
+const HERO_IMG  = '/pexels-negativespace-34639.jpg';
 const ABOUT_IMG = '/images/home_01.jpg';
 
 export const IMAGE_DEFAULTS = {
-  homeHero:        '/images/home_03.jpg',
+  homeHero:        '/pexels-negativespace-34639.jpg',
   homeAbout:       '/images/home_01.jpg',
   homeDesign:      '/images/home_02.jpg',
   homeGraphic:     '/images/home_00.jpg',

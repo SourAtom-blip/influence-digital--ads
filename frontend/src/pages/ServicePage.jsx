@@ -56,7 +56,7 @@ export default function ServicePage() {
           </div>
         )}
         {!heroImg && <div className="absolute inset-0 bg-primary" />}
-        <div className="max-w-container-max mx-auto px-margin-desktop relative z-10 w-full">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop relative z-10 w-full">
           <Link to="/advertising" className="inline-flex items-center gap-2 text-white/60 hover:text-white font-label-caps text-label-caps mb-10 transition-colors">
             <span className="material-symbols-outlined text-sm">arrow_back</span> {t.allServices}
           </Link>
@@ -66,7 +66,7 @@ export default function ServicePage() {
             </div>
             <div>
               <span className="font-label-caps text-label-caps text-secondary-container block mb-3">{t.ourSolutions}</span>
-              <h1 className="font-display-lg text-display-lg text-white mb-4">{service.title}</h1>
+              <h1 className="font-display-lg text-3xl sm:text-4xl lg:text-display-lg text-white mb-4">{service.title}</h1>
               <p className="text-white/70 text-lg max-w-2xl">{service.tagline}</p>
             </div>
           </div>
@@ -75,8 +75,8 @@ export default function ServicePage() {
 
       {/* Description + Image */}
       <section className="py-20 bg-white">
-        <div className="max-w-container-max mx-auto px-margin-desktop">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 items-center">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-20 items-center">
             <div className="relative overflow-hidden rounded-lg min-h-[380px]">
               <img src={heroImg || '/images/activities_03.jpg'} alt={service.title} className="w-full h-full object-cover absolute inset-0" />
             </div>
@@ -93,7 +93,7 @@ export default function ServicePage() {
 
       {/* CTA Banner */}
       <section className="py-16 bg-secondary">
-        <div className="max-w-container-max mx-auto px-margin-desktop flex flex-col md:flex-row items-center justify-between gap-8">
+        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop flex flex-col md:flex-row items-center justify-between gap-8">
           <div>
             <h3 className="font-headline-lg text-headline-lg text-white mb-2">{t.ctaLaunch(service.title)}</h3>
             <p className="text-white/70 font-body-sm">{t.ctaSubtext}</p>
