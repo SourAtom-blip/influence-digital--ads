@@ -229,17 +229,6 @@ export default function Home() {
       </section>
 
 
-      {/* Impact Metrics */}
-      <section className="py-24 bg-secondary text-on-secondary">
-        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-12 text-center">
-          {metrics.map(m => (
-            <div key={m.label}>
-              <CounterNumber value={m.val} className="font-display-lg text-[32px] sm:text-[40px] lg:text-[48px] font-black mb-2 text-white" />
-              <div className="font-label-caps text-label-caps opacity-80 text-white">{m.label}</div>
-            </div>
-          ))}
-        </div>
-      </section>
 
       {/* Our Process */}
       <section id="process" className="py-stack-lg bg-white overflow-hidden">
