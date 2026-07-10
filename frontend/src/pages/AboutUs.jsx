@@ -204,23 +204,6 @@ export default function AboutUs() {
         </div>
       </section>
 
-      {/* ── Impact Numbers ───────────────────────────────────────────── */}
-      <section className="py-24 bg-secondary">
-        <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
-          <div className="text-center mb-16">
-            <span className="font-label-caps text-label-caps text-white/60 block mb-3">{ta.byNumbers}</span>
-            <h2 className="font-headline-lg text-headline-lg text-white">{ta.reachImpact}</h2>
-          </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-12 text-center">
-            {metrics.map(m => (
-              <div key={m.label}>
-                <CounterNumber value={m.val} className="font-display-lg text-[30px] sm:text-[44px] lg:text-[56px] font-black text-white mb-2" />
-                <div className="font-label-caps text-label-caps text-white/70">{m.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
 
 
       {/* ── CTA ─────────────────────────────────────────────────────── */}
