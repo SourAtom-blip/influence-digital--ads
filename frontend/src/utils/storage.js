@@ -31,7 +31,7 @@ export const IMAGE_DEFAULTS = {
 const CONTENT_EN = {
   navBrand: 'Influence Digital Ads',
 
-  heroBadge:    'Strategic Visibility',
+  heroBadge:    'DIGITAL ADVERTISING AGENCY / DIGITAL SIGNAGE SOLUTIONS',
   heroHeadline: 'Amplify Your Brand Presence Across High-Traffic Locations',
   heroSubtext:  'Elevate your impact with precision-targeted digital advertising solutions in premium malls, international airports, and urban billboards. Data-driven strategy meets high-definition display.',
   heroCta1:     'Get Free Quote',
@@ -46,7 +46,7 @@ const CONTENT_EN = {
   aboutHeadline:   "Maximize Your Brand's Visibility",
   aboutText1:      'Influence Digital-ads specializes in digital advertising with giant LED screens. We broadcast a variety of content, including client information, weather updates, and announcements, in high-traffic areas such as shopping centers, airports, and other strategic locations.',
   aboutText2:      'Successful advertising on giant screens requires exceptional graphic design. Our expertise in creating captivating graphics ensures that your content stands out and effectively captures the audience\'s attention.',
-  aboutYears:      '15+',
+  aboutYears:      '7+',
   aboutYearsLabel: 'Years of Excellence',
   aboutCta:        'Learn More About Us',
 
@@ -171,7 +171,7 @@ const CONTENT_EN = {
 const CONTENT_FR = {
   navBrand: 'Influence Digital Ads',
 
-  heroBadge:    'Visibilité Stratégique',
+  heroBadge:    'AGENCE DE PUBLICITE DIGITALE / SOLUTIONS D\'AFFICHAGE NUMERIQUE',
   heroHeadline: 'Amplifiez la Présence de Votre Marque dans les Lieux à Fort Trafic',
   heroSubtext:  "Élevez votre impact avec des solutions publicitaires numériques ciblées dans les centres commerciaux premium, les aéroports internationaux et les panneaux urbains. Une stratégie axée sur les données pour un affichage haute définition.",
   heroCta1:     'Devis Gratuit',
@@ -186,7 +186,7 @@ const CONTENT_FR = {
   aboutHeadline:   'Redéfinir la Présence à l\'Ère Numérique',
   aboutText1:      'Influence Digital Ads est bien plus qu\'un acheteur média. Nous sommes des partenaires stratégiques dans l\'élévation des marques. Notre mission est de combler le fossé entre les marques haut de gamme et leurs publics cibles grâce à des placements premium dans les espaces physiques les plus influents.',
   aboutText2:      'Des monuments emblématiques aux audiences captives des hubs de voyages internationaux, nous livrons précision, transparence et un impact indéniable.',
-  aboutYears:      '15+',
+  aboutYears:      '7+',
   aboutYearsLabel: "Années d'Excellence",
   aboutCta:        'En Savoir Plus Sur Nous',
 

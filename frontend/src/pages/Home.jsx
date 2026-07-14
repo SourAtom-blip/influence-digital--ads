@@ -83,8 +83,7 @@ export default function Home() {
         </div>
         <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop relative z-20">
           <div className="max-w-2xl">
-            <span className="inline-block px-3 py-1 bg-secondary-container/10 text-secondary font-label-caps text-label-caps mb-6 rounded-full">{content.heroBadge}</span>
-            <h1 className="font-display-lg text-3xl sm:text-4xl lg:text-display-lg text-white mb-6 drop-shadow-md">{content.heroHeadline}</h1>
+            <h1 className="font-black text-white text-3xl sm:text-4xl lg:text-5xl mb-6 tracking-wider uppercase drop-shadow-lg leading-tight" style={{ textShadow: '0 2px 8px rgba(0,0,0,0.6)' }}>{content.heroBadge}</h1>
             <p className="font-body-md text-white mb-8 text-base sm:text-lg leading-relaxed drop-shadow-sm opacity-90">{content.heroSubtext}</p>
             <div className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4">
               <button onClick={handleScrollToContact} className="bg-primary text-on-primary px-6 py-3 sm:px-8 sm:py-4 font-label-caps text-label-caps hover:bg-secondary transition-all w-full sm:w-auto text-center">{content.heroCta1}</button>
@@ -231,11 +230,11 @@ export default function Home() {
       {/* Final CTA */}
       <section className="py-24 bg-surface-container-low">
         <div className="max-w-container-max mx-auto px-4 sm:px-6 lg:px-margin-desktop">
-          <div className="bg-primary p-6 sm:p-12 lg:p-20 relative overflow-hidden">
+          <div className="bg-primary p-8 sm:p-14 lg:p-20 relative overflow-hidden">
             <div className="absolute top-0 right-0 w-1/3 h-full opacity-10 bg-secondary-container pointer-events-none transform skew-x-12 translate-x-1/2"></div>
-            <div className="relative z-10 flex flex-col lg:flex-row justify-between items-center gap-8">
+            <div className="relative z-10 flex flex-col lg:flex-row justify-between items-end gap-8">
               <div className="max-w-xl text-center lg:text-left">
-                <h2 className="font-display-lg text-white mb-4 text-2xl sm:text-[32px] lg:text-[40px]">{content.ctaHeadline}</h2>
+                <h2 className="font-display-lg text-white mb-4 text-2xl sm:text-[28px] lg:text-[32px] leading-tight">{content.ctaHeadline}</h2>
                 <p className="text-outline-variant text-base sm:text-lg">{content.ctaSubtext}</p>
               </div>
               <button onClick={handleScrollToContact} className="bg-secondary text-on-secondary px-8 py-4 sm:px-12 sm:py-5 font-label-caps text-label-caps hover:bg-secondary-container transition-all shadow-xl w-full sm:w-auto text-center">{content.ctaButton}</button>
