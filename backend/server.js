@@ -30,8 +30,16 @@ const app = express();
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
+const allowedOrigins = [
+  process.env.FRONTEND_URL,
+  'http://localhost:5173',
+  'http://localhost:5174',
+].filter(Boolean);
 app.use(cors({
-  origin: process.env.FRONTEND_URL || 'http://localhost:5173',
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.some(o => origin.startsWith(o.replace(/\/$/, '')))) return cb(null, true);
+    cb(new Error('CORS not allowed'));
+  },
   credentials: true,
 }));
 app.use(express.json());
