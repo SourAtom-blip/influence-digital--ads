@@ -100,18 +100,28 @@ async function seedAdmin() {
 // ── Connect & Start ───────────────────────────────────────────────────────────
 const PORT = process.env.PORT || 5000;
 
-mongoose.connect(process.env.MONGO_URI, {
-  serverSelectionTimeoutMS: 10000,
-  connectTimeoutMS: 10000,
-})
-  .then(async () => {
+const server = app.listen(PORT, () => {
+  console.log(`[Server] Running on http://localhost:${PORT}`);
+});
+
+const shutdown = () => {
+  console.log('[Server] Shutting down gracefully…');
+  server.close(() => {
+    mongoose.connection.close().then(() => process.exit(0));
+  });
+};
+process.on('SIGTERM', shutdown);
+process.on('SIGINT',  shutdown);
+
+async function connectDB() {
+  try {
+    await mongoose.connect(process.env.MONGO_URI, {
+      serverSelectionTimeoutMS: 10000,
+      connectTimeoutMS: 10000,
+    });
     console.log('[DB] MongoDB connected');
     await seedAdmin();
-    const server = app.listen(PORT, () => {
-      console.log(`[Server] Running on http://localhost:${PORT}`);
-    });
 
-    // Keep MongoDB Atlas active — ping every 24h to prevent M0 free tier auto-pause
     setInterval(async () => {
       try {
         await mongoose.connection.db.command({ ping: 1 });
@@ -120,17 +130,10 @@ mongoose.connect(process.env.MONGO_URI, {
         console.error('[KeepAlive] Ping failed:', e.message);
       }
     }, 24 * 60 * 60 * 1000);
-
-    const shutdown = () => {
-      console.log('[Server] Shutting down gracefully…');
-      server.close(() => {
-        mongoose.connection.close().then(() => process.exit(0));
-      });
-    };
-    process.on('SIGTERM', shutdown);
-    process.on('SIGINT',  shutdown);
-  })
-  .catch(err => {
+  } catch (err) {
     console.error('[DB] Connection failed:', err.message);
-    process.exit(1);
-  });
+    console.error('[DB] Server running without DB — fix MONGO_URI and restart.');
+  }
+}
+
+connectDB();
