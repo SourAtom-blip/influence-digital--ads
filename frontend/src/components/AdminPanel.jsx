@@ -366,6 +366,7 @@ function ServicesTab() {
   const [adding, setAdding] = useState(false);
   const [msg, setMsg] = useState('');
   const [translating, setTranslating] = useState(false);
+  const [imgUploading, setImgUploading] = useState(false);
 
   const remove = (slug) => {
     if (!window.confirm('Remove this service?')) return;
@@ -516,14 +517,22 @@ function ServicesTab() {
           </div>
           <div className="mt-4">
             <label className="font-label-caps text-xs text-on-surface-variant block mb-1">Service Image</label>
-            <input type="file" accept="image/*" onChange={e => {
+            <input type="file" accept="image/*" onChange={async e => {
               const file = e.target.files[0];
               if (!file) return;
-              const reader = new FileReader();
-              reader.onload = ev => setForm(p => ({...p, image: ev.target.result}));
-              reader.readAsDataURL(file);
+              e.target.value = '';
+              setImgUploading(true);
+              try {
+                const data = await apiUploadImage(file);
+                setForm(p => ({...p, image: data.url}));
+              } catch (err) {
+                setMsg(err.message || 'Image upload failed.');
+              } finally {
+                setImgUploading(false);
+              }
             }} className="w-full text-sm text-on-surface-variant file:mr-4 file:py-2 file:px-4 file:rounded file:border-0 file:font-label-caps file:text-xs file:bg-secondary file:text-white hover:file:bg-secondary/80 cursor-pointer" />
-            {form.image && (
+            {imgUploading && <p className="text-xs text-secondary mt-1">Uploading image…</p>}
+            {form.image && !imgUploading && (
               <div className="mt-2 relative w-full h-32 rounded overflow-hidden border border-outline-variant/30">
                 <img src={form.image} alt="preview" className="w-full h-full object-cover" />
                 <button onClick={() => setForm(p => ({...p, image: ''}))} className="absolute top-1 right-1 bg-black/60 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs">✕</button>
@@ -531,7 +540,7 @@ function ServicesTab() {
             )}
           </div>
           <div className="flex gap-3 mt-4">
-            <button onClick={add} className="bg-primary text-white px-6 py-2 font-label-caps text-label-caps hover:bg-secondary transition-colors rounded">Save Service</button>
+            <button onClick={add} disabled={imgUploading} className="bg-primary text-white px-6 py-2 font-label-caps text-label-caps hover:bg-secondary transition-colors rounded disabled:opacity-60">Save Service</button>
             <button onClick={() => setAdding(false)} className="px-6 py-2 border border-outline-variant/30 text-on-surface-variant font-label-caps text-label-caps rounded hover:bg-surface-container">Cancel</button>
           </div>
         </div>
