@@ -859,9 +859,6 @@ export default function AdminPanel() {
     return () => window.removeEventListener('beforeunload', handleBeforeUnload);
   }, [isLoggedIn]);
 
-  const LOCAL_USER = import.meta.env.VITE_LOCAL_USER || '';
-  const LOCAL_PASS = import.meta.env.VITE_LOCAL_PASS || '';
-
   const handleLogin = async (e) => {
     e.preventDefault();
     setError('');
@@ -869,18 +866,10 @@ export default function AdminPanel() {
       await apiLogin(username, password);
       setIsLoggedIn(true);
     } catch (err) {
-      // Only fall back to local credentials when the backend is genuinely unreachable.
-      // If the backend responded (wrong password, rate limit, etc.) respect that response.
-      const backendDown = err.message === 'Failed to fetch' || err.message === 'Backend unavailable';
-      if (backendDown && username === LOCAL_USER && password === LOCAL_PASS) {
-        setIsLoggedIn(true);
-      } else {
-        setError(err.message || 'Invalid username or password.');
-      }
+      setError(err.message || 'Invalid username or password.');
     }
   };
 
-  const LOCAL_RECOVERY = import.meta.env.VITE_LOCAL_RECOVERY || '';
 
   const handleForgot = async (e) => {
     e.preventDefault();
@@ -890,13 +879,7 @@ export default function AdminPanel() {
       setFpMsg({ ok: true, text: 'Password reset successfully. You can now sign in.' });
       setTimeout(() => { setMode('login'); setRecInput(''); setFpNew(''); setFpConfirm(''); setFpMsg(null); }, 2000);
     } catch (err) {
-      const backendDown = err.message === 'Failed to fetch' || err.message === 'Backend unavailable';
-      if (!backendDown) { setFpMsg({ ok: false, text: err.message || 'Reset failed.' }); return; }
-      // Backend unreachable — local recovery key fallback
-      if (recInput !== LOCAL_RECOVERY) { setFpMsg({ ok: false, text: 'Recovery key is incorrect.' }); return; }
-      if (fpNew.length < 6)            { setFpMsg({ ok: false, text: 'Password must be at least 6 characters.' }); return; }
-      setFpMsg({ ok: true, text: 'Password reset successfully. You can now sign in.' });
-      setTimeout(() => { setMode('login'); setRecInput(''); setFpNew(''); setFpConfirm(''); setFpMsg(null); }, 2000);
+      setFpMsg({ ok: false, text: err.message || 'Reset failed.' });
     }
   };
 
