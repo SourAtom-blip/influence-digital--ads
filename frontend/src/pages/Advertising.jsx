@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage, useContent } from '../context/LanguageContext';
-import CounterNumber from '../components/CounterNumber';
 import { getServices, getImages } from '../utils/storage';
 import T from '../utils/translations';
 

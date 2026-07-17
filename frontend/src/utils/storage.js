@@ -6,16 +6,12 @@ export const IMAGE_DEFAULTS = {
   homeAbout:       '/images/home_01.jpg',
   homeDesign:      '/images/home_02.jpg',
   homeGraphic:     '/images/home_00.jpg',
-  homeExtra:       '/images/home_08.jpg',
   aboutMain:       '/images/advertising_02.jpg',
   contactHero:     '/images/contact_00.jpg',
   freeQuoteHero:   '/images/freequote_00.jpg',
   advertisingHero: '/images/advertising_00.jpg',
   advertisingMid:  '/images/advertising_01.jpg',
-  advertisingBanner:'/images/advertising_03.jpg',
   activitiesHero:  '/images/activities_01.jpg',
-  activitiesFounder:'/images/activities_00.jpg',
-  activitiesZone1: '/images/activities_02.jpg',
   activitiesZone2: '/images/activities_03.jpg',
   activitiesZone3: '/images/Image 1.jpg',
   activitiesZone4: '/images/eric-prouzet-qUi9i0nLcPQ-unsplash.jpg',
@@ -308,27 +304,11 @@ const CONTENT_FR = {
 
 export const DEFAULTS = {
   images: { ...IMAGE_DEFAULTS },
-  brands: [
-    { id: '1', name: 'Brand One',   logoUrl: '', siteUrl: '#' },
-    { id: '2', name: 'Brand Two',   logoUrl: '', siteUrl: '#' },
-    { id: '3', name: 'Brand Three', logoUrl: '', siteUrl: '#' },
-    { id: '4', name: 'Brand Four',  logoUrl: '', siteUrl: '#' },
-    { id: '5', name: 'Brand Five',  logoUrl: '', siteUrl: '#' },
-    { id: '6', name: 'Brand Six',   logoUrl: '', siteUrl: '#' },
-  ],
   services: [
     { slug: 'shopping-centers', icon: 'shopping_cart',   title: 'Shopping Centers', tagline: 'Reach Consumers at Prime Shopping Moments',          stat: '200+ Screens',   desc: 'Reach a wide audience every day with strategic locations in shopping centers. Ideal for capturing consumers\' attention at a prime shopping moment.' },
     { slug: 'malls',            icon: 'storefront',      title: 'Malls',            tagline: 'Large Daily Audience in Premium Retail Spaces',       stat: '150+ Locations', desc: 'Benefit from a large daily audience with strategic locations in malls. Ideal for capturing consumers\' attention at a prime shopping moment.' },
     { slug: 'airports',         icon: 'flight_takeoff',  title: 'Airports',         tagline: 'Communicate With Travelers and Professionals',        stat: '12 Airports',    desc: 'Communicate effectively with travelers and air transport professionals. Airports offer significant visibility in transit and waiting areas.' },
     { slug: 'urban-zones',      icon: 'location_city',   title: 'Urban Zones',      tagline: 'High Visibility With a Local and Regular Audience',   stat: '500+ Placements',desc: 'Achieve high visibility with a local and regular audience. Bus stops allow you to reach an urban and mobile public throughout the day.' },
-  ],
-  capabilities: [
-    { id: '1', icon: 'analytics',     title: 'Audience Analytics',      desc: 'We integrate footfall data, mobile movement insights, and demographic profiling to plan placements with surgical precision.' },
-    { id: '2', icon: 'monitoring',    title: 'Real-Time Monitoring',    desc: '24/7 screen uptime monitoring with automated alerts ensures your campaign is never down without our knowledge.' },
-    { id: '3', icon: 'content_paste', title: 'Content Management',      desc: 'Our proprietary CMS allows instant creative swaps, A/B testing, and daypart scheduling across all screens simultaneously.' },
-    { id: '4', icon: 'verified_user', title: 'Proof of Play',           desc: 'Every impression is logged. We provide verifiable play-logs, screen-level reporting, and third-party audience measurement.' },
-    { id: '5', icon: 'support_agent', title: 'Dedicated Account Team',  desc: 'A senior strategist and a campaign manager are assigned to every client. One point of contact for the entire relationship.' },
-    { id: '6', icon: 'bar_chart',     title: 'Post-Campaign Reporting', desc: 'Comprehensive end-of-campaign reports with reach, frequency, OTS estimates, and brand recall survey options.' },
   ],
   content:    CONTENT_EN,
   content_fr: CONTENT_FR,
@@ -362,17 +342,9 @@ export const getImages = () => {
   const s = load('site_images');
   return s ? { ...DEFAULTS.images, ...s } : DEFAULTS.images;
 };
-export const getTrustedBrands = () => {
-  const s = load('site_brands');
-  return Array.isArray(s) && s.length > 0 ? s : DEFAULTS.brands;
-};
 export const getServices = () => {
   const s = load('site_services');
   return Array.isArray(s) && s.length > 0 ? s : DEFAULTS.services;
-};
-export const getCapabilities = () => {
-  const s = load('site_capabilities');
-  return Array.isArray(s) && s.length > 0 ? s : DEFAULTS.capabilities;
 };
 export const getContent  = (lang = 'en') => {
   // Migrate old site_content key → site_content_en
@@ -389,14 +361,6 @@ export const getContent  = (lang = 'en') => {
 export const saveImages = (val) => {
   save('site_images', val);
   syncToApi('images', val);
-};
-export const saveTrustedBrands = (val) => {
-  save('site_brands', val);
-  syncToApi('brands', val);
-};
-export const saveCapabilities = (val) => {
-  save('site_capabilities', val);
-  syncToApi('capabilities', val);
 };
 export const saveServices = (val) => {
   save('site_services', val);

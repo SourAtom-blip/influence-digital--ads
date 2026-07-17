@@ -4,7 +4,7 @@ import protect from '../middleware/protect.js';
 
 const router = express.Router();
 
-const ALLOWED_KEYS = ['content', 'content_en', 'content_fr', 'services', 'images'];
+const ALLOWED_KEYS = ['content_en', 'content_fr', 'services', 'images'];
 
 // GET /api/site/:key  (public)
 router.get('/:key', async (req, res) => {

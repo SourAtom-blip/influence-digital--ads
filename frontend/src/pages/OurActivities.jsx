@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage, useContent } from '../context/LanguageContext';
-import { getCapabilities, getImages } from '../utils/storage';
+import { getImages } from '../utils/storage';
 import T from '../utils/translations';
 
 export default function OurActivities() {
@@ -15,9 +15,6 @@ export default function OurActivities() {
   const headline     = content.oaHeadline     || t.headline;
   const subtext      = content.oaSubtext      || t.subtext;
   const processTitle = content.oaProcessTitle || t.processTitle;
-  const capBadge     = content.oaCapBadge     || t.capBadge;
-  const capHeadline  = content.oaCapHeadline  || t.capHeadline;
-  const capSubtext   = content.oaCapSubtext   || t.capSubtext;
   const ctaHeadline  = content.oaCtaHeadline  || t.ctaHeadline;
   const ctaSubtext   = content.oaCtaSubtext   || t.ctaSubtext;
   const ctaButton    = content.oaCtaButton    || t.ctaButton;
@@ -29,14 +26,6 @@ export default function OurActivities() {
     desc:  content[`oaStep${i + 1}Desc`]  || s.desc,
   }));
 
-
-  // Capabilities — driven by storage (admin-editable), use FR fields when in French
-  const isFr = lang === 'fr';
-  const capabilities = getCapabilities().map(c => ({
-    ...c,
-    title: isFr ? c.title_fr || c.title : c.title,
-    desc:  isFr ? c.desc_fr  || c.desc  : c.desc,
-  }));
 
   return (
     <div className="bg-surface">
