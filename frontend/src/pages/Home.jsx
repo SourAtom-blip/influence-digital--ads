@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import QuoteForm from '../components/QuoteForm';
 import CounterNumber from '../components/CounterNumber';
-import { getImages, getServices, getTrustedBrands } from '../utils/storage';
+import { getImages, getServices } from '../utils/storage';
 import { useContent, useLanguage } from '../context/LanguageContext';
 import T from '../utils/translations';
 
@@ -11,7 +11,6 @@ export default function Home() {
   const content = useContent();
   const { lang } = useLanguage();
   const t       = T[lang] || T.en;
-  const brands  = getTrustedBrands();
   const [activeCard, setActiveCard] = useState(0);
   const carouselRef = useRef(null);
   const [visibleCards, setVisibleCards] = useState(3);
@@ -44,21 +43,6 @@ export default function Home() {
   const handleScrollToContact  = (e) => { e.preventDefault(); scrollTo('contact'); };
   const handleScrollToSolutions = (e) => { e.preventDefault(); scrollTo('solutions'); };
 
-  const whyItems = [
-    { n:'01', title: content.why1Title, desc: content.why1Desc },
-    { n:'02', title: content.why2Title, desc: content.why2Desc },
-    { n:'03', title: content.why3Title, desc: content.why3Desc },
-    { n:'04', title: content.why4Title, desc: content.why4Desc },
-    { n:'05', title: content.why5Title, desc: content.why5Desc },
-    { n:'06', title: content.why6Title, desc: content.why6Desc },
-  ];
-
-  const metrics = [
-    { val: content.metric1Val, label: content.metric1Label },
-    { val: content.metric2Val, label: content.metric2Label },
-    { val: content.metric3Val, label: content.metric3Label },
-    { val: content.metric4Val, label: content.metric4Label },
-  ];
 
   const steps = [
     { n:'01', title: content.process1Title, desc: content.process1Desc },

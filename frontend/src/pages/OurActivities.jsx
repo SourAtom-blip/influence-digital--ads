@@ -18,9 +18,6 @@ export default function OurActivities() {
   const capBadge     = content.oaCapBadge     || t.capBadge;
   const capHeadline  = content.oaCapHeadline  || t.capHeadline;
   const capSubtext   = content.oaCapSubtext   || t.capSubtext;
-  const whyBadge     = content.oaWhyBadge     || t.whyBadge;
-  const whyHeadline  = content.oaWhyHeadline  || t.whyHeadline;
-  const whySubtext   = content.oaWhySubtext   || t.whySubtext;
   const ctaHeadline  = content.oaCtaHeadline  || t.ctaHeadline;
   const ctaSubtext   = content.oaCtaSubtext   || t.ctaSubtext;
   const ctaButton    = content.oaCtaButton    || t.ctaButton;
@@ -32,12 +29,6 @@ export default function OurActivities() {
     desc:  content[`oaStep${i + 1}Desc`]  || s.desc,
   }));
 
-  // Why items — admin-editable; numbers stay hardcoded
-  const whyItems = t.whyItems.map(([num, defTitle, defDesc], i) => [
-    num,
-    content[`oaWhy${i + 1}Title`] || defTitle,
-    content[`oaWhy${i + 1}Desc`]  || defDesc,
-  ]);
 
   // Capabilities — driven by storage (admin-editable), use FR fields when in French
   const isFr = lang === 'fr';

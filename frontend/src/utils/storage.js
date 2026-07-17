@@ -1,7 +1,5 @@
 import { apiGetSite, apiSaveSite } from './api.js';
 
-const HERO_IMG  = '/pexels-negativespace-34639.jpg';
-const ABOUT_IMG = '/images/home_01.jpg';
 
 export const IMAGE_DEFAULTS = {
   homeHero:        '/pexels-negativespace-34639.jpg',
@@ -417,4 +415,3 @@ export const fetchContent  = (lang = 'en') => loadFromApi(
   lang === 'fr' ? CONTENT_FR : CONTENT_EN
 );
 
-export const logVisit = () => {};
