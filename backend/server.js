@@ -127,7 +127,7 @@ async function connectDB() {
       } catch (e) {
         console.error('[KeepAlive] Ping failed:', e.message);
       }
-    }, 24 * 60 * 60 * 1000);
+    }, 5 * 60 * 1000);
   } catch (err) {
     console.error('[DB] Connection failed:', err.message);
     console.error('[DB] Server running without DB — fix MONGO_URI and restart.');

@@ -20,7 +20,7 @@ function signToken(id) {
 // POST /api/auth/login
 router.post('/login', async (req, res) => {
   try {
-    console.log('[Auth Login] body:', JSON.stringify(req.body), 'content-type:', req.headers['content-type']);
+    console.log('[Auth Login] username:', req.body?.username, 'content-type:', req.headers['content-type']);
     const { username, password } = req.body || {};
     if (!username || !password)
       return res.status(400).json({ message: 'Username and password are required.' });

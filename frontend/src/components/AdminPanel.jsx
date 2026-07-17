@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import {
   getImages, saveImages,
-  getTrustedBrands, saveTrustedBrands,
   getServices, saveServices,
-  getCapabilities, saveCapabilities,
   getContent, saveContent,
   DEFAULTS, IMAGE_DEFAULTS,
 } from '../utils/storage';
@@ -322,126 +320,6 @@ function ImagesTab() {
   );
 }
 
-// ─── Tab: Brands ─────────────────────────────────────────────────────────────
-function BrandsTab() {
-  const [brands, setBrands] = useState(getTrustedBrands);
-  const [form, setForm]     = useState({ name: '', logoUrl: '', siteUrl: '' });
-  const [adding, setAdding] = useState(false);
-  const [msg, setMsg]       = useState('');
-
-  const persist = (updated) => {
-    setBrands(updated);
-    saveTrustedBrands(updated);
-  };
-
-  const add = () => {
-    if (!form.name.trim()) return;
-    const newBrand = { id: Date.now().toString(), name: form.name.trim(), logoUrl: form.logoUrl.trim(), siteUrl: form.siteUrl.trim() || '#' };
-    persist([...brands, newBrand]);
-    setForm({ name: '', logoUrl: '', siteUrl: '' });
-    setAdding(false);
-    setMsg('Brand added.');
-    setTimeout(() => setMsg(''), 3000);
-  };
-
-  const remove = (id) => {
-    if (!window.confirm('Remove this brand?')) return;
-    persist(brands.filter(b => b.id !== id));
-  };
-
-  return (
-    <div className="space-y-6">
-      {msg && <div className="p-3 bg-green-100 text-green-800 text-sm rounded font-medium">{msg}</div>}
-      <p className="text-on-surface-variant text-sm">These logos scroll automatically across the homepage banner. Add a logo URL and a destination URL so visitors can click through to each brand's website.</p>
-
-      <div className="bg-white border border-outline-variant/20 rounded-lg overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-surface border-b border-outline-variant/20 text-on-surface-variant font-label-caps text-xs">
-              <th className="p-5 text-left">Preview</th>
-              <th className="p-5 text-left">Name</th>
-              <th className="p-5 text-left">Logo URL</th>
-              <th className="p-5 text-left">Site URL</th>
-              <th className="p-5 text-right">Action</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-outline-variant/20">
-            {brands.map(b => (
-              <tr key={b.id} className="hover:bg-surface-container-lowest">
-                <td className="p-5">
-                  {b.logoUrl ? (
-                    <img src={b.logoUrl} alt={b.name} className="h-8 max-w-[80px] object-contain" onError={e => { e.target.style.opacity = '0.2'; }} />
-                  ) : (
-                    <div className="h-8 w-20 rounded bg-outline-variant/20 flex items-center justify-center text-xs text-on-surface-variant">No logo</div>
-                  )}
-                </td>
-                <td className="p-5 font-semibold text-primary">{b.name}</td>
-                <td className="p-5 text-on-surface-variant text-xs max-w-[180px] truncate">
-                  {b.logoUrl ? (
-                    <a href={b.logoUrl} target="_blank" rel="noopener noreferrer" className="text-secondary hover:underline">{b.logoUrl}</a>
-                  ) : <span className="italic opacity-50">None</span>}
-                </td>
-                <td className="p-5 text-xs text-on-surface-variant max-w-[160px] truncate">
-                  {b.siteUrl && b.siteUrl !== '#' ? (
-                    <a href={b.siteUrl} target="_blank" rel="noopener noreferrer" className="text-secondary hover:underline">{b.siteUrl}</a>
-                  ) : <span className="italic opacity-50">None</span>}
-                </td>
-                <td className="p-5 text-right">
-                  <button onClick={() => remove(b.id)} className="text-red-600 hover:bg-red-50 p-1 rounded">
-                    <span className="material-symbols-outlined text-lg">delete</span>
-                  </button>
-                </td>
-              </tr>
-            ))}
-            {brands.length === 0 && (
-              <tr><td colSpan={5} className="p-8 text-center text-on-surface-variant text-sm italic">No brands added yet.</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-
-      {!adding ? (
-        <button onClick={() => setAdding(true)} className="bg-primary text-white px-6 py-3 font-label-caps text-label-caps hover:bg-secondary transition-colors rounded flex items-center gap-2">
-          <span className="material-symbols-outlined text-sm">add</span> Add Brand
-        </button>
-      ) : (
-        <div className="bg-white border border-outline-variant/20 rounded-lg p-8">
-          <h3 className="font-headline-lg text-[18px] text-primary mb-6">New Brand</h3>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
-            <div>
-              <label className="font-label-caps text-xs text-on-surface-variant block mb-1">Brand Name *</label>
-              <input value={form.name} onChange={e => setForm(p => ({...p, name: e.target.value}))} placeholder="e.g. Samsung"
-                className="w-full px-4 py-2 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary" />
-            </div>
-            <div>
-              <label className="font-label-caps text-xs text-on-surface-variant block mb-1">Logo Image URL</label>
-              <input value={form.logoUrl} onChange={e => setForm(p => ({...p, logoUrl: e.target.value}))} placeholder="https://example.com/logo.png"
-                className="w-full px-4 py-2 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary" />
-              <p className="text-xs text-on-surface-variant/60 mt-1">Paste a direct link to the logo image. Leave blank to show brand name as text.</p>
-            </div>
-            <div className="md:col-span-2">
-              <label className="font-label-caps text-xs text-on-surface-variant block mb-1">Brand Website URL</label>
-              <input value={form.siteUrl} onChange={e => setForm(p => ({...p, siteUrl: e.target.value}))} placeholder="https://samsung.com"
-                className="w-full px-4 py-2 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary" />
-              <p className="text-xs text-on-surface-variant/60 mt-1">Clicking the logo on the site will navigate to this URL.</p>
-            </div>
-          </div>
-          {form.logoUrl && (
-            <div className="mb-4 p-4 bg-secondary rounded-lg flex items-center gap-4">
-              <span className="text-xs text-white font-label-caps">Preview:</span>
-              <img src={form.logoUrl} alt="preview" className="h-8 max-w-[120px] object-contain brightness-0 invert" onError={e => { e.target.style.opacity='0.3'; }} />
-            </div>
-          )}
-          <div className="flex gap-3 mt-4">
-            <button onClick={add} className="bg-primary text-white px-6 py-2 font-label-caps text-label-caps hover:bg-secondary transition-colors rounded">Save Brand</button>
-            <button onClick={() => setAdding(false)} className="px-6 py-2 border border-outline-variant/30 text-on-surface-variant font-label-caps text-label-caps rounded hover:bg-surface-container">Cancel</button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
-
 
 // ─── Tab: Services ────────────────────────────────────────────────────────────
 async function translateServiceFields(obj) {
@@ -637,159 +515,6 @@ function ServicesTab() {
   );
 }
 
-
-// ─── Tab: Capabilities ────────────────────────────────────────────────────────
-async function translateCapFields(obj) {
-  const result = { ...obj };
-  for (const f of ['title', 'desc']) {
-    if (obj[f] && String(obj[f]).trim()) {
-      try { result[`${f}_fr`] = await translateText(obj[f]); } catch { result[`${f}_fr`] = obj[f]; }
-    }
-  }
-  return result;
-}
-
-function CapabilitiesTab() {
-  const [caps, setCaps] = useState(getCapabilities);
-  const [editing, setEditing] = useState(null);
-  const [editForm, setEditForm] = useState({});
-  const [adding, setAdding] = useState(false);
-  const [form, setForm] = useState({ icon: '', title: '', desc: '' });
-  const [msg, setMsg] = useState('');
-  const [translating, setTranslating] = useState(false);
-
-  const ICONS = ['analytics','monitoring','content_paste','verified_user','support_agent','bar_chart','campaign','insights','speed','dashboard','smart_display','tune'];
-
-  const persist = (updated) => { setCaps(updated); saveCapabilities(updated); };
-
-  const remove = (id) => {
-    if (!window.confirm('Remove this capability?')) return;
-    persist(caps.filter(c => c.id !== id));
-  };
-
-  const startEdit = (c) => { setEditing(c.id); setEditForm({ ...c }); };
-  const saveEdit = async () => {
-    setTranslating(true);
-    const translated = await translateCapFields(editForm);
-    persist(caps.map(c => c.id === editing ? { ...c, ...translated } : c));
-    setEditing(null);
-    setTranslating(false);
-    setMsg('Updated — French translation saved.'); setTimeout(() => setMsg(''), 2500);
-  };
-
-  const add = async () => {
-    if (!form.title.trim()) return;
-    setTranslating(true);
-    const translated = await translateCapFields(form);
-    persist([...caps, { id: Date.now().toString(), ...translated }]);
-    setForm({ icon: '', title: '', desc: '' });
-    setAdding(false);
-    setTranslating(false);
-    setMsg('Capability added — French translation saved.'); setTimeout(() => setMsg(''), 2500);
-  };
-
-  return (
-    <div className="space-y-6">
-      {translating && <div className="p-3 bg-blue-50 text-blue-800 text-sm rounded font-medium flex items-center gap-2"><span className="material-symbols-outlined text-base animate-spin">autorenew</span> Auto-translating to French…</div>}
-      {!translating && msg && <div className="p-3 bg-green-100 text-green-800 text-sm rounded font-medium">{msg}</div>}
-      <p className="text-on-surface-variant text-sm">These cards appear in the "Capabilities" section on the Our Activities page.</p>
-
-      <div className="bg-white border border-outline-variant/20 rounded-lg overflow-hidden">
-        <table className="w-full text-sm">
-          <thead>
-            <tr className="bg-surface border-b border-outline-variant/20 text-on-surface-variant font-label-caps text-xs">
-              <th className="p-4 text-left">Icon</th>
-              <th className="p-4 text-left">Title</th>
-              <th className="p-4 text-left">Description</th>
-              <th className="p-4 text-right">Actions</th>
-            </tr>
-          </thead>
-          <tbody className="divide-y divide-outline-variant/20">
-            {caps.map(c => (
-              editing === c.id ? (
-                <tr key={c.id} className="bg-surface-container-low">
-                  <td className="p-4">
-                    <div className="flex flex-wrap gap-1 mb-2">
-                      {ICONS.map(ic => (
-                        <button key={ic} onClick={() => setEditForm(p => ({...p, icon: ic}))} className={`p-1 rounded border ${editForm.icon===ic?'border-secondary bg-surface-container':'border-outline-variant/30'}`}>
-                          <span className="material-symbols-outlined text-base text-secondary">{ic}</span>
-                        </button>
-                      ))}
-                    </div>
-                    {editForm.icon && <span className="material-symbols-outlined text-secondary text-2xl">{editForm.icon}</span>}
-                  </td>
-                  <td className="p-4">
-                    <input value={editForm.title || ''} onChange={e => setEditForm(p => ({...p, title: e.target.value}))} className="w-full px-2 py-1 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary" />
-                  </td>
-                  <td className="p-4">
-                    <textarea value={editForm.desc || ''} onChange={e => setEditForm(p => ({...p, desc: e.target.value}))} rows={3} className="w-full px-2 py-1 border border-outline-variant/30 rounded text-xs outline-none focus:border-secondary resize-none" />
-                  </td>
-                  <td className="p-4 text-right">
-                    <div className="flex gap-1 justify-end">
-                      <button onClick={saveEdit} className="px-3 py-1 bg-secondary text-white font-label-caps text-xs rounded hover:bg-secondary-container">Save</button>
-                      <button onClick={() => setEditing(null)} className="px-3 py-1 border border-outline-variant/30 text-on-surface-variant font-label-caps text-xs rounded">Cancel</button>
-                    </div>
-                  </td>
-                </tr>
-              ) : (
-                <tr key={c.id} className="hover:bg-surface-container-lowest">
-                  <td className="p-4"><span className="material-symbols-outlined text-secondary text-2xl">{c.icon}</span></td>
-                  <td className="p-4 font-semibold text-primary">{c.title}</td>
-                  <td className="p-4 text-on-surface-variant text-xs max-w-xs">{c.desc}</td>
-                  <td className="p-4 text-right">
-                    <div className="flex gap-1 justify-end">
-                      <button onClick={() => startEdit(c)} className="p-1 text-secondary hover:bg-surface-container rounded">
-                        <span className="material-symbols-outlined text-lg">edit</span>
-                      </button>
-                      <button onClick={() => remove(c.id)} className="p-1 text-red-600 hover:bg-red-50 rounded">
-                        <span className="material-symbols-outlined text-lg">delete</span>
-                      </button>
-                    </div>
-                  </td>
-                </tr>
-              )
-            ))}
-          </tbody>
-        </table>
-      </div>
-
-      {!adding ? (
-        <button onClick={() => setAdding(true)} className="bg-primary text-white px-6 py-3 font-label-caps text-label-caps hover:bg-secondary transition-colors rounded flex items-center gap-2">
-          <span className="material-symbols-outlined text-sm">add</span> Add Capability
-        </button>
-      ) : (
-        <div className="bg-white border border-outline-variant/20 rounded-lg p-8">
-          <h3 className="font-headline-lg text-[18px] text-primary mb-6">New Capability</h3>
-          <div className="space-y-4">
-            <div>
-              <label className="font-label-caps text-xs text-on-surface-variant block mb-1">Icon</label>
-              <div className="flex flex-wrap gap-2 mb-2">
-                {ICONS.map(ic => (
-                  <button key={ic} onClick={() => setForm(p => ({...p, icon: ic}))} className={`p-1.5 rounded border ${form.icon===ic?'border-secondary bg-surface-container':'border-outline-variant/30'}`}>
-                    <span className="material-symbols-outlined text-xl text-secondary">{ic}</span>
-                  </button>
-                ))}
-              </div>
-              <input value={form.icon} onChange={e => setForm(p => ({...p, icon: e.target.value}))} placeholder="Or type icon name" className="w-full px-4 py-2 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary" />
-            </div>
-            <div>
-              <label className="font-label-caps text-xs text-on-surface-variant block mb-1">Title *</label>
-              <input value={form.title} onChange={e => setForm(p => ({...p, title: e.target.value}))} className="w-full px-4 py-2 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary" />
-            </div>
-            <div>
-              <label className="font-label-caps text-xs text-on-surface-variant block mb-1">Description</label>
-              <textarea value={form.desc} onChange={e => setForm(p => ({...p, desc: e.target.value}))} rows={3} className="w-full px-4 py-2 border border-outline-variant/30 rounded text-sm outline-none focus:border-secondary resize-none" />
-            </div>
-          </div>
-          <div className="flex gap-3 mt-4">
-            <button onClick={add} className="bg-primary text-white px-6 py-2 font-label-caps text-label-caps hover:bg-secondary transition-colors rounded">Save</button>
-            <button onClick={() => setAdding(false)} className="px-6 py-2 border border-outline-variant/30 text-on-surface-variant font-label-caps text-label-caps rounded hover:bg-surface-container">Cancel</button>
-          </div>
-        </div>
-      )}
-    </div>
-  );
-}
 
 
 // ─── Auto-translate helper ─────────────────────────────────────────────────────
@@ -1101,7 +826,6 @@ const TABS = [
   { id: 'Leads',        icon: 'inbox' },
   { id: 'Images',       icon: 'image' },
   { id: 'Services',     icon: 'grid_view' },
-  { id: 'Capabilities', icon: 'workspace_premium' },
   { id: 'Content',      icon: 'edit_note' },
   { id: 'Settings',     icon: 'settings' },
 ];
@@ -1110,7 +834,6 @@ const TAB_DESC = {
   Leads:        'Review and manage client quote requests.',
   Images:       'Manage images displayed on the website. Click an image to set it as active.',
   Services:     'Add, edit, or remove advertising services. Changes apply to the Home page and Advertising page cards.',
-  Capabilities: 'Edit the capability cards shown in the "Our Activities" page. Add, edit, or remove items.',
   Content:      'Edit all text content on every page of the website — homepage, advertising, activities, and contact.',
   Settings:     'Change your admin password and manage your recovery key.',
 };
@@ -1283,7 +1006,6 @@ export default function AdminPanel() {
         {activeTab === 'Leads'        && <LeadsTab />}
         {activeTab === 'Images'       && <ImagesTab />}
         {activeTab === 'Services'     && <ServicesTab />}
-        {activeTab === 'Capabilities' && <CapabilitiesTab />}
         {activeTab === 'Content'      && <ContentTab />}
         {activeTab === 'Settings'     && <SettingsTab />}
       </div>
