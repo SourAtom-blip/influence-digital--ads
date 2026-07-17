@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useLanguage, useContent } from '../context/LanguageContext';
 import { getImages } from '../utils/storage';
+import { apiSubmitQuote } from '../utils/api';
 import T from '../utils/translations';
 
 export default function Contact() {
@@ -27,7 +28,15 @@ export default function Contact() {
     if (!agreed) { setConsentError(true); return; }
     setConsentError(false);
     setLoading(true);
-    await new Promise(r => setTimeout(r, 700));
+    try {
+      await apiSubmitQuote({ ...form, targetArea: 'Contact Form', duration: '-', type: 'contact' });
+    } catch {
+      try {
+        const existing = JSON.parse(localStorage.getItem('site_leads') ?? '[]');
+        existing.unshift({ ...form, targetArea: 'Contact Form', duration: '-', type: 'contact', _id: Date.now().toString(), status: 'Pending', createdAt: new Date().toISOString() });
+        localStorage.setItem('site_leads', JSON.stringify(existing));
+      } catch {}
+    }
     setSubmitted(true);
     setLoading(false);
     setForm(empty);
