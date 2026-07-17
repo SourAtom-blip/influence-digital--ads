@@ -1,23 +1,20 @@
 import express from 'express';
 import multer from 'multer';
 import path from 'path';
-import { fileURLToPath } from 'url';
 import jwt from 'jsonwebtoken';
+import { v2 as cloudinary } from 'cloudinary';
 
 const router = express.Router();
-const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
-const storage = multer.diskStorage({
-  destination: path.join(__dirname, '../uploads'),
-  filename: (req, file, cb) => {
-    const ext = path.extname(file.originalname).toLowerCase() || '.jpg';
-    cb(null, `${Date.now()}-${Math.random().toString(36).slice(2, 8)}${ext}`);
-  },
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key:    process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 const upload = multer({
-  storage,
-  limits: { fileSize: 5 * 1024 * 1024 },
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 10 * 1024 * 1024 },
   fileFilter: (req, file, cb) => {
     const allowed = /jpeg|jpg|png|webp/;
     cb(null, allowed.test(path.extname(file.originalname).toLowerCase()));
@@ -36,14 +33,26 @@ function authRequired(req, res, next) {
 }
 
 router.post('/', authRequired, (req, res, next) => {
-  upload.single('image')(req, res, (err) => {
+  upload.single('image')(req, res, async (err) => {
     if (err?.code === 'LIMIT_FILE_SIZE')
-      return res.status(400).json({ message: 'File too large. Maximum size is 5MB.' });
+      return res.status(400).json({ message: 'File too large. Maximum size is 10MB.' });
     if (err)
       return res.status(400).json({ message: 'Invalid file. Only JPEG, PNG, and WebP are allowed.' });
     if (!req.file) return res.status(400).json({ message: 'No file received' });
-    const base = process.env.BACKEND_URL || `http://localhost:${process.env.PORT || 5000}`;
-    res.json({ url: `${base}/uploads/${req.file.filename}` });
+
+    try {
+      const result = await new Promise((resolve, reject) => {
+        const stream = cloudinary.uploader.upload_stream(
+          { folder: 'influence-ads', resource_type: 'image', transformation: [{ quality: 'auto', fetch_format: 'auto' }] },
+          (error, result) => error ? reject(error) : resolve(result)
+        );
+        stream.end(req.file.buffer);
+      });
+      res.json({ url: result.secure_url });
+    } catch (e) {
+      console.error('[Upload] Cloudinary error:', e.message);
+      res.status(500).json({ message: 'Upload failed. Please try again.' });
+    }
   });
 });
 

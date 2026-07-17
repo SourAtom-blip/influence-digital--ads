@@ -256,29 +256,23 @@ const IMAGE_SLOTS = [
 function ImageSlot({ imgKey, label, images, onChange }) {
   const fileRef = React.useRef();
   const current = images[imgKey];
+  const [uploading, setUploading] = React.useState(false);
+  const [uploadErr, setUploadErr] = React.useState('');
 
-  const handleFile = (e) => {
+  const handleFile = async (e) => {
     const file = e.target.files[0];
     if (!file) return;
-    const reader = new FileReader();
-    reader.onload = ev => {
-      const img = new Image();
-      img.onload = () => {
-        const MAX = 1200;
-        let w = img.width, h = img.height;
-        if (w > MAX || h > MAX) {
-          if (w > h) { h = Math.round(h * MAX / w); w = MAX; }
-          else       { w = Math.round(w * MAX / h); h = MAX; }
-        }
-        const canvas = document.createElement('canvas');
-        canvas.width = w; canvas.height = h;
-        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-        onChange(imgKey, canvas.toDataURL('image/jpeg', 0.75));
-      };
-      img.src = ev.target.result;
-    };
-    reader.readAsDataURL(file);
     e.target.value = '';
+    setUploadErr('');
+    setUploading(true);
+    try {
+      const data = await apiUploadImage(file);
+      onChange(imgKey, data.url);
+    } catch (err) {
+      setUploadErr(err.message || 'Upload failed.');
+    } finally {
+      setUploading(false);
+    }
   };
 
   return (
@@ -288,10 +282,12 @@ function ImageSlot({ imgKey, label, images, onChange }) {
         {current && <img src={current} alt={label} className="w-full h-full object-cover" />}
         {!current && <div className="flex items-center justify-center h-full text-on-surface-variant/40 text-xs">No image</div>}
       </div>
+      {uploadErr && <p className="text-red-600 text-xs">{uploadErr}</p>}
       <div className="flex gap-2">
-        <button onClick={() => fileRef.current.click()}
-          className="flex-1 flex items-center justify-center gap-1 bg-primary text-white px-3 py-1.5 font-label-caps text-xs rounded hover:bg-secondary transition-colors">
-          <span className="material-symbols-outlined text-sm">upload</span> Upload
+        <button onClick={() => !uploading && fileRef.current.click()} disabled={uploading}
+          className="flex-1 flex items-center justify-center gap-1 bg-primary text-white px-3 py-1.5 font-label-caps text-xs rounded hover:bg-secondary transition-colors disabled:opacity-60">
+          <span className="material-symbols-outlined text-sm">{uploading ? 'hourglass_empty' : 'upload'}</span>
+          {uploading ? 'Uploading…' : 'Upload'}
         </button>
         {current && current !== IMAGE_DEFAULTS[imgKey] && (
           <button onClick={() => onChange(imgKey, IMAGE_DEFAULTS[imgKey])}
