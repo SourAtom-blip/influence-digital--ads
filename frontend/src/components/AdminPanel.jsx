@@ -224,7 +224,6 @@ const IMAGE_SLOTS = [
     { key: 'homeAbout',   label: 'About Section' },
     { key: 'homeDesign',  label: 'Billboard Thumbnail' },
     { key: 'homeGraphic', label: 'Graphic Design Section' },
-    { key: 'homeExtra',   label: 'Stats/CTA Background' },
   ]},
   { section: 'Advertising Page', slots: [
     { key: 'advertisingHero',   label: 'Hero Background' },
@@ -521,7 +520,6 @@ function ServicesTab() {
 const NO_TRANSLATE = new Set([
   'navBrand',
   'heroStat1Val','heroStat2Val','heroStat3Val',
-  'metric1Val','metric2Val','metric3Val','metric4Val',
   'aboutYears','footerPhone','footerEmail',
   'advStat1Val','advStat2Val','advStat3Val','advStat4Val',
   'contactResponseTime','contactInfo1Value','contactInfo2Value','contactInfo3Value','contactInfo4Value',
@@ -611,7 +609,7 @@ function ContentTab() {
 
   const fields = [
     { section: 'Navbar', keys: ['navBrand'] },
-    { section: 'Hero Section', keys: ['heroBadge','heroHeadline','heroSubtext','heroCta1','heroCta2','heroStat1Val','heroStat1Label','heroStat2Val','heroStat2Label','heroStat3Val','heroStat3Label'] },
+    { section: 'Hero Section', keys: ['heroBadge','heroSubtext','heroCta1','heroCta2','heroStat1Val','heroStat1Label','heroStat2Val','heroStat2Label','heroStat3Val','heroStat3Label'] },
     { section: 'About Section', keys: ['aboutLabel','aboutHeadline','aboutText1','aboutText2','aboutYears','aboutYearsLabel','aboutCta'] },
     { section: 'Solutions Section', keys: ['solutionsHeadline','solutionsSubtext'] },
     { section: 'Our Process', keys: ['processHeadline','process1Title','process1Desc','process2Title','process2Desc','process3Title','process3Desc','process4Title','process4Desc'] },
@@ -634,17 +632,11 @@ function ContentTab() {
 
   const labels = {
     navBrand: 'Brand Name',
-    heroBadge:'Badge Text', heroHeadline:'Main Headline', heroSubtext:'Sub-text', heroCta1:'Button 1', heroCta2:'Button 2',
+    heroBadge:'Badge Text', heroSubtext:'Sub-text', heroCta1:'Button 1', heroCta2:'Button 2',
     heroStat1Val:'Stat 1 Number', heroStat1Label:'Stat 1 Label', heroStat2Val:'Stat 2 Number', heroStat2Label:'Stat 2 Label', heroStat3Val:'Stat 3 Number', heroStat3Label:'Stat 3 Label',
     trustedLabel: 'Banner Text',
     aboutLabel:'Section Label', aboutHeadline:'Headline', aboutText1:'Paragraph 1', aboutText2:'Paragraph 2', aboutYears:'Years Number', aboutYearsLabel:'Years Label', aboutCta:'Button Text',
     solutionsHeadline:'Headline', solutionsSubtext:'Sub-text',
-    whyLabel:'Section Label', whyHeadline:'Headline', whySubtext:'Sub-text',
-    why1Title:'Item 1 Title', why1Desc:'Item 1 Description', why2Title:'Item 2 Title', why2Desc:'Item 2 Description',
-    why3Title:'Item 3 Title', why3Desc:'Item 3 Description', why4Title:'Item 4 Title', why4Desc:'Item 4 Description',
-    why5Title:'Item 5 Title', why5Desc:'Item 5 Description', why6Title:'Item 6 Title', why6Desc:'Item 6 Description',
-    metric1Val:'Metric 1 Number', metric1Label:'Metric 1 Label', metric2Val:'Metric 2 Number', metric2Label:'Metric 2 Label',
-    metric3Val:'Metric 3 Number', metric3Label:'Metric 3 Label', metric4Val:'Metric 4 Number', metric4Label:'Metric 4 Label',
     processHeadline:'Section Headline',
     process1Title:'Step 1 Title', process1Desc:'Step 1 Description', process2Title:'Step 2 Title', process2Desc:'Step 2 Description',
     process3Title:'Step 3 Title', process3Desc:'Step 3 Description', process4Title:'Step 4 Title', process4Desc:'Step 4 Description',
@@ -686,7 +678,6 @@ function ContentTab() {
   };
 
   const isLong = (key) => ['heroSubtext','aboutText1','aboutText2','solutionsSubtext','ctaSubtext','whySubtext','footerDesc',
-    'why1Desc','why2Desc','why3Desc','why4Desc','why5Desc','why6Desc',
     'process1Desc','process2Desc','process3Desc','process4Desc',
     'advSubtext','advCtaSubtext','oaSubtext','oaCapSubtext','oaWhySubtext','oaCtaSubtext',
     'oaStep1Desc','oaStep2Desc','oaStep3Desc','oaStep4Desc',
