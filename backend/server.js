@@ -31,10 +31,13 @@ const app = express();
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
 app.use(cors({
-  origin: [
-    'https://influence-digital-ads-frontend-zeta.vercel.app',
-    'http://localhost:5173',
-  ],
+  origin: (origin, cb) => {
+    if (!origin) return cb(null, true);
+    const allowed =
+      origin === 'http://localhost:5173' ||
+      /^https:\/\/influence-digital-ads[a-z0-9-]*\.vercel\.app$/.test(origin);
+    cb(allowed ? null : new Error('Not allowed by CORS'), allowed);
+  },
   credentials: true,
 }));
 app.use(express.json());
