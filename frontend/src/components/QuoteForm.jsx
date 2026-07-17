@@ -7,7 +7,8 @@ function saveLeadLocally(data) {
     const existing = JSON.parse(localStorage.getItem('site_leads') ?? '[]');
     existing.unshift({ ...data, _id: Date.now().toString(), status: 'Pending', createdAt: new Date().toISOString() });
     localStorage.setItem('site_leads', JSON.stringify(existing));
-  } catch {}
+    return true;
+  } catch { return false; }
 }
 
 const T = {
@@ -65,12 +66,17 @@ export default function QuoteForm({ preselected = '', compact = false, showConse
 
     try {
       await apiSubmitQuote(formData);
+      setStatus({ type: 'success', message: t.success });
     } catch {
-      // Backend not connected — save locally so admin still sees the lead
-      saveLeadLocally(formData);
+      const saved = saveLeadLocally(formData);
+      if (saved) {
+        setStatus({ type: 'success', message: t.success });
+      } else {
+        setStatus({ type: 'error', message: t.error || 'Submission failed. Please try again.' });
+        setLoading(false);
+        return;
+      }
     }
-
-    setStatus({ type: 'success', message: t.success });
     setFormData({ ...empty, targetArea: '' });
     setLoading(false);
   };

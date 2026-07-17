@@ -107,7 +107,8 @@ router.get('/', protect, async (req, res) => {
 // PUT /api/quotes/:id  (admin)
 router.put('/:id', protect, async (req, res) => {
   try {
-    const quote = await Quote.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const { status } = req.body;
+    const quote = await Quote.findByIdAndUpdate(req.params.id, { status }, { new: true });
     if (!quote) return res.status(404).json({ message: 'Quote not found.' });
     res.json(quote);
   } catch (err) {

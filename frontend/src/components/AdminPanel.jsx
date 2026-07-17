@@ -129,13 +129,19 @@ function LeadsTab() {
       try { dbLeads = await apiGetQuotes() ?? []; } catch { return; }
       const dbIds = new Set(dbLeads.map(q => q._id));
       const unsynced = local.filter(l => !dbIds.has(l._id));
+      const failed = [];
       for (const lead of unsynced) {
-        try { await apiSubmitQuote(lead); } catch {}
+        try { await apiSubmitQuote(lead); }
+        catch { failed.push(lead); }
       }
       if (unsynced.length > 0) {
         try { dbLeads = await apiGetQuotes() ?? []; } catch {}
       }
-      localStorage.removeItem('site_leads');
+      if (failed.length > 0) {
+        localStorage.setItem('site_leads', JSON.stringify(failed));
+      } else {
+        localStorage.removeItem('site_leads');
+      }
       setQuotes(dbLeads);
     };
     syncAndLoad();
