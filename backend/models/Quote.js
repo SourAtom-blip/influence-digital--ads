@@ -3,10 +3,7 @@ import mongoose from 'mongoose';
 const quoteSchema = new mongoose.Schema({
   name:       { type: String, required: true, trim: true },
   title:      { type: String, trim: true },
-  email:      {
-    type: String, required: true, trim: true, lowercase: true,
-    match: [/^[^\s@]+@[^\s@]+\.[^\s@]+$/, 'Please enter a valid email address.'],
-  },
+  email:      { type: String, required: true, trim: true },
   company:    { type: String, trim: true },
   telephone:  { type: String, trim: true },
   location:   { type: String, trim: true },
