@@ -30,7 +30,13 @@ const app = express();
 
 // ── Middleware ────────────────────────────────────────────────────────────────
 app.use(helmet({ contentSecurityPolicy: false }));
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({
+  origin: [
+    'https://influence-digital-ads-frontend-zeta.vercel.app',
+    'http://localhost:5173',
+  ],
+  credentials: true,
+}));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
