@@ -9,7 +9,7 @@ import {
   apiLogin, apiLogout,
   apiGetQuotes, apiUpdateQuote, apiDeleteQuote,
   apiChangePassword, apiResetPassword, apiChangeKey,
-  apiUploadImage,
+  apiUploadImage, apiSubmitQuote,
 } from '../utils/api';
 
 
@@ -123,7 +123,22 @@ function LeadsTab() {
   const [sendingTo, setSendingTo] = useState(null);
 
   useEffect(() => {
-    apiGetQuotes().then(data => { if (data?.length) setQuotes(data); }).catch(() => {});
+    const syncAndLoad = async () => {
+      const local = getStoredLeads();
+      let dbLeads = [];
+      try { dbLeads = await apiGetQuotes() ?? []; } catch { return; }
+      const dbIds = new Set(dbLeads.map(q => q._id));
+      const unsynced = local.filter(l => !dbIds.has(l._id));
+      for (const lead of unsynced) {
+        try { await apiSubmitQuote(lead); } catch {}
+      }
+      if (unsynced.length > 0) {
+        try { dbLeads = await apiGetQuotes() ?? []; } catch {}
+      }
+      localStorage.removeItem('site_leads');
+      setQuotes(dbLeads);
+    };
+    syncAndLoad();
   }, []);
 
   const persistLeads = (updated) => {
