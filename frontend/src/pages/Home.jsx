@@ -162,7 +162,7 @@ export default function Home() {
                 style={{ transform: `translateX(calc(-${activeCard} * (100% / ${visibleCards} + ${visibleCards === 1 ? 16 : visibleCards === 2 ? 8 : 5}px)))` }}
               >
                 {services.map((s) => {
-                  const svcImg = { 'shopping-centers': images.serviceShoppingCenters, 'malls': images.serviceMalls, 'airports': images.serviceAirports, 'urban-zones': images.serviceUrbanZones }[s.slug];
+                  const svcImg = ({ 'shopping-centers': images.serviceShoppingCenters, 'malls': images.serviceMalls, 'airports': images.serviceAirports, 'urban-zones': images.serviceUrbanZones }[s.slug]) || s.image;
                   return (
                   <div
                     key={s.slug}
