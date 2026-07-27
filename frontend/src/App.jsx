@@ -49,6 +49,8 @@ function Layout() {
   useEffect(() => {
     fetchImages();
     fetchServices();
+    fetchContent('en');
+    fetchContent('fr');
   }, []);
 
   return (
