@@ -7,6 +7,9 @@ node_modules/
 backend/node_modules/
 frontend/node_modules/
 
+# Frontend build output (served via backend/public/)
+frontend/dist/
+
 # Uploaded files (large binary assets)
 backend/uploads/
 
