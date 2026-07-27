@@ -47,7 +47,7 @@ export default function Advertising() {
       icon:  s.icon  || tr.icon  || '',
       title: tr.title || (isFr ? s.title_fr || s.title : s.title) || '',
       desc:  tr.desc  || (isFr ? s.desc_fr  || s.desc  : s.desc)  || '',
-      stat:  s.stat  || tr.stat  || '',
+      stat:  (isFr ? s.stat_fr || s.stat : s.stat) || tr.stat || '',
     };
   });
 

@@ -354,14 +354,13 @@ function ImagesTab() {
 
 // ─── Tab: Services ────────────────────────────────────────────────────────────
 async function translateServiceFields(obj) {
-  const fields = ['title', 'tagline', 'desc'];
+  const fields = ['title', 'tagline', 'desc', 'stat'];
   const result = { ...obj };
   for (const f of fields) {
     if (obj[f] && String(obj[f]).trim()) {
       try {
         result[`${f}_fr`] = await translateText(obj[f]);
       } catch {
-        // keep existing FR value if present, otherwise leave blank so FR default shows
         if (!result[`${f}_fr`]) result[`${f}_fr`] = '';
       }
     }
