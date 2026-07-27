@@ -1,8 +1,8 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
 import { getContent, fetchContent } from '../utils/storage';
 import T from '../utils/translations';
 
-const LanguageContext = createContext({ lang: 'en', setLang: () => {}, content: {} });
+const LanguageContext = createContext({ lang: 'en', setLang: () => {}, content: {}, refreshContent: () => {} });
 
 export function LanguageProvider({ children }) {
   const [lang, setLangState] = useState(() => localStorage.getItem('site_lang') || 'en');
@@ -10,6 +10,11 @@ export function LanguageProvider({ children }) {
   const [contentFr, setContentFr] = useState(() => getContent('fr'));
 
   useEffect(() => {
+    fetchContent('en').then(c => { if (c) setContentEn(c); });
+    fetchContent('fr').then(c => { if (c) setContentFr(c); });
+  }, []);
+
+  const refreshContent = useCallback(() => {
     fetchContent('en').then(c => { if (c) setContentEn(c); });
     fetchContent('fr').then(c => { if (c) setContentFr(c); });
   }, []);
@@ -22,7 +27,7 @@ export function LanguageProvider({ children }) {
   const content = lang === 'fr' ? contentFr : contentEn;
 
   return (
-    <LanguageContext.Provider value={{ lang, setLang, content }}>
+    <LanguageContext.Provider value={{ lang, setLang, content, refreshContent }}>
       {children}
     </LanguageContext.Provider>
   );

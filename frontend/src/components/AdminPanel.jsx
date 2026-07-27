@@ -11,6 +11,7 @@ import {
   apiChangePassword, apiResetPassword, apiChangeKey,
   apiUploadImage, apiSubmitQuote,
 } from '../utils/api';
+import { useLanguage } from '../context/LanguageContext';
 
 
 // ─── Tab: Leads ───────────────────────────────────────────────────────────────
@@ -626,6 +627,7 @@ async function autoTranslateFrWithProgress(englishContent, onProgress) {
 
 // ─── Tab: Content ─────────────────────────────────────────────────────────────
 function ContentTab() {
+  const { refreshContent } = useLanguage();
   const [content, setContent]         = useState(() => getContent());
   const [saved, setSaved]             = useState(false);
   const [translating, setTranslating] = useState(false);
@@ -644,6 +646,7 @@ function ContentTab() {
     try {
       const frContent = await autoTranslateFrWithProgress(content, (done) => setTranslateProgress({ done, total }));
       saveContent(frContent, 'fr');
+      refreshContent();
       setSaved(true);
       setTimeout(() => setSaved(false), 3500);
     } catch {
