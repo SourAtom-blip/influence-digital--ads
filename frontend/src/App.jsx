@@ -22,7 +22,7 @@ class ErrorBoundary extends React.Component {
     );
   }
 }
-import { fetchImages, fetchServices, fetchContent } from './utils/storage';
+import { fetchImages, fetchServices } from './utils/storage';
 import { LanguageProvider } from './context/LanguageContext';
 
 function ScrollToTop() {
@@ -49,8 +49,6 @@ function Layout() {
   useEffect(() => {
     fetchImages();
     fetchServices();
-    fetchContent('en');
-    fetchContent('fr');
   }, []);
 
   return (
