@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage, useContent } from '../context/LanguageContext';
-import { getServices, getImages } from '../utils/storage';
+import { getServices, getImages, fetchImages } from '../utils/storage';
 import T from '../utils/translations';
 
 export default function Advertising() {
   const { lang } = useLanguage();
   const t = (T[lang] || T.en).advertising;
   const content = useContent();
-  const images = getImages();
+  const [images, setImages] = useState(getImages);
+  useEffect(() => {
+    fetchImages().then(imgs => setImages(prev => ({ ...prev, ...imgs })));
+  }, []);
   const [activeCard, setActiveCard] = useState(0);
   const [visibleCards, setVisibleCards] = useState(3);
   useEffect(() => {

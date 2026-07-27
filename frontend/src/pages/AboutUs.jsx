@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useContent, useLanguage } from '../context/LanguageContext';
-import { getImages } from '../utils/storage';
+import { getImages, fetchImages } from '../utils/storage';
 import CounterNumber from '../components/CounterNumber';
 import T from '../utils/translations';
 
@@ -12,7 +12,10 @@ export default function AboutUs() {
   const ta = (T[lang] || T.en).aboutUs;
   const tadv = (T[lang] || T.en).advertising;
   const tact = (T[lang] || T.en).ourActivities;
-  const images  = getImages();
+  const [images, setImages] = useState(getImages);
+  useEffect(() => {
+    fetchImages().then(imgs => setImages(prev => ({ ...prev, ...imgs })));
+  }, []);
   const aboutImg = images.homeAbout;
 
   const metrics = [

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import QuoteForm from '../components/QuoteForm';
 import { useLanguage } from '../context/LanguageContext';
-import { getServices, getImages } from '../utils/storage';
+import { getServices, getImages, fetchImages } from '../utils/storage';
 import T from '../utils/translations';
 
 export default function ServicePage() {
@@ -13,7 +13,10 @@ export default function ServicePage() {
 
   const [allServices, setAllServices] = useState(() => getServices());
   useEffect(() => { setAllServices(getServices()); }, [slug]);
-  const images = getImages();
+  const [images, setImages] = useState(getImages);
+  useEffect(() => {
+    fetchImages().then(imgs => setImages(prev => ({ ...prev, ...imgs })));
+  }, []);
   const SLUG_IMAGES = {
     'shopping-centers': images.serviceShoppingCenters,
     'malls':            images.serviceMalls,

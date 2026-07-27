@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLanguage, useContent } from '../context/LanguageContext';
-import { getImages } from '../utils/storage';
+import { getImages, fetchImages } from '../utils/storage';
 import { apiSubmitQuote } from '../utils/api';
 import T from '../utils/translations';
 
@@ -8,7 +8,10 @@ export default function Contact() {
   const { lang } = useLanguage();
   const t = (T[lang] || T.en).contact;
   const content = useContent();
-  const images = getImages();
+  const [images, setImages] = useState(getImages);
+  useEffect(() => {
+    fetchImages().then(imgs => setImages(prev => ({ ...prev, ...imgs })));
+  }, []);
 
   const badge    = content.contactBadge    || t.badge;
   const headline = content.contactHeadline || t.headline;

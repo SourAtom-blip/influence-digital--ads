@@ -1,13 +1,16 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import QuoteForm from '../components/QuoteForm';
 import { useLanguage } from '../context/LanguageContext';
-import { getImages } from '../utils/storage';
+import { getImages, fetchImages } from '../utils/storage';
 import T from '../utils/translations';
 
 export default function FreeQuote() {
   const { lang } = useLanguage();
   const t = (T[lang] || T.en).freeQuote;
-  const images = getImages();
+  const [images, setImages] = useState(getImages);
+  useEffect(() => {
+    fetchImages().then(imgs => setImages(prev => ({ ...prev, ...imgs })));
+  }, []);
 
   return (
     <div className="bg-surface">

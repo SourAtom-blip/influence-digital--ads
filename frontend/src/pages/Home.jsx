@@ -2,12 +2,15 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import QuoteForm from '../components/QuoteForm';
 import CounterNumber from '../components/CounterNumber';
-import { getImages, getServices } from '../utils/storage';
+import { getImages, getServices, fetchImages } from '../utils/storage';
 import { useContent, useLanguage } from '../context/LanguageContext';
 import T from '../utils/translations';
 
 export default function Home() {
-  const images  = getImages();
+  const [images, setImages] = useState(getImages);
+  useEffect(() => {
+    fetchImages().then(imgs => setImages(prev => ({ ...prev, ...imgs })));
+  }, []);
   const content = useContent();
   const { lang } = useLanguage();
   const t       = T[lang] || T.en;
