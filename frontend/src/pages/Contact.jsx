@@ -143,32 +143,32 @@ export default function Contact() {
                   <div className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-secondary-container text-base mt-0.5">call</span>
                     <div>
-                      <p className="text-white font-semibold">+1 803 295 7599</p>
+                      <a href="tel:+18032957599" className="text-white font-semibold hover:text-white/80 transition-colors">+1 803 295 7599</a>
                       <p className="text-white/60 text-xs">United States</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-secondary-container text-base mt-0.5">call</span>
                     <div>
-                      <p className="text-white/80">+223 93 14 14 51</p>
+                      <a href="tel:+22393141451" className="text-white/80 hover:text-white transition-colors">+223 93 14 14 51</a>
                       <p className="text-white/60 text-xs">Bamako</p>
                     </div>
                   </div>
                   <div className="flex items-start gap-3">
                     <span className="material-symbols-outlined text-secondary-container text-base mt-0.5">call</span>
                     <div>
-                      <p className="text-white/80">+221 77 234 66 33</p>
+                      <a href="tel:+221772346633" className="text-white/80 hover:text-white transition-colors">+221 77 234 66 33</a>
                       <p className="text-white/60 text-xs">Dakar</p>
                     </div>
                   </div>
                   <div className="pt-3 border-t border-white/10 space-y-2">
                     <div className="flex items-center gap-3">
                       <span className="material-symbols-outlined text-secondary-container text-base">language</span>
-                      <p className="text-white/70 text-xs">www.influencedigital-ads.com</p>
+                      <a href="https://influencedigital-ads.com" className="text-white/70 text-xs hover:text-white/90 transition-colors">www.influencedigital-ads.com</a>
                     </div>
                     <div className="flex items-center gap-3">
                       <span className="material-symbols-outlined text-secondary-container text-base">mail</span>
-                      <p className="text-white/70 text-xs">info@influencedigital-ads.com</p>
+                      <a href="mailto:info@influencedigital-ads.com" className="text-white/70 text-xs hover:text-white/90 transition-colors">info@influencedigital-ads.com</a>
                     </div>
                   </div>
                 </div>

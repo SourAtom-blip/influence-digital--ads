@@ -57,11 +57,11 @@ export default function Footer() {
             </li>
             <li className="flex items-center gap-3">
               <span className="material-symbols-outlined text-sm">call</span>
-              {c.footerPhone}
+              <a href={`tel:${c.footerPhone}`} className="hover:text-white transition-colors">{c.footerPhone}</a>
             </li>
             <li className="flex items-center gap-3">
               <span className="material-symbols-outlined text-sm">mail</span>
-              {c.footerEmail}
+              <a href={`mailto:${c.footerEmail}`} className="hover:text-white transition-colors">{c.footerEmail}</a>
             </li>
           </ul>
         </div>
