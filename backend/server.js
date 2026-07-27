@@ -35,6 +35,8 @@ app.use(cors({
     if (!origin) return cb(null, true);
     const allowed =
       origin === 'http://localhost:5173' ||
+      origin === 'https://influencedigital-ads.com' ||
+      origin === 'https://www.influencedigital-ads.com' ||
       /^https:\/\/influence-digital-ads[a-z0-9-]*\.vercel\.app$/.test(origin);
     cb(allowed ? null : new Error('Not allowed by CORS'), allowed);
   },
@@ -66,6 +68,10 @@ app.use('/api/quotes', rateLimit({
 // ── Static uploads ────────────────────────────────────────────────────────────
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
+// ── Serve React frontend ──────────────────────────────────────────────────────
+const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
+app.use(express.static(frontendDist));
+
 // ── Routes ────────────────────────────────────────────────────────────────────
 app.use('/api/auth',   authRoutes);
 app.use('/api/quotes', quoteRoutes);
@@ -74,6 +80,11 @@ app.use('/api/upload', uploadRoutes);
 
 app.get('/api/health', (req, res) => {
   res.json({ status: 'ok', db: mongoose.connection.readyState === 1 ? 'connected' : 'disconnected' });
+});
+
+// ── React Router catch-all ───────────────────────────────────────────────────
+app.get('*', (req, res) => {
+  res.sendFile(path.join(frontendDist, 'index.html'));
 });
 
 // ── Global error handler ──────────────────────────────────────────────────────
