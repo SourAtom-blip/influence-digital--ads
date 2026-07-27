@@ -2,7 +2,7 @@ import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import QuoteForm from '../components/QuoteForm';
 import CounterNumber from '../components/CounterNumber';
-import { getImages, getServices, fetchImages } from '../utils/storage';
+import { getImages, getServices, fetchImages, fetchServices } from '../utils/storage';
 import { useContent, useLanguage } from '../context/LanguageContext';
 import T from '../utils/translations';
 
@@ -15,6 +15,10 @@ export default function Home() {
   const { lang } = useLanguage();
   const t       = T[lang] || T.en;
   const [activeCard, setActiveCard] = useState(0);
+  const [rawServices, setRawServices] = useState(getServices);
+  useEffect(() => {
+    fetchServices().then(s => setRawServices(prev => (Array.isArray(s) && s.length ? s : prev)));
+  }, []);
   const carouselRef = useRef(null);
   const [visibleCards, setVisibleCards] = useState(3);
   useEffect(() => {
@@ -25,7 +29,7 @@ export default function Home() {
   }, []);
 
   // Merge admin-managed structure with translated titles/descs by slug
-  const services = getServices().map(s => {
+  const services = rawServices.map(s => {
     const tr = t.advertising.services.find(ts => ts.slug === s.slug);
     if (tr) return { ...s, title: tr.title, desc: tr.desc };
     // For custom services added via admin, use FR fields when in French

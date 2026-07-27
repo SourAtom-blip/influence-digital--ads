@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import QuoteForm from '../components/QuoteForm';
 import { useLanguage } from '../context/LanguageContext';
-import { getServices, getImages, fetchImages } from '../utils/storage';
+import { getServices, fetchServices, getImages, fetchImages } from '../utils/storage';
 import T from '../utils/translations';
 
 export default function ServicePage() {
@@ -12,7 +12,9 @@ export default function ServicePage() {
   const isFr = lang === 'fr';
 
   const [allServices, setAllServices] = useState(() => getServices());
-  useEffect(() => { setAllServices(getServices()); }, [slug]);
+  useEffect(() => {
+    fetchServices().then(s => setAllServices(prev => (Array.isArray(s) && s.length ? s : prev)));
+  }, [slug]);
   const [images, setImages] = useState(getImages);
   useEffect(() => {
     fetchImages().then(imgs => setImages(prev => ({ ...prev, ...imgs })));

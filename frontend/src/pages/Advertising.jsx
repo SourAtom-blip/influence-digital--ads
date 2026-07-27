@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage, useContent } from '../context/LanguageContext';
-import { getServices, getImages, fetchImages } from '../utils/storage';
+import { getServices, fetchServices, getImages, fetchImages } from '../utils/storage';
 import T from '../utils/translations';
 
 export default function Advertising() {
@@ -13,6 +13,10 @@ export default function Advertising() {
     fetchImages().then(imgs => setImages(prev => ({ ...prev, ...imgs })));
   }, []);
   const [activeCard, setActiveCard] = useState(0);
+  const [rawServices, setRawServices] = useState(getServices);
+  useEffect(() => {
+    fetchServices().then(s => setRawServices(prev => (Array.isArray(s) && s.length ? s : prev)));
+  }, []);
   const [visibleCards, setVisibleCards] = useState(3);
   useEffect(() => {
     const update = () => setVisibleCards(window.innerWidth < 640 ? 1 : window.innerWidth < 1024 ? 2 : 3);
@@ -39,7 +43,7 @@ export default function Advertising() {
   ];
 
   // Service cards — driven by storage (admin-editable); fall back to translations per slug
-  const services = getServices().map(s => {
+  const services = rawServices.map(s => {
     const tr = t.services.find(ts => ts.slug === s.slug) || {};
     const isFr = lang === 'fr';
     return {
