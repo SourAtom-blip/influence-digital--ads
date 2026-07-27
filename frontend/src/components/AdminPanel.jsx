@@ -578,11 +578,16 @@ async function translateText(text) {
   const translated = [];
   for (const chunk of chunks) {
     const r = await fetch(
-      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=en|fr&de=admin@influencedigital-ads.com`
+      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=en-US|fr-FR`
     );
     const d = await r.json();
-    const t = d.responseData?.translatedText;
-    if (!t || t === 'QUERY LENGTH LIMIT EXCEDEED' || d.responseStatus === 429) throw new Error('rate_limit');
+    if (d.responseStatus === 429) throw new Error('rate_limit');
+    // Prefer a match explicitly targeting fr-FR over the default responseData
+    const frMatch = Array.isArray(d.matches)
+      ? d.matches.find(m => m.target === 'fr-FR' && m.translation && !m.translation.includes('{{'))
+      : null;
+    const t = frMatch?.translation || d.responseData?.translatedText;
+    if (!t || t === 'QUERY LENGTH LIMIT EXCEDEED') throw new Error('rate_limit');
     translated.push(t);
     if (chunks.length > 1) await new Promise(res => setTimeout(res, 300));
   }
