@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "install-all": "npm install && cd ../frontend && npm install && npm run build"
+    "install-all": "npm install && cd .. && npm install && npm run build"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
