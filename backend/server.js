@@ -29,7 +29,7 @@ if (missing.length) {
 const app = express();
 
 // ── Middleware ────────────────────────────────────────────────────────────────
-app.use(helmet({ contentSecurityPolicy: false }));
+app.use(helmet({ contentSecurityPolicy: false, crossOriginEmbedderPolicy: false }));
 app.use(cors({
   origin: (origin, cb) => {
     if (!origin) return cb(null, true);
