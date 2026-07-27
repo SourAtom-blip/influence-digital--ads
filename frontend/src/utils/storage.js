@@ -2,7 +2,7 @@ import { apiGetSite, apiSaveSite } from './api.js';
 
 
 export const IMAGE_DEFAULTS = {
-  homeHero:        '/pexels-negativespace-34639.jpg',
+  homeHero:        'https://res.cloudinary.com/fl5vkej3/image/upload/v1785175137/influence-ads/hero-home-bg.jpg',
   homeAbout:       '/images/home_01.jpg',
   homeDesign:      '/images/home_02.jpg',
   homeGraphic:     '/images/home_00.jpg',
