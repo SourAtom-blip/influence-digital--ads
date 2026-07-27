@@ -42,16 +42,16 @@ export default function Advertising() {
     [content.advStat4Val || t.stats[3][0], content.advStat4Label || t.stats[3][1]],
   ];
 
-  // Service cards — driven by storage (admin-editable); fall back to translations per slug
+  // Admin data takes priority; hardcoded translations are fallback only
   const services = rawServices.map(s => {
     const tr = t.services.find(ts => ts.slug === s.slug) || {};
     const isFr = lang === 'fr';
     return {
       slug:  s.slug,
       icon:  s.icon  || tr.icon  || '',
-      title: tr.title || (isFr ? s.title_fr || s.title : s.title) || '',
-      desc:  tr.desc  || (isFr ? s.desc_fr  || s.desc  : s.desc)  || '',
-      stat:  (isFr ? s.stat_fr || s.stat : s.stat) || tr.stat || '',
+      title: (isFr ? s.title_fr || s.title : s.title) || tr.title || '',
+      desc:  (isFr ? s.desc_fr  || s.desc  : s.desc)  || tr.desc  || '',
+      stat:  (isFr ? s.stat_fr  || s.stat  : s.stat)  || tr.stat  || '',
     };
   });
 

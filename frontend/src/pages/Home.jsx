@@ -28,14 +28,15 @@ export default function Home() {
     return () => window.removeEventListener('resize', update);
   }, []);
 
-  // Merge admin-managed structure with translated titles/descs by slug
+  // Admin data takes priority; hardcoded translations are fallback only
   const services = rawServices.map(s => {
-    const tr = t.advertising.services.find(ts => ts.slug === s.slug);
-    if (tr) return { ...s, title: tr.title, desc: tr.desc };
-    // For custom services added via admin, use FR fields when in French
-    return lang === 'fr'
-      ? { ...s, title: s.title_fr || s.title, desc: s.desc_fr || s.desc }
-      : s;
+    const tr = t.advertising.services.find(ts => ts.slug === s.slug) || {};
+    const isFr = lang === 'fr';
+    return {
+      ...s,
+      title: (isFr ? s.title_fr || s.title : s.title) || tr.title || '',
+      desc:  (isFr ? s.desc_fr  || s.desc  : s.desc)  || tr.desc  || '',
+    };
   });
 
   const heroImg  = images.homeHero;
