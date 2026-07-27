@@ -578,18 +578,16 @@ async function translateText(text) {
   const translated = [];
   for (const chunk of chunks) {
     const r = await fetch(
-      `https://api.mymemory.translated.net/get?q=${encodeURIComponent(chunk)}&langpair=en-US|fr-FR`
+      `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=fr&dt=t&q=${encodeURIComponent(chunk)}`
     );
+    if (!r.ok) throw new Error('translate_failed');
     const d = await r.json();
-    if (d.responseStatus === 429) throw new Error('rate_limit');
-    // Prefer a match explicitly targeting fr-FR over the default responseData
-    const frMatch = Array.isArray(d.matches)
-      ? d.matches.find(m => m.target === 'fr-FR' && m.translation && !m.translation.includes('{{'))
+    const t = Array.isArray(d) && Array.isArray(d[0])
+      ? d[0].map(s => s[0]).filter(Boolean).join('')
       : null;
-    const t = frMatch?.translation || d.responseData?.translatedText;
-    if (!t || t === 'QUERY LENGTH LIMIT EXCEDEED') throw new Error('rate_limit');
+    if (!t) throw new Error('translate_failed');
     translated.push(t);
-    if (chunks.length > 1) await new Promise(res => setTimeout(res, 300));
+    if (chunks.length > 1) await new Promise(res => setTimeout(res, 200));
   }
   return translated.join(' ');
 }
