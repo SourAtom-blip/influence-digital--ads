@@ -26,15 +26,15 @@ export default function ServicePage() {
     'urban-zones':      images.serviceUrbanZones,
   };
 
-  // Try translations.js first (built-in services), then fall back to admin-added services
   const staticService = t.services[slug];
   const adminService  = allServices.find(s => s.slug === slug);
-  const service = staticService || (adminService ? {
-    icon:       adminService.icon,
+  // Admin data takes priority; fall back to hardcoded translations only if no admin entry exists
+  const service = adminService ? {
+    icon:       adminService.icon || staticService?.icon,
     title:      isFr ? adminService.title_fr    || adminService.title    : adminService.title,
     tagline:    isFr ? adminService.tagline_fr  || adminService.tagline  : adminService.tagline,
     paragraphs: [(isFr ? adminService.desc_fr || adminService.desc : adminService.desc) || ''],
-  } : null);
+  } : staticService || null;
 
   const heroImg = SLUG_IMAGES[slug] || adminService?.image || null;
 
