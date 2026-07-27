@@ -1,0 +1,4 @@
+/api/*      https://influence-digital-ads-production.up.railway.app/api/:splat      200
+/uploads/*  https://influence-digital-ads-production.up.railway.app/uploads/:splat  200
+
+/*          /index.html                                                               200

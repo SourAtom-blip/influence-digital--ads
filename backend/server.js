@@ -69,7 +69,7 @@ app.use('/api/quotes', rateLimit({
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // ── Serve React frontend ──────────────────────────────────────────────────────
-const frontendDist = path.join(__dirname, '..', 'frontend', 'dist');
+const frontendDist = path.join(__dirname, 'public');
 app.use(express.static(frontendDist));
 
 // ── Routes ────────────────────────────────────────────────────────────────────
@@ -84,7 +84,10 @@ app.get('/api/health', (req, res) => {
 
 // ── React Router catch-all ───────────────────────────────────────────────────
 app.get('*', (req, res) => {
-  res.sendFile(path.join(frontendDist, 'index.html'));
+  const indexPath = path.join(frontendDist, 'index.html');
+  res.sendFile(indexPath, (err) => {
+    if (err) res.status(404).json({ message: 'Frontend not found.' });
+  });
 });
 
 // ── Global error handler ──────────────────────────────────────────────────────
