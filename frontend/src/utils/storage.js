@@ -1,28 +1,30 @@
 import { apiGetSite, apiSaveSite } from './api.js';
 
 
+const CDN = 'https://res.cloudinary.com/fl5vkej3/image/upload/q_auto,f_auto/influence-ads';
+
 export const IMAGE_DEFAULTS = {
-  homeHero:        'https://res.cloudinary.com/fl5vkej3/image/upload/v1785175137/influence-ads/hero-home-bg.jpg',
-  homeAbout:       '/images/home_01.jpg',
-  homeDesign:      '/images/home_02.jpg',
-  homeGraphic:     '/images/home_00.jpg',
-  aboutMain:       '/images/advertising_02.jpg',
-  contactHero:     '/images/contact_00.jpg',
-  freeQuoteHero:   '/images/freequote_00.jpg',
-  advertisingHero: '/images/advertising_00.jpg',
-  advertisingMid:  '/images/advertising_01.jpg',
-  activitiesHero:  '/images/activities_01.jpg',
-  activitiesFounder: 'https://res.cloudinary.com/fl5vkej3/image/upload/v1785174370/influence-ads/eric-prouzet-qUi9i0nLcPQ-unsplash.jpg',
-  activitiesZone1:   'https://res.cloudinary.com/fl5vkej3/image/upload/v1785174350/influence-ads/activities_06.jpg',
-  advertisingBanner: 'https://res.cloudinary.com/fl5vkej3/image/upload/v1785174357/influence-ads/advertising_04.jpg',
-  activitiesZone2: '/images/activities_03.jpg',
-  activitiesZone3: '/images/Image 1.jpg',
-  activitiesZone4: '/images/eric-prouzet-qUi9i0nLcPQ-unsplash.jpg',
-  activitiesZone5: '/images/pexels-kokyo-k-244418001-26761527.jpg',
-  serviceShoppingCenters: '/images/activities_03.jpg',
-  serviceMalls:           '/images/Image 1.jpg',
-  serviceAirports:        '/images/eric-prouzet-qUi9i0nLcPQ-unsplash.jpg',
-  serviceUrbanZones:      '/images/pexels-kokyo-k-244418001-26761527.jpg',
+  homeHero:        `${CDN}/hero-home-bg.jpg`,
+  homeAbout:       `${CDN}/home_01.jpg`,
+  homeDesign:      `${CDN}/home_02.jpg`,
+  homeGraphic:     `${CDN}/home_00.jpg`,
+  aboutMain:       `${CDN}/advertising_02.jpg`,
+  contactHero:     `${CDN}/contact_00.jpg`,
+  freeQuoteHero:   `${CDN}/freequote_00.jpg`,
+  advertisingHero: `${CDN}/advertising_00.jpg`,
+  advertisingMid:  `${CDN}/advertising_01.jpg`,
+  activitiesHero:  `${CDN}/activities_01.jpg`,
+  activitiesFounder: `${CDN}/eric-prouzet-qUi9i0nLcPQ-unsplash.jpg`,
+  activitiesZone1:   `${CDN}/activities_06.jpg`,
+  advertisingBanner: `${CDN}/advertising_04.jpg`,
+  activitiesZone2: `${CDN}/activities_03.jpg`,
+  activitiesZone3: `${CDN}/Image%201.jpg`,
+  activitiesZone4: `${CDN}/eric-prouzet-qUi9i0nLcPQ-unsplash.jpg`,
+  activitiesZone5: `${CDN}/pexels-kokyo-k-244418001-26761527.jpg`,
+  serviceShoppingCenters: `${CDN}/activities_03.jpg`,
+  serviceMalls:           `${CDN}/Image%201.jpg`,
+  serviceAirports:        `${CDN}/eric-prouzet-qUi9i0nLcPQ-unsplash.jpg`,
+  serviceUrbanZones:      `${CDN}/pexels-kokyo-k-244418001-26761527.jpg`,
 };
 
 const CONTENT_EN = {
