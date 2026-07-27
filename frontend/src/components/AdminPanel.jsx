@@ -604,7 +604,8 @@ async function autoTranslateFrWithProgress(englishContent, onProgress) {
       await new Promise(res => setTimeout(res, 250));
     } catch {
       failures++;
-      result[key] = val;
+      // Use existing FR default instead of English text
+      result[key] = DEFAULTS.content_fr[key] ?? val;
     }
   }
 
