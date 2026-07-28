@@ -69,7 +69,8 @@ export default function Home() {
             style={{
               backgroundImage: `linear-gradient(to right, rgba(0, 0, 0, 0.75) 0%, rgba(0, 0, 0, 0.4) 40%, rgba(0, 0, 0, 0.1) 70%), url("${heroImg}")`,
               backgroundSize: 'cover',
-              backgroundPosition: 'center top'
+              backgroundPosition: 'center top',
+              filter: 'grayscale(100%)'
             }}
           />
         </div>
