@@ -245,22 +245,24 @@ const IMAGE_SLOTS = [
     { key: 'homeHero',    label: 'Hero Background' },
     { key: 'homeAbout',   label: 'About Section' },
     { key: 'homeDesign',  label: 'Billboard Thumbnail' },
-    { key: 'homeGraphic', label: 'Graphic Design Section' },
+    { key: 'homeGraphic', label: 'Graphic Design Section (Home + About Us)' },
+  ]},
+  { section: 'About Us Page', slots: [
+    { key: 'aboutMain',   label: 'Hero & Agency Section' },
   ]},
   { section: 'Advertising Page', slots: [
     { key: 'advertisingHero',   label: 'Hero Background' },
     { key: 'advertisingMid',    label: 'Middle Section' },
-    { key: 'aboutMain',         label: 'Agency Section' },
-    { key: 'advertisingBanner', label: 'Brand Banner' },
+    { key: 'advertisingBanner', label: 'Brand Banner (Advertising + About Us)' },
   ]},
   { section: 'Our Activities Page', slots: [
     { key: 'activitiesHero',    label: 'Hero Background' },
-    { key: 'activitiesFounder', label: 'Founder / Gallery Image' },
-    { key: 'activitiesZone1',   label: 'Zone 1 (Urban)' },
-    { key: 'activitiesZone2',   label: 'Zone 2 (Shopping Centers)' },
-    { key: 'activitiesZone3',   label: 'Zone 3 (Malls)' },
-    { key: 'activitiesZone4',   label: 'Zone 4 (Airports)' },
-    { key: 'activitiesZone5',   label: 'Zone 5 (Extra)' },
+    { key: 'activitiesFounder', label: 'Founder Photo (Activities + About Us)' },
+    { key: 'activitiesZone1',   label: 'Zone 1 — Urban' },
+    { key: 'activitiesZone2',   label: 'Zone 2 — Shopping Centers' },
+    { key: 'activitiesZone3',   label: 'Zone 3 — Malls' },
+    { key: 'activitiesZone4',   label: 'Zone 4 — Airports' },
+    { key: 'activitiesZone5',   label: 'Zone 5 — Extra' },
   ]},
   { section: 'Service Pages', slots: [
     { key: 'serviceShoppingCenters', label: 'Shopping Centers' },
@@ -268,10 +270,9 @@ const IMAGE_SLOTS = [
     { key: 'serviceAirports',        label: 'Airports' },
     { key: 'serviceUrbanZones',      label: 'Urban Zones' },
   ]},
-  { section: 'Other Pages', slots: [
-    { key: 'aboutMain',      label: 'About Us Hero' },
-    { key: 'contactHero',    label: 'Contact Hero' },
-    { key: 'freeQuoteHero',  label: 'Free Quote Hero' },
+  { section: 'Contact & Quote Pages', slots: [
+    { key: 'contactHero',   label: 'Contact Page Hero' },
+    { key: 'freeQuoteHero', label: 'Free Quote Page Hero' },
   ]},
 ];
 
