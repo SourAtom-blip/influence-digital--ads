@@ -55,10 +55,24 @@ export default function QuoteForm({ preselected = '', compact = false, showConse
   const [agreed, setAgreed]     = useState(false);
   const [consentError, setConsentError] = useState(false);
 
-  const handleChange = (e) => setFormData(p => ({ ...p, [e.target.name]: e.target.value }));
+  const [telError, setTelError] = useState('');
+  const handleChange = (e) => {
+    setFormData(p => ({ ...p, [e.target.name]: e.target.value }));
+    if (e.target.name === 'telephone') setTelError('');
+  };
+
+  const validatePhone = (val) => {
+    if (!val || !val.trim()) return true; // optional field
+    const digits = val.replace(/\D/g, '');
+    return digits.length >= 7 && digits.length <= 15;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (formData.telephone && !validatePhone(formData.telephone)) {
+      setTelError(lang === 'fr' ? 'Numéro invalide (7–15 chiffres)' : 'Invalid number (7–15 digits)');
+      return;
+    }
     if (showConsent && !agreed) { setConsentError(true); return; }
     setConsentError(false);
     setLoading(true);
@@ -124,7 +138,8 @@ export default function QuoteForm({ preselected = '', compact = false, showConse
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
               <div>
                 <label className="font-label-caps text-xs text-on-surface font-semibold block mb-1.5">{t.telephone}</label>
-                <input type="tel" name="telephone" value={formData.telephone} onChange={handleChange} placeholder={t.telPh} className={inputCls} />
+                <input type="tel" name="telephone" value={formData.telephone} onChange={handleChange} placeholder={t.telPh} className={`${inputCls} ${telError ? 'border-red-500' : ''}`} />
+                {telError && <p className="text-red-500 text-xs mt-1">{telError}</p>}
               </div>
               <div>
                 <label className="font-label-caps text-xs text-on-surface font-semibold block mb-1.5">{t.location}</label>

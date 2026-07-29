@@ -24,10 +24,24 @@ export default function Contact() {
   const [submitted, setSubmitted]         = useState(false);
   const [loading, setLoading]             = useState(false);
 
-  const handleChange = (e) => setForm(p => ({ ...p, [e.target.name]: e.target.value }));
+  const [telError, setTelError] = useState('');
+  const handleChange = (e) => {
+    setForm(p => ({ ...p, [e.target.name]: e.target.value }));
+    if (e.target.name === 'telephone') setTelError('');
+  };
+
+  const validatePhone = (val) => {
+    if (!val || !val.trim()) return true;
+    const digits = val.replace(/\D/g, '');
+    return digits.length >= 7 && digits.length <= 15;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (form.telephone && !validatePhone(form.telephone)) {
+      setTelError(lang === 'fr' ? 'Numéro invalide (7–15 chiffres)' : 'Invalid number (7–15 digits)');
+      return;
+    }
     if (!agreed) { setConsentError(true); return; }
     setConsentError(false);
     setLoading(true);
@@ -96,7 +110,8 @@ export default function Contact() {
                     </div>
                     <div>
                       <label className="font-label-caps text-xs text-on-surface font-semibold block mb-1.5">{t.fieldTel}</label>
-                      <input type="tel" name="telephone" value={form.telephone} onChange={handleChange} placeholder={t.fieldTelPh} className={inputCls} />
+                      <input type="tel" name="telephone" value={form.telephone} onChange={handleChange} placeholder={t.fieldTelPh} className={`${inputCls} ${telError ? 'border-red-500' : ''}`} />
+                      {telError && <p className="text-red-500 text-xs mt-1">{telError}</p>}
                     </div>
                   </div>
 
